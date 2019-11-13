@@ -156,8 +156,14 @@ class GenotypeCorpusGenerator(object):
                 found_dummy_snp = False
                 while not found_dummy_snp:
                     dummy_snp += 1
+                    found_zero = False
+                    found_one = False
                     for gen in next(reader):
-                        if gen != "0":
+                        if gen == "0":
+                            found_zero = True
+                        elif gen == "1":
+                            found_one = True
+                        if found_zero and found_one:
                             found_dummy_snp = True
                             break
             with open(legend, "r") as csvfile:

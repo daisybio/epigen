@@ -21,9 +21,9 @@
 
 """This script constitutes the main user interface of EpiGEN -- run it, to simulate epistasis data.
 
-This script has to be run on top of a pre-computed genotype corpus. Pre-computed corpora can be selected 
-by calling the script with the option ``--corpus-id 0`` (see detailed description below). 
-These corpora contain data for 100000 individuals at the SNPs of all 22 chromosomes supported by HAPGEN2. 
+This script has to be run on top of a pre-computed genotype corpus. For each population code ``<POP>``
+and each chromosome ``<CHROM>``, EpiGEN contains a pre-computed corpus for 10000 individuals. These corpora
+can be selected by running the script with the options ``--corpus-id <CRHOM> --pop <POP>``.
 You can also use your own corpora -- simply run the script ``generate_genotype_corpus.py`` before running this script.
 
 **Usage**::
@@ -35,7 +35,7 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
         Description:
             ID of selected genotype corpus.
         Accepted Arguments:
-            Non-negative integers. Choose ``--corpus-id 0`` to select one of the pre-computed corpora shipped with EpiGEN.
+            Non-negative integers.
         Effect:
             Together with ``--pop``, this option selects the genotype corpus with the prefix ``./corpora/<CORPUS_ID>_<POP>``. 
             If this corpus does not exist, the script raises an error. If necessary, run the script ``./generate_genotype_corpus.py``
