@@ -119,20 +119,20 @@ def run_script():
     
     descr = "\n############################################################################\n"
     descr += "#################### EpiGEN - merge_genotype_corpora.py ####################\n"
-    descr += "\nRun this script to generate a genotype corpus.\n"
+    descr += "\nRun this script to merge genotype corpora.\n"
     descr += "\nusage: python3 %(prog)s [required arguments] [optional arguments]\n"
     epilo = "The generated data can be found in the ./corpora directory:\n"
     epilo += "Genotype data:\t\t\t./corpora/<CORPUS_ID>_<POP>_genotype.<SUFFIX>\n"
     epilo += "SNPs:\t\t\t\t./corpora/<CORPUS_ID>_<POP>_snps.<SUFFIX>\n"
     epilo += "MAFs:\t\t\t\t./corpora/<CORPUS_ID>_<POP>_mafs.<SUFFIX>\n"
     epilo += "Cumulative MAF distr.:\t\t./corpora/<CORPUS_ID>_<POP>_cum_mafs.<SUFFIX>\n"
-    epilo += "Plot of cumulative MAF distr.:\t./corpora/<CORPUS_ID>_<POP>_cum_mafs.<SUFFIX>\n"
+    epilo += "Plot of cumulative MAF distr.:\t./corpora/<CORPUS_ID>_<POP>_cum_mafs.pdf\n"
     epilo += "\n############################################################################\n"
     parser = argparse.ArgumentParser(description=descr,formatter_class=argparse.RawTextHelpFormatter, epilog=epilo, usage=argparse.SUPPRESS)
     required_args = parser.add_argument_group("requried arguments")
-    required_args.add_argument("--corpus-ids", type=int, nargs="+", required=True, help="IDs of corpora that should be merged.", action=checks.check_length("--corpus-ids"))
+    required_args.add_argument("--corpus-ids", type=int, nargs="+", required=True, help="IDs of corpora that should be merged.", metavar="CORPUS_ID", action=checks.check_length("--corpus-ids"))
     required_args.add_argument("--corpus-id", type=int, required=True, help="ID of generated corpus.", action=checks.check_non_negative("--corpus-id"))
-    required_args.add_argument("--pops", nargs="+", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI","MIX"], help="HAPMAP3 population codes of corpora that should be merged.", action=checks.check_length("--pops"))
+    required_args.add_argument("--pops", nargs="+", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI","MIX"], metavar="POP", help="HAPMAP3 population codes of corpora that should be merged.", action=checks.check_length("--pops"))
     required_args.add_argument("--append", required=True, help="The axis along which the corpora should be merged.", choices=["SNPS","INDS"])
     optional_args = parser.add_argument_group("optional arguments")
     optional_args.add_argument("--compress", help="Compress generated output files.", action="store_true")

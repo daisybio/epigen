@@ -127,13 +127,13 @@ def run_script():
     epilo += "SNPs:\t\t\t\t./corpora/<CORPUS_ID>_<POP>_snps.<SUFFIX>\n"
     epilo += "MAFs:\t\t\t\t./corpora/<CORPUS_ID>_<POP>_mafs.<SUFFIX>\n"
     epilo += "Cumulative MAF distr.:\t\t./corpora/<CORPUS_ID>_<POP>_cum_mafs.<SUFFIX>\n"
-    epilo += "Plot of cumulative MAF distr.:\t./corpora/<CORPUS_ID>_<POP>_cum_mafs.<SUFFIX>\n"
+    epilo += "Plot of cumulative MAF distr.:\t./corpora/<CORPUS_ID>_<POP>_cum_mafs.pdf\n"
     epilo += "\n############################################################################\n"
     parser = argparse.ArgumentParser(description=descr,formatter_class=argparse.RawTextHelpFormatter, epilog=epilo, usage=argparse.SUPPRESS)
     required_args = parser.add_argument_group("requried arguments")
     required_args.add_argument("--inds", type=int, required=True, help="Number of individuals.", action=checks.check_positive("--inds"))
     required_args.add_argument("--corpus-id", type=int, required=True, help="ID of generated corpus.", action=checks.check_non_negative("--corpus-id"))
-    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI"], help="HAPMAP3 population code.")
+    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI"], metavar="POP", help="HAPMAP3 population code.")
     optional_args = parser.add_argument_group("optional arguments")
     optional_args.add_argument("--chroms", nargs="+", type=int, default=range(1,23), help="List of chromosomes.", metavar="{1|...|22}", choices=range(1,23))
     optional_args.add_argument("--compress", help="Compress generated output files.", action="store_true")

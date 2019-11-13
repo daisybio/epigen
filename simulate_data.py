@@ -232,7 +232,7 @@ def run_script():
     parser = argparse.ArgumentParser(description=descr,formatter_class=argparse.RawTextHelpFormatter, epilog=epilo, usage=argparse.SUPPRESS)
     required_args = parser.add_argument_group("required arguments")
     required_args.add_argument("--corpus-id", type=int, required=True, help="ID of selected genotype corpus.", action=checks.check_non_negative("--corpus-id"))
-    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI", "MIX"], help="HAPMAP3 population code of selected genotype corpus.")
+    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI", "MIX"], metavar="POP", help="HAPMAP3 population code of selected genotype corpus.")
     required_args.add_argument("--model", required=True, help="Path to model file (see examples in ./model directory).")
     required_args.add_argument("--snps", type=int, required=True, help="Number of SNPs in simulated data.", action=checks.check_positive("--snps"))
     required_args.add_argument("--inds", type=int, required=True, help="Number of individuals in simulated data.", action=checks.check_positive("--inds"))
