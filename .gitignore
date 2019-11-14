@@ -1,3 +1,9 @@
+# PyDev files
+.project
+.pydevproject
+
+# Documentation
+
 # Desktop Service Store files
 *.DS_Store
 

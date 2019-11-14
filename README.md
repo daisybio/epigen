@@ -26,7 +26,7 @@ The script `simulate_data.py` simulates epistasis data on top of a pre-computed 
 python3 simulate_data.py --sim-id 0 --corpus-id 1 --pop ASW --inds 7500 --snps 10000 --disease-snps 156 3 1076 --model models/param_model.xml  
 ```
 
-As you will notice when running this command, a large fraction of the runtime of `simulate_data.py` is used for unzipping the corpora. You can therefore significantly speed-up the script by unzipping them before. 
+As you will notice when executing this command, a large fraction of the runtime of `simulate_data.py` is used for unzipping the corpora. You can therefore significantly speed-up the script by unzipping them before. 
 
 If you want to use custom corpora instead of the pre-computed ones, you can generate them via the script `generate_genotype_corpus.py`. For example, the corpus `corpora/1_ASW_` shipped with EpiGEN was generated as follows:
 
@@ -40,7 +40,7 @@ Finally, the script `merge_genotype_corpora.py` allows you to merge pre-computed
 python3 merge_genotype_corpora.py --corpus-ids 1 2 --pops ASW ASW --corpus-id 23 --append SNPS
 ```
 
-Detailed descriptions of how to use the scripts can be found in the user guide.
+Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in `docs/build/html` and `docs/build/latex`.
 
 ## Requirements
 
@@ -53,9 +53,17 @@ EpiGen has the following dependencies:
 
 Moreover, due to its HAPGEN2 dependency, the script `generate_genotype_corpus.py` needs to be run on a Linux machine or on a machine running macOS 10.14 or lower. However, you can avoid running `generate_genotype_corpus.py` by using the pre-computed corpora and merging them, if necessary.
 
+If you want to re-compile the documentation contained in the `docs` directory, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing `make html` and `make latexpdf` from the `docs` directory. 
+
 ## License
 
 All of EpiGEN's Python sources are licensed under the [GNU General Public License 3](https://www.gnu.org/licenses/gpl-3.0.de.html). However, this license does not cover the HAPGEN2 binaries, which are distributed with EpiGEN and are called by the script `generate_genotype_corpus.py`. HAPGEN2 is property of the University of Oxford and may only be freely used for academic research and in accordance with the license found at [https://mathgen.stats.ox.ac.uk/genetics_software/hapgen/LICENCE](https://mathgen.stats.ox.ac.uk/genetics_software/hapgen/LICENCE). Copies of the GNU General Public License 3 and of the license for HAPGEN2 are distributed with EpiGEN.
+
+## Citing EpiGEN
+
+If you use EpiGEN, please cite the following paper:
+
+- D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski. &ldquo;EpiGEN: an epistasis simulation pipeline&rdquo;. Submitted.
 
 
 ## Structure of the Repository
@@ -64,11 +72,11 @@ All of EpiGEN's Python sources are licensed under the [GNU General Public Licens
 .
 ├── README.md                        // README
 ├── LICENSE                          // A copy of the GNU General Public License 3
-├── user_guide.pdf                   // The user guide
 ├── requirements.txt                 // Lists dependencies
 ├── simulate_data.py                 // Script the simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data
 ├── corpora                          // Output directory for genotype corpora
 ├── temp                             // Contains auxiliary files 
@@ -88,3 +96,4 @@ All of EpiGEN's Python sources are licensed under the [GNU General Public Licens
     ├── extensional_model.py.        // Implements extensional models
     └── argparse_checks.py.          // Implements argparse checks
 ```
+ 
