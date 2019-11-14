@@ -1,7 +1,7 @@
-Implementation Details
-======================
+The package ``utils``
+=====================
 
-The package ``utils`` contains the core of EpiGEN. Do not modify it, unless you really know what you are doing.
+This package contains the core of EpiGEN. Do not modify it, unless you really know what you are doing.
 
 The module ``utils.data_simulator.py``
 --------------------------------------

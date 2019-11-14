@@ -127,7 +127,7 @@ The script \sphinxcode{\sphinxupquote{simulate\_data.py}} simulates epistasis da
 python3 simulate\PYGZus{}data.py \PYGZhy{}\PYGZhy{}sim\PYGZhy{}id \PYG{l+m}{0} \PYGZhy{}\PYGZhy{}corpus\PYGZhy{}id \PYG{l+m}{1} \PYGZhy{}\PYGZhy{}pop ASW \PYGZhy{}\PYGZhy{}inds \PYG{l+m}{7500} \PYGZhy{}\PYGZhy{}snps \PYG{l+m}{10000} \PYGZhy{}\PYGZhy{}disease\PYGZhy{}snps \PYG{l+m}{156} \PYG{l+m}{3} \PYG{l+m}{1076} \PYGZhy{}\PYGZhy{}model models/param\PYGZus{}model.xml  
 \end{sphinxVerbatim}
 
-As you will notice when executing this command, a large fraction of the runtime of \sphinxcode{\sphinxupquote{simulate\_data.py}} is used for unzipping the corpora. You can therefore significantly speed-up the script by unzipping them before.
+As you will notice when executing this command, a large fraction of the runtime of \sphinxcode{\sphinxupquote{simulate\_data.py}} is used for loading the corpora. If you want to simulate data for only a small number of individuals, it is therefore advisable to first compute your own, smaller corpora. You can also speed-up the script by unzipping the corpora before running it.
 
 If you want to use custom corpora instead of the pre-computed ones, you can generate them via the script \sphinxcode{\sphinxupquote{generate\_genotype\_corpus.py}}. For example, the corpus \sphinxcode{\sphinxupquote{corpora/1\_ASW\_}} shipped with EpiGEN was generated as follows:
 
@@ -457,7 +457,7 @@ fall into the specified range. If the range is too narrow, it is dynamically ext
 \sphinxcode{\sphinxupquote{./sim/\textless{}ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_genotype.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0 ... G\_0\_\textless{}INDS-1\textgreater{}{]} ... {[}G\_\textless{}SNPS-1\textgreater{}\_0 ... G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0, ..., G\_0\_\textless{}INDS-1\textgreater{}{]} ... {[}G\_\textless{}SNPS-1\textgreater{}\_0, ..., G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
 where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles of the individual with index \sphinxcode{\sphinxupquote{I}} at the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
@@ -467,7 +467,7 @@ where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles o
 \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_phenotype.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}P\_0 ... P\_\textless{}INDS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{P\_I}} encodes the phenotype of
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}P\_0, ..., P\_\textless{}INDS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{P\_I}} encodes the phenotype of
 the individual with index \sphinxcode{\sphinxupquote{I}}.
 
 \end{description}
@@ -477,7 +477,7 @@ the individual with index \sphinxcode{\sphinxupquote{I}}.
 \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_snps.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0 ... INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0, ..., INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
 information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
 
 \end{description}
@@ -487,7 +487,7 @@ information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifi
 \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_mafs.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0 ... MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0, ..., MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
 the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
@@ -497,7 +497,7 @@ the SNP with index \sphinxcode{\sphinxupquote{S}}.
 \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_disease\_snps.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}S\_0 ... S\_\textless{}MODELSIZE-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{S\_POS}} encodes the index of the SNP at position \sphinxcode{\sphinxupquote{POS}}
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}S\_0, ..., S\_\textless{}MODELSIZE-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{S\_POS}} encodes the index of the SNP at position \sphinxcode{\sphinxupquote{POS}}
 in the epistasis model.
 
 \end{description}
@@ -614,7 +614,7 @@ Show help message and exit.
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_genotype.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-Compressed JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0 ... G\_0\_\textless{}INDS-1\textgreater{}{]} ... {[}G\_\textless{}SNPS-1\textgreater{}\_0 ... G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
+Compressed JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0, ..., G\_0\_\textless{}INDS-1\textgreater{}{]}, ..., {[}G\_\textless{}SNPS-1\textgreater{}\_0, ..., G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
 where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles of the individual with index \sphinxcode{\sphinxupquote{I}} at the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
@@ -624,7 +624,7 @@ where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles o
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_snps.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-Compressed JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0 ... INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
+Compressed JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0, ..., INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
 information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
 
 \end{description}
@@ -634,7 +634,7 @@ information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifi
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_mafs.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-Compressed JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0 ... MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
+Compressed JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0, ..., MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
 the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
@@ -644,7 +644,7 @@ the SNP with index \sphinxcode{\sphinxupquote{S}}.
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_cum\_mafs.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-Compressed ordered JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}MAF\_0 COUNT\_0{]} ... {[}MAF\_\textless{}NMAFS-1\textgreater{} COUNT\_\textless{}NMAFS-1\textgreater{}{]}{]}}}, where \sphinxcode{\sphinxupquote{COUNT\_POS}} encodes the
+Compressed ordered JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}MAF\_0, COUNT\_0{]}, ..., {[}MAF\_\textless{}NMAFS-1\textgreater{}, COUNT\_\textless{}NMAFS-1\textgreater{}{]}{]}}}, where \sphinxcode{\sphinxupquote{COUNT\_POS}} encodes the
 number of SNPs is does not exceed \sphinxcode{\sphinxupquote{MAF\_POS}}.
 
 \end{description}
@@ -770,7 +770,7 @@ Show help message and exit.
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_genotype.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0 ... G\_0\_\textless{}INDS-1\textgreater{}{]} ... {[}G\_\textless{}SNPS-1\textgreater{}\_0 ... G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0, ..., G\_0\_\textless{}INDS-1\textgreater{}{]}, ..., {[}G\_\textless{}SNPS-1\textgreater{}\_0, ..., G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
 where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles of the individual with index \sphinxcode{\sphinxupquote{I}} at the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
@@ -780,7 +780,7 @@ where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles o
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_snps.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0 ... INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0, ..., INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
 information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
 
 \end{description}
@@ -790,7 +790,7 @@ information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifi
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_mafs.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0 ... MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0, ..., MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
 the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
@@ -800,7 +800,7 @@ the SNP with index \sphinxcode{\sphinxupquote{S}}.
 \sphinxcode{\sphinxupquote{./corpora/\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_cum\_mafs.\textless{}SUFFIX\textgreater{}}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) ordered JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}MAF\_0 COUNT\_0{]} ... {[}MAF\_\textless{}NMAFS-1\textgreater{} COUNT\_\textless{}NMAFS-1\textgreater{}{]}{]}}}, where \sphinxcode{\sphinxupquote{COUNT\_POS}} encodes the
+(Compressed) ordered JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}MAF\_0, COUNT\_0{]}, ..., {[}MAF\_\textless{}NMAFS-1\textgreater{}, COUNT\_\textless{}NMAFS-1\textgreater{}{]}{]}}}, where \sphinxcode{\sphinxupquote{COUNT\_POS}} encodes the
 number of SNPs is does not exceed \sphinxcode{\sphinxupquote{MAF\_POS}}.
 
 \end{description}
@@ -828,9 +828,9 @@ Runs the script.
 
 
 
-\section{Implementation Details}
-\label{\detokenize{utils:implementation-details}}\label{\detokenize{utils::doc}}
-The package \sphinxcode{\sphinxupquote{utils}} contains the core of EpiGEN. Do not modify it, unless you really know what you are doing.
+\section{The package \sphinxstyleliteralintitle{\sphinxupquote{utils}}}
+\label{\detokenize{utils:the-package-utils}}\label{\detokenize{utils::doc}}
+This package contains the core of EpiGEN. Do not modify it, unless you really know what you are doing.
 
 
 \subsection{The module \sphinxstyleliteralintitle{\sphinxupquote{utils.data\_simulator.py}}}

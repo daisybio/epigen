@@ -10,7 +10,7 @@
 \contentsline {section}{\numberline {2}The script \sphinxstyleliteralintitle {\sphinxupquote {simulate\_data.py}}}{3}{section.2}% 
 \contentsline {section}{\numberline {3}The script \sphinxstyleliteralintitle {\sphinxupquote {generate\_genotype\_corpus.py}}}{6}{section.3}% 
 \contentsline {section}{\numberline {4}The script \sphinxstyleliteralintitle {\sphinxupquote {merge\_genotype\_corpora.py}}}{8}{section.4}% 
-\contentsline {section}{\numberline {5}Implementation Details}{10}{section.5}% 
+\contentsline {section}{\numberline {5}The package \sphinxstyleliteralintitle {\sphinxupquote {utils}}}{10}{section.5}% 
 \contentsline {subsection}{\numberline {5.1}The module \sphinxstyleliteralintitle {\sphinxupquote {utils.data\_simulator.py}}}{10}{subsection.5.1}% 
 \contentsline {subsection}{\numberline {5.2}The module \sphinxstyleliteralintitle {\sphinxupquote {utils.genotype\_corpus\_generator.py}}}{12}{subsection.5.2}% 
 \contentsline {subsection}{\numberline {5.3}The module \sphinxstyleliteralintitle {\sphinxupquote {utils.genotype\_corpus\_merger.py}}}{14}{subsection.5.3}% 

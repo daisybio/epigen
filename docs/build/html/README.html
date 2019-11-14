@@ -68,7 +68,7 @@
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 simulate_data.py --sim-id <span class="m">0</span> --corpus-id <span class="m">1</span> --pop ASW --inds <span class="m">7500</span> --snps <span class="m">10000</span> --disease-snps <span class="m">156</span> <span class="m">3</span> <span class="m">1076</span> --model models/param_model.xml  
 </pre></div>
 </div>
-<p>As you will notice when executing this command, a large fraction of the runtime of <code class="docutils literal notranslate"><span class="pre">simulate_data.py</span></code> is used for unzipping the corpora. You can therefore significantly speed-up the script by unzipping them before.</p>
+<p>As you will notice when executing this command, a large fraction of the runtime of <code class="docutils literal notranslate"><span class="pre">simulate_data.py</span></code> is used for loading the corpora. If you want to simulate data for only a small number of individuals, it is therefore advisable to first compute your own, smaller corpora. You can also speed-up the script by unzipping the corpora before running it.</p>
 <p>If you want to use custom corpora instead of the pre-computed ones, you can generate them via the script <code class="docutils literal notranslate"><span class="pre">generate_genotype_corpus.py</span></code>. For example, the corpus <code class="docutils literal notranslate"><span class="pre">corpora/1_ASW_</span></code> shipped with EpiGEN was generated as follows:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 generate_genotype_corpus.py --corpus-id <span class="m">1</span> --pop ASW --inds <span class="m">10000</span> --chroms <span class="m">1</span> --compress 
 </pre></div>

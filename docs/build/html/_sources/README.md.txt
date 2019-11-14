@@ -26,7 +26,7 @@ The script `simulate_data.py` simulates epistasis data on top of a pre-computed 
 python3 simulate_data.py --sim-id 0 --corpus-id 1 --pop ASW --inds 7500 --snps 10000 --disease-snps 156 3 1076 --model models/param_model.xml  
 ```
 
-As you will notice when executing this command, a large fraction of the runtime of `simulate_data.py` is used for unzipping the corpora. You can therefore significantly speed-up the script by unzipping them before. 
+As you will notice when executing this command, a large fraction of the runtime of `simulate_data.py` is used for loading the corpora. If you want to simulate data for only a small number of individuals, it is therefore advisable to first compute your own, smaller corpora. You can also speed-up the script by unzipping the corpora before running it. 
 
 If you want to use custom corpora instead of the pre-computed ones, you can generate them via the script `generate_genotype_corpus.py`. For example, the corpus `corpora/1_ASW_` shipped with EpiGEN was generated as follows:
 

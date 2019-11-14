@@ -113,8 +113,8 @@ class DataSimulator(object):
         
         # Load MAFs.
         print("Loading MAFs ...")
-        if os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_genotype.json"):
-            with open("corpora/" + str(corpus_id) + "_" + pop + "_genotype.json", "rt") as jsonfile:
+        if os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json"):
+            with open("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json", "rt") as jsonfile:
                 self.mafs = np.asarray(json.load(jsonfile), dtype=float)
         elif os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json.bz2"):
             with bz2.open("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json.bz2", "rt", encoding="ascii") as zipfile:
@@ -250,7 +250,7 @@ class DataSimulator(object):
                 print("WARNING: Specified disease MAF range is too narrow. Extended to [{},{}].".format(self.disease_maf_range[0], self.disease_maf_range[1]))
             
         # Adjust global MAF range if too few SNPs respect it.
-        print("Checking global MAF range (extend if too narrow) ...")
+        print("Checking noise MAF range (extend if too narrow) ...")
         pos_last_too_small = -1
         pos_last_not_too_large = -1
         for item in self.cum_mafs:
@@ -280,21 +280,21 @@ class DataSimulator(object):
         if adjust_range:
             self.noise_maf_range[0] = min(self.noise_maf_range[0], self.cum_mafs[pos_last_too_small + 1][0])
             self.noise_maf_range[1] = max(self.noise_maf_range[1], self.cum_mafs[pos_last_not_too_large][0])
-            print("WARNING: Specified global MAF range is too narrow. Extended to [{},{}].".format(self.noise_maf_range[0], self.noise_maf_range[1]))
+            print("WARNING: Specified noise MAF range is too narrow. Extended to [{},{}].".format(self.noise_maf_range[0], self.noise_maf_range[1]))
             
         
         # Sample the disease SNPs.
         print("Sampling disease SNPs ...")
         if len(self.disease_snps) == 0:
-            candidates = [snp for snp in range(self.total_num_snps) if self.mafs[snp] >= self.disease_maf_range[0] and self.mafs[snp] <= self.disease_maf_range[1]]
+            candidates = [snp for snp in range(self.total_num_snps) if (self.mafs[snp] >= self.disease_maf_range[0]) and (self.mafs[snp] <= self.disease_maf_range[1])]
             self.disease_snps = np.random.choice(candidates, replace=False, size=self.model.size).tolist()
         is_no_disease_snp = [True] * self.total_num_snps
         for snp in self.disease_snps:
             is_no_disease_snp[snp] = False
             
-        # Sample the remaining SNPs.
-        print("Sampling remaining SNPs ...")
-        candidates = [snp for snp in range(self.total_num_snps) if self.mafs[snp] >= self.noise_maf_range[0] and self.mafs[snp] <= self.noise_maf_range[1] and is_no_disease_snp[snp]]
+        # Sample the noise SNPs.
+        print("Sampling noise SNPs ...")
+        candidates = [snp for snp in range(self.total_num_snps) if (self.mafs[snp] >= self.noise_maf_range[0]) and (self.mafs[snp] <= self.noise_maf_range[1]) & is_no_disease_snp[snp]]
         selected_snps = sorted(self.disease_snps + np.random.choice(candidates, replace=False, size=(self.num_snps - self.model.size)).tolist())
         
         # Update the genotype and the MAF arrays, as well as the SNP list.
