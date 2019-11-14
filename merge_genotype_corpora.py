@@ -43,7 +43,7 @@ If you want to these or other corpora, run this script.
             List of HAPMAP3 population codes of the corpora that should be merged. 
             The size must match the size of the argument passed to ``--corpus-ids``.
         Accepted Arguments: 
-            ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, YRI, and MIX.
+            ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, and MIX.
         Effect:
             Selects the corpora that should be merged and determines the prefix ``./corpora/<CORPUS_ID>_<POP>`` of the files
             that contain the generated corpus. If the list passed to this argument contains only one population code,
@@ -82,25 +82,25 @@ If you want to these or other corpora, run this script.
         File: 
             ``./corpora/<CORPUS_ID>_<POP>_genotype.<SUFFIX>``
         Content and Format: 
-            (Compressed) JSON file of the form ``[[G_0_0 ... G_0_<INDS-1>] ... [G_<SNPS-1>_0 ... G_<SNPS-1>_<INDS-1>]]``,
+            (Compressed) JSON file of the form ``[[G_0_0, ..., G_0_<INDS-1>], ..., [G_<SNPS-1>_0, ..., G_<SNPS-1>_<INDS-1>]]``,
             where ``G_S_I`` encodes the number of minor alleles of the individual with index ``I`` at the SNP with index ``S``.
     *SNPs:*
         File:
             ``./corpora/<CORPUS_ID>_<POP>_snps.<SUFFIX>``
         Content and Format:
-            (Compressed) JSON file of the form ``[INFO_0 ... INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
+            (Compressed) JSON file of the form ``[INFO_0, ..., INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
             information about the SNP with index ``S``: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
     *MAFs:*
         File:
             ``./corpora/<CORPUS_ID>_<POP>_mafs.<SUFFIX>``
         Content and Format:
-            (Compressed) JSON file of the form ``[MAF_0 ... MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
+            (Compressed) JSON file of the form ``[MAF_0, ..., MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
             the SNP with index ``S``.
     *Cumulative MAF distribution:*
         File: 
             ``./corpora/<CORPUS_ID>_<POP>_cum_mafs.<SUFFIX>``
         Content and Format:
-            (Compressed) ordered JSON file of the form ``[[MAF_0 COUNT_0] ... [MAF_<NMAFS-1> COUNT_<NMAFS-1>]]``, where ``COUNT_POS`` encodes the 
+            (Compressed) ordered JSON file of the form ``[[MAF_0, COUNT_0], ..., [MAF_<NMAFS-1>, COUNT_<NMAFS-1>]]``, where ``COUNT_POS`` encodes the 
             number of SNPs is does not exceed ``MAF_POS``.
     *Plot of Cumulative MAF distribution:*
         File: 
@@ -132,7 +132,7 @@ def run_script():
     required_args = parser.add_argument_group("requried arguments")
     required_args.add_argument("--corpus-ids", type=int, nargs="+", required=True, help="IDs of corpora that should be merged.", metavar="CORPUS_ID", action=checks.check_length("--corpus-ids"))
     required_args.add_argument("--corpus-id", type=int, required=True, help="ID of generated corpus.", action=checks.check_non_negative("--corpus-id"))
-    required_args.add_argument("--pops", nargs="+", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI","MIX"], metavar="POP", help="HAPMAP3 population codes of corpora that should be merged.", action=checks.check_length("--pops"))
+    required_args.add_argument("--pops", nargs="+", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","MIX"], metavar="POP", help="HAPMAP3 population codes of corpora that should be merged.", action=checks.check_length("--pops"))
     required_args.add_argument("--append", required=True, help="The axis along which the corpora should be merged.", choices=["SNPS","INDS"])
     optional_args = parser.add_argument_group("optional arguments")
     optional_args.add_argument("--compress", help="Compress generated output files.", action="store_true")
@@ -143,7 +143,7 @@ def run_script():
     axis = 0
     if args.append == "INDS":
         axis = 1
-    merger = GenCorMerge(args.corpus_id, args.pop, args.corpus_ids, axis, args.compress)
+    merger = GenCorMerge(args.corpus_ids, args.pops, args.corpus_id, axis, args.compress)
     merger.merge_corpora()
     merger.compute_mafs()
     merger.dump_corpus()

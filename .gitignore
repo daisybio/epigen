@@ -2,7 +2,37 @@
 .project
 .pydevproject
 
-# Documentation
+# Simulated data
+sim/*
+!sim/README.md
+
+# Temporary files
+temp/*
+!temp/README.md
+
+# Corpora except for the precomputed ones.
+corpora/*
+!corpora/README.md
+!corpora/[1-22]_ASW_*.bz2
+!corpora/[1-22]_CEU_*.bz2
+!corpora/[1-22]_CEU+TSI_*.bz2
+!corpora/[1-22]_CHD_*.bz2
+!corpora/[1-22]_GIH_*.bz2
+!corpora/[1-22]_JPT+CHB_*.bz2
+!corpora/[1-22]_LWK_*.bz2
+!corpora/[1-22]_MEX_*.bz2
+!corpora/[1-22]_MKK_*.bz2
+!corpora/[1-22]_TSI_*.bz2
+!corpora/[1-22]_ASW_*.pdf
+!corpora/[1-22]_CEU_*.pdf
+!corpora/[1-22]_CEU+TSI_*.pdf
+!corpora/[1-22]_CHD_*.pdf
+!corpora/[1-22]_GIH_*.pdf
+!corpora/[1-22]_JPT+CHB_*.pdf
+!corpora/[1-22]_LWK_*.pdf
+!corpora/[1-22]_MEX_*.pdf
+!corpora/[1-22]_MKK_*.pdf
+!corpora/[1-22]_TSI_*.pdf
 
 # Desktop Service Store files
 *.DS_Store

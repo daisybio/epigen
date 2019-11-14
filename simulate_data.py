@@ -44,7 +44,7 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
         Description:
             HAPMAP3 population code of selected genotype corpus.
         Accepted Arguments: 
-            ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, YRI, and MIX (for merged corpora).
+            ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, and MIX (for merged corpora).
         Effect:
             Together with ``--corpus-id``, this option selects the genotype corpus with the prefix ``./corpora/<CORPUS_ID>_<POP>``. 
             If this corpus does not exist, the script raises an error. If necessary, run the script ``./generate_genotype_corpus.py``
@@ -182,31 +182,31 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
         File: 
             ``./sim/<ID>_<CORPUS_ID>_<POP>_genotype.<SUFFIX>``
         Content and Format: 
-            (Compressed) JSON file of the form ``[[G_0_0 ... G_0_<INDS-1>] ... [G_<SNPS-1>_0 ... G_<SNPS-1>_<INDS-1>]]``,
+            (Compressed) JSON file of the form ``[[G_0_0, ..., G_0_<INDS-1>] ... [G_<SNPS-1>_0, ..., G_<SNPS-1>_<INDS-1>]]``,
             where ``G_S_I`` encodes the number of minor alleles of the individual with index ``I`` at the SNP with index ``S``.
     *Phenotype Data:*
         File: 
             ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_phenotype.<SUFFIX>``
         Content and Format: 
-            (Compressed) JSON file of the form ``[P_0 ... P_<INDS-1>]``, where ``P_I`` encodes the phenotype of 
+            (Compressed) JSON file of the form ``[P_0, ..., P_<INDS-1>]``, where ``P_I`` encodes the phenotype of 
             the individual with index ``I``.
     *SNPs:*
         File:
             ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_snps.<SUFFIX>``
         Content and Format:
-            (Compressed) JSON file of the form ``[INFO_0 ... INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
+            (Compressed) JSON file of the form ``[INFO_0, ..., INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
             information about the SNP with index ``S``: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
     *MAFs:*
         File:
             ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_mafs.<SUFFIX>``
         Content and Format:
-            (Compressed) JSON file of the form ``[MAF_0 ... MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
+            (Compressed) JSON file of the form ``[MAF_0, ..., MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
             the SNP with index ``S``.
     *Disease SNPs:*
         File: 
             ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_disease_snps.<SUFFIX>``
         Content and Format:
-            (Compressed) JSON file of the form ``[S_0 ... S_<MODELSIZE-1>]``, where ``S_POS`` encodes the index of the SNP at position ``POS``
+            (Compressed) JSON file of the form ``[S_0, ..., S_<MODELSIZE-1>]``, where ``S_POS`` encodes the index of the SNP at position ``POS``
             in the epistasis model.
 
 """
@@ -232,7 +232,7 @@ def run_script():
     parser = argparse.ArgumentParser(description=descr,formatter_class=argparse.RawTextHelpFormatter, epilog=epilo, usage=argparse.SUPPRESS)
     required_args = parser.add_argument_group("required arguments")
     required_args.add_argument("--corpus-id", type=int, required=True, help="ID of selected genotype corpus.", action=checks.check_non_negative("--corpus-id"))
-    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI", "MIX"], metavar="POP", help="HAPMAP3 population code of selected genotype corpus.")
+    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","MIX"], metavar="POP", help="HAPMAP3 population code of selected genotype corpus.")
     required_args.add_argument("--model", required=True, help="Path to model file (see examples in ./model directory).")
     required_args.add_argument("--snps", type=int, required=True, help="Number of SNPs in simulated data.", action=checks.check_positive("--snps"))
     required_args.add_argument("--inds", type=int, required=True, help="Number of individuals in simulated data.", action=checks.check_positive("--inds"))
@@ -250,6 +250,7 @@ def run_script():
     
     print("\n############################################################################")
     print("######################### EpiGEN - simulate_data.py ########################\n")
+    # Just for testing#
     sim = DataSim(args.sim_id, args.corpus_id, args.pop, args.model, args.snps, args.inds, args.disease_snps, args.biased_distr, args.noise_maf_range, args.disease_maf_range, args.seed, args.compress)
     sim.sample_snps()
     sim.generate_phenotype()

@@ -42,7 +42,7 @@ If you want to simulate data on top of your own corpora, run this script.
         Description:
             HAPMAP3 population code of generated genotype corpus.
         Accepted Arguments: 
-            ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, and YRI.
+            ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, and TSI.
         Effect:
             Together with ``--pop``, this option determines the prefix ``./corpora/<CORPUS_ID>_<POP>`` of the files
             that contain the generated corpus.
@@ -82,25 +82,25 @@ If you want to simulate data on top of your own corpora, run this script.
         File: 
             ``./corpora/<CORPUS_ID>_<POP>_genotype.<SUFFIX>``
         Content and Format: 
-            Compressed JSON file of the form ``[[G_0_0 ... G_0_<INDS-1>] ... [G_<SNPS-1>_0 ... G_<SNPS-1>_<INDS-1>]]``,
+            Compressed JSON file of the form ``[[G_0_0, ..., G_0_<INDS-1>], ..., [G_<SNPS-1>_0, ..., G_<SNPS-1>_<INDS-1>]]``,
             where ``G_S_I`` encodes the number of minor alleles of the individual with index ``I`` at the SNP with index ``S``.
     *SNPs:*
         File:
             ``./corpora/<CORPUS_ID>_<POP>_snps.<SUFFIX>``
         Content and Format:
-            Compressed JSON file of the form ``[INFO_0 ... INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
+            Compressed JSON file of the form ``[INFO_0, ..., INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
             information about the SNP with index ``S``: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
     *MAFs:*
         File:
             ``./corpora/<CORPUS_ID>_<POP>_mafs.<SUFFIX>``
         Content and Format:
-            Compressed JSON file of the form ``[MAF_0 ... MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
+            Compressed JSON file of the form ``[MAF_0, ..., MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
             the SNP with index ``S``.
     *Cumulative MAF distribution:*
         File: 
             ``./corpora/<CORPUS_ID>_<POP>_cum_mafs.<SUFFIX>``
         Content and Format:
-            Compressed ordered JSON file of the form ``[[MAF_0 COUNT_0] ... [MAF_<NMAFS-1> COUNT_<NMAFS-1>]]``, where ``COUNT_POS`` encodes the 
+            Compressed ordered JSON file of the form ``[[MAF_0, COUNT_0], ..., [MAF_<NMAFS-1>, COUNT_<NMAFS-1>]]``, where ``COUNT_POS`` encodes the 
             number of SNPs is does not exceed ``MAF_POS``.
     *Plot of Cumulative MAF distribution:*
         File: 
@@ -133,7 +133,7 @@ def run_script():
     required_args = parser.add_argument_group("requried arguments")
     required_args.add_argument("--inds", type=int, required=True, help="Number of individuals.", action=checks.check_positive("--inds"))
     required_args.add_argument("--corpus-id", type=int, required=True, help="ID of generated corpus.", action=checks.check_non_negative("--corpus-id"))
-    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI","YRI"], metavar="POP", help="HAPMAP3 population code.")
+    required_args.add_argument("--pop", required=True, choices=["ASW","CEU","CEU+TSI","CHD","GIH","JPT+CHB","LWK","MEX","MKK","TSI"], metavar="POP", help="HAPMAP3 population code.")
     optional_args = parser.add_argument_group("optional arguments")
     optional_args.add_argument("--chroms", nargs="+", type=int, default=range(1,23), help="List of chromosomes.", metavar="{1|...|22}", choices=range(1,23))
     optional_args.add_argument("--compress", help="Compress generated output files.", action="store_true")

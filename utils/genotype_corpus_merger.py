@@ -69,7 +69,7 @@ class GenotypeCorpusMerger(object):
         self.corpus_ids = corpus_ids
         self.pops = pops
         self.pop = "MIX"
-        if len(set(self.pops)) == 0:
+        if len(set(self.pops)) == 1:
             self.pop = self.pops[0]
         self.corpus_id = corpus_id
         self.genotype = None
@@ -199,19 +199,19 @@ class GenotypeCorpusMerger(object):
             with bz2.open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_cum_mafs.json.bz2", "wt", encoding="ascii") as zipfile:
                 json.dump(self.cum_mafs, zipfile)
         else:
-            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_genotype.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_genotype.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.genotype.tolist(), jsonfile)
                 
             # Dump SNPs.
-            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_snps.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_snps.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.snps, jsonfile)
                 
             # Dump MAFs.
-            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_mafs.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_mafs.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.mafs.tolist(), jsonfile)
                 
             # Dump cumulative MAF distribution.
-            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_cum_mafs.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("corpora/" + str(self.corpus_id) + "_" + self.pop + "_cum_mafs.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.cum_mafs, jsonfile)
         
         # Plot cumulative MAF distribution.

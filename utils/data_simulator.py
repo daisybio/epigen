@@ -368,22 +368,22 @@ class DataSimulator(object):
             with bz2.open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_mafs.json.bz2", "wt", encoding="ascii") as zipfile:
                 json.dump(self.mafs.tolist(), zipfile)
         else:
-            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_genotype.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_genotype.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.genotype.tolist(), jsonfile)
                 
             # Dump phenotype.
-            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_phenotype.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_phenotype.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.phenotype.tolist(), jsonfile)
                 
             # Dump SNPs.
-            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_snps.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_snps.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.snps, jsonfile)
                 
             # Dump disease SNPs.
-            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_disease_snps.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_disease_snps.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.disease_snps, jsonfile)
                 
             # Dump MAFs.
-            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_mafs.json.bz2", "wt", encoding="ascii") as jsonfile:
+            with open("sim/" + str(self.sim_id) + "_" + str(self.corpus_id) + "_" + self.pop + "_mafs.json", "wt", encoding="ascii") as jsonfile:
                 json.dump(self.mafs.tolist(), jsonfile)
         
