@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Implementation Details &#8212; EpiGEN  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="The script merge_genotype_corpora.py" href="merge_genotype_corpora.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="merge_genotype_corpora.html" title="The script merge_genotype_corpora.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="implementation-details">
+<h1>Implementation Details<a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h1>
+<p>The package <code class="docutils literal notranslate"><span class="pre">utils</span></code> contains the core of EpiGEN. Do not modify it, unless you really know what you are doing.</p>
+<div class="section" id="module-utils.data_simulator">
+<span id="the-module-utils-data-simulator-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.data_simulator.py</span></code><a class="headerlink" href="#module-utils.data_simulator" title="Permalink to this headline">¶</a></h2>
+<p>Contains definition of DataSimulator class.</p>
+<dl class="class">
+<dt id="utils.data_simulator.DataSimulator">
+<em class="property">class </em><code class="sig-prename descclassname">utils.data_simulator.</code><code class="sig-name descname">DataSimulator</code><span class="sig-paren">(</span><em class="sig-param">sim_id</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">model</em>, <em class="sig-param">num_snps</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">disease_snps</em>, <em class="sig-param">biased_distr</em>, <em class="sig-param">noise_maf_range</em>, <em class="sig-param">disease_maf_range</em>, <em class="sig-param">seed</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simulates epistasis data given a pre-generated genotype corpus.</p>
+<p>This class is employed by the script simulate_data.py.
+Not intended for use outside of this script.
+Expects to be imported from EpiGEN’s root directory.</p>
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.genotype">
+<code class="sig-name descname">genotype</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.genotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array with entries from range(3) whose rows represent SNPs and whose
+columns represent individuals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.snps">
+<code class="sig-name descname">snps</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list with one entry for each row of self.genotype. The entries provide information
+about the corresponding SNP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (list of str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.mafs">
+<code class="sig-name descname">mafs</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array of floats representing the MAFs of all rows of self.genotype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.cum_mafs">
+<code class="sig-name descname">cum_mafs</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.cum_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of pairs of the form (MAF,count) representing the cumulative MAF distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (float,int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The epistasis model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>ExtensionalModel/ParametrizedModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.sim_id">
+<code class="sig-name descname">sim_id</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.sim_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer that represents the ID of the generated data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.corpus_id">
+<code class="sig-name descname">corpus_id</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.corpus_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer that represents the ID of the genotype corpus on top of which
+the data should be simulated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.pop">
+<code class="sig-name descname">pop</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the HAPMAP3 population for which the selected genotype corpus was
+generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.num_snps">
+<code class="sig-name descname">num_snps</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.num_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of SNPs in the simulated data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.num_inds">
+<code class="sig-name descname">num_inds</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.num_inds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individuals in the simulated data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.total_num_snps">
+<code class="sig-name descname">total_num_snps</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.total_num_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of SNPs in the selected genotype corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.total_num_inds">
+<code class="sig-name descname">total_num_inds</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.total_num_inds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of individuals in the selected genotype corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.biased_distr">
+<code class="sig-name descname">biased_distr</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.biased_distr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters of biased observed phenotype distribution. If empty, no observation bias is applied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.phenotype">
+<code class="sig-name descname">phenotype</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.phenotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array that stores the generated phenotypes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.disease_snps">
+<code class="sig-name descname">disease_snps</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.disease_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of positions of the selected disease SNPs in self.snps and self.genotype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.noise_maf_range">
+<code class="sig-name descname">noise_maf_range</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.noise_maf_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected noise SNPs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float,float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.disease_maf_range">
+<code class="sig-name descname">disease_maf_range</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.disease_maf_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected disease SNPs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float,float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.epsilon">
+<code class="sig-name descname">epsilon</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.epsilon" title="Permalink to this definition">¶</a></dt>
+<dd><p>A small positive real used for comparing floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.compress">
+<code class="sig-name descname">compress</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.compress" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the simulated data is compressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.data_simulator.DataSimulator.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">sim_id</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">model</em>, <em class="sig-param">num_snps</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">disease_snps</em>, <em class="sig-param">biased_distr</em>, <em class="sig-param">noise_maf_range</em>, <em class="sig-param">disease_maf_range</em>, <em class="sig-param">seed</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialized DataSimulator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim_id</strong> (<em>int</em>) – An integer that represents the ID of the generated data.</p></li>
+<li><p><strong>corpus_id</strong> (<em>int</em>) – An integer that represents the ID of the genotype corpus on top of which
+the data should be simulated.</p></li>
+<li><p><strong>pop</strong> (<em>str</em>) – A string representing the HAPMAP3 population for which the selected genotype corpus was
+generated.</p></li>
+<li><p><strong>model</strong> (<em>str</em>) – Path to an INI or an XML file containing the epistasis model specification.</p></li>
+<li><p><strong>num_snps</strong> (<em>int</em>) – The number of SNPs in the simulated data.</p></li>
+<li><p><strong>num_inds</strong> (<em>int</em>) – The number of individuals in the simulated data.</p></li>
+<li><p><strong>disease_snps</strong> (<em>list of int</em>) – A list the disease SNPs’ position in the selected genotype corpus. If not empty, its size must match the size of the model.</p></li>
+<li><p><strong>biased_distr</strong> (<em>list of float</em>) – Parameters of biased observed phenotype distribution. If empty, no observation bias is applied.</p></li>
+<li><p><strong>noise_maf_range</strong> (<em>float</em><em>,</em><em>float</em>) – A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected noise SNPs.</p></li>
+<li><p><strong>disease_maf_range</strong> (<em>float</em><em>,</em><em>float</em>) – A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected disease SNPs.</p></li>
+<li><p><strong>seed</strong> (<em>int/None</em>) – The seed for numpy.random (possibly None).</p></li>
+<li><p><strong>compress</strong> (<em>bool</em>) – If True, the simulated data is compressed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.data_simulator.DataSimulator.dump_simulated_data">
+<code class="sig-name descname">dump_simulated_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.dump_simulated_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dumps the simulated data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.data_simulator.DataSimulator.generate_phenotype">
+<code class="sig-name descname">generate_phenotype</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.generate_phenotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the phenotype and adjusts the number of individuals.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.data_simulator.DataSimulator.sample_snps">
+<code class="sig-name descname">sample_snps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.sample_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Samples the SNPs and the disease SNP set based on the MAFs.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-utils.genotype_corpus_generator">
+<span id="the-module-utils-genotype-corpus-generator-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.genotype_corpus_generator.py</span></code><a class="headerlink" href="#module-utils.genotype_corpus_generator" title="Permalink to this headline">¶</a></h2>
+<p>Contains definition of GenotypeCorpusGenerator class.</p>
+<dl class="class">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator">
+<em class="property">class </em><code class="sig-prename descclassname">utils.genotype_corpus_generator.</code><code class="sig-name descname">GenotypeCorpusGenerator</code><span class="sig-paren">(</span><em class="sig-param">chroms</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generates genotype corpus by calling HAPGEN2 and merging the obtained chromosome-wise genotypes.</p>
+<p>This class is employed by the script generate_genotype_corpus.py.
+Not intended for use outside of this script.
+Expects to be imported from EpiGEN’s root directory.</p>
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.hapmap_dir">
+<code class="sig-name descname">hapmap_dir</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.hapmap_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the HAPMAP3 directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.hapgen_dir">
+<code class="sig-name descname">hapgen_dir</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.hapgen_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the directory that contains the HAPGEN2 binary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.chroms">
+<code class="sig-name descname">chroms</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.chroms" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of integers between 1 and 22 representing the chromosomes
+for which HAPGEN2 generates the genotypes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.num_inds">
+<code class="sig-name descname">num_inds</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.num_inds" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer that represents the number of individuals for which
+genotypes are constructed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.num_snps">
+<code class="sig-name descname">num_snps</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.num_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer that represents the number of SNPs in the generated corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.corpus_id">
+<code class="sig-name descname">corpus_id</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.corpus_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer that represents the ID of the generated corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.pop">
+<code class="sig-name descname">pop</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the HAPMAP3 population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.dummy_disease_snps">
+<code class="sig-name descname">dummy_disease_snps</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.dummy_disease_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict that, for each chromosome, specifies the position
+of a SNP that can be passed to HAPGEN2 as argument of the -dl option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict of (int,int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.genotype">
+<code class="sig-name descname">genotype</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.genotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array with entries from range(3) that contains the merged genotypes.
+The rows represent SNPs, the columns represent individuals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.snps">
+<code class="sig-name descname">snps</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list with one entry for each row of self.genotype. The entries provide information
+about the corresponding SNP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (list of str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.mafs">
+<code class="sig-name descname">mafs</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array of floats representing the MAFs of all rows of self.genotype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.cum_mafs">
+<code class="sig-name descname">cum_mafs</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.cum_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of pairs of the form (MAF,count) representing the cumulative MAF distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (float,int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.compress">
+<code class="sig-name descname">compress</code><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.compress" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the generated corpus is compressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">chroms</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes GenotypeCorpusGenerator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chroms</strong> (<em>list of int</em>) – A list of integers between 1 and 22 representing the chroms for which
+HAPGEN2 should be called. Duplicates are ignored.</p></li>
+<li><p><strong>num_inds</strong> (<em>int</em>) – An integer representing the number of individuals for which genotypes should
+be constructed.</p></li>
+<li><p><strong>corpus_id</strong> (<em>int</em>) – An integer that represents the ID of the generated corpus.</p></li>
+<li><p><strong>compress</strong> (<em>bool</em>) – If True, the generated corpus is compressed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.call_hapgen2">
+<code class="sig-name descname">call_hapgen2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.call_hapgen2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls HAPGEN2 to generate genotypes for all chromosomes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.compute_mafs">
+<code class="sig-name descname">compute_mafs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.compute_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes MAFs for all SNPs contained in self.genotype.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.dump_corpus">
+<code class="sig-name descname">dump_corpus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.dump_corpus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dumps the generated corpus to zipped JSON files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_generator.GenotypeCorpusGenerator.merge_hapgen2_output">
+<code class="sig-name descname">merge_hapgen2_output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_generator.GenotypeCorpusGenerator.merge_hapgen2_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merges the output of HAPGEN2.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-utils.genotype_corpus_merger">
+<span id="the-module-utils-genotype-corpus-merger-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.genotype_corpus_merger.py</span></code><a class="headerlink" href="#module-utils.genotype_corpus_merger" title="Permalink to this headline">¶</a></h2>
+<p>Contains definition of GenotypeCorpusMerger class.</p>
+<dl class="class">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger">
+<em class="property">class </em><code class="sig-prename descclassname">utils.genotype_corpus_merger.</code><code class="sig-name descname">GenotypeCorpusMerger</code><span class="sig-paren">(</span><em class="sig-param">corpus_ids</em>, <em class="sig-param">pops</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">axis</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Merges pre-computed genotype corpora.</p>
+<p>This class is employed by the script generate_genotype_corpus.py.
+Not intended for use outside of this script.
+Expects to be imported from EpiGEN’s root directory.</p>
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.corpus_ids">
+<code class="sig-name descname">corpus_ids</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.corpus_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of integers that represents the IDs of the corpora that should be merged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.pops">
+<code class="sig-name descname">pops</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.pops" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of strings representing the HAPMAP3 population codes of the corpora that should be merged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.corpus_id">
+<code class="sig-name descname">corpus_id</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.corpus_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer that represents the ID of the generated corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.pop">
+<code class="sig-name descname">pop</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the HAPMAP3 population code of the merged corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.genotype">
+<code class="sig-name descname">genotype</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.genotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array with entries from range(3) that contains the merged genotypes.
+The rows represent SNPs, the columns represent individuals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.snps">
+<code class="sig-name descname">snps</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list with one entry for each row of self.genotype. The entries provide information
+about the corresponding SNP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (list of str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.mafs">
+<code class="sig-name descname">mafs</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array of floats representing the MAFs of all rows of self.genotype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.cum_mafs">
+<code class="sig-name descname">cum_mafs</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.cum_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of pairs of the form (MAF,count) representing the cumulative MAF distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (float,int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.axis">
+<code class="sig-name descname">axis</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer representing the axis of the merge (0 for merge along SNPs, 1 for merge along individuals).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.num_snps">
+<code class="sig-name descname">num_snps</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.num_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of SNPs in merged corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.num_inds">
+<code class="sig-name descname">num_inds</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.num_inds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of individuals in merged corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.compress">
+<code class="sig-name descname">compress</code><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.compress" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the merged corpus is compressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">corpus_ids</em>, <em class="sig-param">pops</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">axis</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes GenotypeCorpusGenerator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>corpus_ids</strong> (<em>list of int</em>) – A list of integers that represents the IDs of the corpora that should be merged.</p></li>
+<li><p><strong>pop</strong> (<em>str</em>) – A list of strings representing the HAPMAP3 population codes of the corpora that should be merged.</p></li>
+<li><p><strong>corpus_id</strong> (<em>int</em>) – An integer that represents the ID of the generated corpus.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – An integer representing the axis of the merge (0 for merge along SNPs, 1 for merge along individuals)</p></li>
+<li><p><strong>compress</strong> (<em>bool</em>) – If True, the merged corpus is compressed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.compute_mafs">
+<code class="sig-name descname">compute_mafs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.compute_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes MAFs for all SNPs contained in self.genotype.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.dump_corpus">
+<code class="sig-name descname">dump_corpus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.dump_corpus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dumps the generated corpus to zipped JSON files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.genotype_corpus_merger.GenotypeCorpusMerger.merge_corpora">
+<code class="sig-name descname">merge_corpora</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.genotype_corpus_merger.GenotypeCorpusMerger.merge_corpora" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-utils.extensional_model">
+<span id="the-module-utils-extensional-model-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.extensional_model.py</span></code><a class="headerlink" href="#module-utils.extensional_model" title="Permalink to this headline">¶</a></h2>
+<p>Contains definition of ExtensionalModel class.</p>
+<dl class="class">
+<dt id="utils.extensional_model.ExtensionalModel">
+<em class="property">class </em><code class="sig-prename descclassname">utils.extensional_model.</code><code class="sig-name descname">ExtensionalModel</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.extensional_model.ExtensionalModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an extensionally defined epistasis model.</p>
+<p>Extensional models can be used to model binary or non-binary categorical phenotypes, as well as quantitative phenotypes.
+This class is employed by the class DataSimulator.
+Not intended for use outside of this class.</p>
+<dl class="attribute">
+<dt id="utils.extensional_model.ExtensionalModel.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#utils.extensional_model.ExtensionalModel.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer greater equal 2 representing the size of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.extensional_model.ExtensionalModel.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#utils.extensional_model.ExtensionalModel.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array of dimension self.size representing the epistasis model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.extensional_model.ExtensionalModel.phenotype">
+<code class="sig-name descname">phenotype</code><a class="headerlink" href="#utils.extensional_model.ExtensionalModel.phenotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer greater equal 2 (for categorical phenotypes)
+or the string “quantitative” (for quantitative phenotypes).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int/str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.extensional_model.ExtensionalModel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.extensional_model.ExtensionalModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the ExtensionalModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>str</em>) – Path to an INI file that contains the full extensional definiton of an epistasis model.
+For categorical models, a discrete probability distribution must be provided for each possible genotype of dimension self.size.
+For quantitative models, the mean and the standard deviation of normal distributions must be provided.
+Examples can be found in the directory epigen/models/.</p></li>
+<li><p><strong>seed</strong> (<em>int/None</em>) – The seed for np.random (possibly None).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-utils.parametrized_model">
+<span id="the-module-utils-parametrized-model-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.parametrized_model.py</span></code><a class="headerlink" href="#module-utils.parametrized_model" title="Permalink to this headline">¶</a></h2>
+<p>Contains definition of ParametrizedModel class.</p>
+<dl class="class">
+<dt id="utils.parametrized_model.ParametrizedModel">
+<em class="property">class </em><code class="sig-prename descclassname">utils.parametrized_model.</code><code class="sig-name descname">ParametrizedModel</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a parametrized epistasis model.</p>
+<p>Parametrized models can be used to model binary categorical phenotypes.
+This class is employed by the class DataSimulator.
+Not intended for use outside of this class.</p>
+<dl class="attribute">
+<dt id="utils.parametrized_model.ParametrizedModel.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer greater equal 2 representing the size of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.parametrized_model.ParametrizedModel.baseline_alpha">
+<code class="sig-name descname">baseline_alpha</code><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel.baseline_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>A float greater 0 representing the baseline risk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.parametrized_model.ParametrizedModel.marginal_models">
+<code class="sig-name descname">marginal_models</code><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel.marginal_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>The marginal models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict of (int,callable)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.parametrized_model.ParametrizedModel.interaction_models">
+<code class="sig-name descname">interaction_models</code><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel.interaction_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interaction models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict of ((list of int),callable)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.parametrized_model.ParametrizedModel.phenotype">
+<code class="sig-name descname">phenotype</code><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel.phenotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>The inetger 2 (for dichotomous phenotypes) or the
+string “quantitative” (for quantitative phenotypes).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int/str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.parametrized_model.ParametrizedModel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.parametrized_model.ParametrizedModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the ExtensionalModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>str</em>) – Path to an XML file that contains the specification of the parametrized model.
+Examples can be found in the directory epigen/models/.</p></li>
+<li><p><strong>seed</strong> (<em>int/None</em>) – The seed for np.random (possibly None).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-utils.argparse_checks">
+<span id="the-module-utils-argparse-checks-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.argparse_checks.py</span></code><a class="headerlink" href="#module-utils.argparse_checks" title="Permalink to this headline">¶</a></h2>
+<p>Contains checks for arguments parsed by argparse.</p>
+<dl class="function">
+<dt id="utils.argparse_checks.check_interval">
+<code class="sig-prename descclassname">utils.argparse_checks.</code><code class="sig-name descname">check_interval</code><span class="sig-paren">(</span><em class="sig-param">argname</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.argparse_checks.check_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that the provided arguments specify a sub-interval of [0,1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argname</strong> (<em>str</em>) – Name of the argparse argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.argparse_checks.check_length">
+<code class="sig-prename descclassname">utils.argparse_checks.</code><code class="sig-name descname">check_length</code><span class="sig-paren">(</span><em class="sig-param">argname</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.argparse_checks.check_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that at least two arguments are provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argname</strong> (<em>str</em>) – Name of the argparse argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.argparse_checks.check_non_negative">
+<code class="sig-prename descclassname">utils.argparse_checks.</code><code class="sig-name descname">check_non_negative</code><span class="sig-paren">(</span><em class="sig-param">argname</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.argparse_checks.check_non_negative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that the provided argument is non-negative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argname</strong> (<em>str</em>) – Name of the argparse argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.argparse_checks.check_positive">
+<code class="sig-prename descclassname">utils.argparse_checks.</code><code class="sig-name descname">check_positive</code><span class="sig-paren">(</span><em class="sig-param">argname</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.argparse_checks.check_positive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that the provided argument is positive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argname</strong> (<em>str</em>) – Name of the argparse argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Implementation Details</a><ul>
+<li><a class="reference internal" href="#module-utils.data_simulator">The module <code class="docutils literal notranslate"><span class="pre">utils.data_simulator.py</span></code></a></li>
+<li><a class="reference internal" href="#module-utils.genotype_corpus_generator">The module <code class="docutils literal notranslate"><span class="pre">utils.genotype_corpus_generator.py</span></code></a></li>
+<li><a class="reference internal" href="#module-utils.genotype_corpus_merger">The module <code class="docutils literal notranslate"><span class="pre">utils.genotype_corpus_merger.py</span></code></a></li>
+<li><a class="reference internal" href="#module-utils.extensional_model">The module <code class="docutils literal notranslate"><span class="pre">utils.extensional_model.py</span></code></a></li>
+<li><a class="reference internal" href="#module-utils.parametrized_model">The module <code class="docutils literal notranslate"><span class="pre">utils.parametrized_model.py</span></code></a></li>
+<li><a class="reference internal" href="#module-utils.argparse_checks">The module <code class="docutils literal notranslate"><span class="pre">utils.argparse_checks.py</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="merge_genotype_corpora.html"
+                        title="previous chapter">The script <code class="docutils literal notranslate"><span class="pre">merge_genotype_corpora.py</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="merge_genotype_corpora.html" title="The script merge_genotype_corpora.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Tim Kacprowski, Paolo Tieri.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

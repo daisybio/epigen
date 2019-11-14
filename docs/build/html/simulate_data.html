@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>The script simulate_data.py &#8212; EpiGEN  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The script generate_genotype_corpus.py" href="generate_genotype_corpus.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generate_genotype_corpus.html" title="The script generate_genotype_corpus.py"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-simulate_data">
+<span id="the-script-simulate-data-py"></span><h1>The script <code class="docutils literal notranslate"><span class="pre">simulate_data.py</span></code><a class="headerlink" href="#module-simulate_data" title="Permalink to this headline">¶</a></h1>
+<p>This script constitutes the main user interface of EpiGEN – run it, to simulate epistasis data.</p>
+<p>This script has to be run on top of a pre-computed genotype corpus. For each population code <code class="docutils literal notranslate"><span class="pre">&lt;POP&gt;</span></code>
+and each chromosome <code class="docutils literal notranslate"><span class="pre">&lt;CHROM&gt;</span></code>, EpiGEN contains a pre-computed corpus for 10000 individuals. These corpora
+can be selected by running the script with the options <code class="docutils literal notranslate"><span class="pre">--corpus-id</span> <span class="pre">&lt;CRHOM&gt;</span> <span class="pre">--pop</span> <span class="pre">&lt;POP&gt;</span></code>.
+You can also use your own corpora – simply run the script <code class="docutils literal notranslate"><span class="pre">generate_genotype_corpus.py</span></code> before running this script.</p>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">simulate_data</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">required</span> <span class="n">arguments</span><span class="p">]</span> <span class="p">[</span><span class="n">optional</span> <span class="n">arguments</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl>
+<dt><strong>Required Arguments:</strong></dt><dd><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">--corpus-id</span> <span class="pre">CORPUS_ID</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>ID of selected genotype corpus.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Non-negative integers.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Together with <code class="docutils literal notranslate"><span class="pre">--pop</span></code>, this option selects the genotype corpus with the prefix <code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code>.
+If this corpus does not exist, the script raises an error. If necessary, run the script <code class="docutils literal notranslate"><span class="pre">./generate_genotype_corpus.py</span></code>
+to generate the desired corpus.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--pop</span> <span class="pre">POP</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>HAPMAP3 population code of selected genotype corpus.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, YRI, and MIX (for merged corpora).</p>
+</dd>
+<dt>Effect:</dt><dd><p>Together with <code class="docutils literal notranslate"><span class="pre">--corpus-id</span></code>, this option selects the genotype corpus with the prefix <code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code>.
+If this corpus does not exist, the script raises an error. If necessary, run the script <code class="docutils literal notranslate"><span class="pre">./generate_genotype_corpus.py</span></code>
+to generate the desired corpus.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--model</span> <span class="pre">MODEL</span></code></dt><dd><dl>
+<dt>Description:</dt><dd><p>Path to epistasis model given as INI or XML file.
+INI files are used to provide extensionally defined models, XML files specify parametrized models.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Strings ending in <code class="docutils literal notranslate"><span class="pre">.ini</span></code> or <code class="docutils literal notranslate"><span class="pre">.xml</span></code> that represent paths to existing model files.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Specifies the epistasis model used by the simulator.</p>
+</dd>
+<dt>Format of INI files:</dt><dd><p>For each genotype of length <code class="docutils literal notranslate"><span class="pre">&lt;size&gt;</span></code>, parameters of a Normal distribution must be provided.
+INI files for quantitative phenotypes have to be of the following format::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Model</span> <span class="n">Type</span><span class="p">]</span>
+<span class="n">size</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span>
+<span class="n">phenotype</span> <span class="o">=</span> <span class="n">quantitative</span>
+<span class="p">[</span><span class="n">Model</span> <span class="n">Definition</span><span class="p">]</span>
+<span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">mu</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="n">stdev</span><span class="o">&gt;</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">mu</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="n">stddev</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>For each genotype of length <code class="docutils literal notranslate"><span class="pre">&lt;size&gt;</span></code>, parameters of a categorical distribution must be provided
+INI files for categorical phenotypes have to be of the following format::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Model</span> <span class="n">Type</span><span class="p">]</span>
+<span class="n">size</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span>
+<span class="n">phenotype</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">c</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">Model</span> <span class="n">Definition</span><span class="p">]</span>
+<span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">p_1</span><span class="o">&gt;</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="o">&lt;</span><span class="n">p_c</span><span class="o">&gt;</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="mi">2</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">p_1</span><span class="o">&gt;</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="o">&lt;</span><span class="n">p_c</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt>Format of XML files:</dt><dd><p>XML files have to match the document type definition <code class="docutils literal notranslate"><span class="pre">./model/ParametrizedModel.dtd</span></code>.</p>
+</dd>
+<dt>Examples:</dt><dd><p>Cf. the files <code class="docutils literal notranslate"><span class="pre">./model/ext_model.ini</span></code> and <code class="docutils literal notranslate"><span class="pre">./model/param_model.xml</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--snps</span> <span class="pre">SNPS</span></code>:</dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Number of SNPs in simulated data.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Positive integers. If larger than the number of SNPs in the selected corpus, it is lowered to this number.
+Should be set to a number that is significantly smaller than the number of SNPs in the selected corpus,
+because otherwise, EpiGEN’s subsampling techniques have no effect.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Determines how many SNPs from the selected corpus are included in the simulated data.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--inds</span> <span class="pre">INDS</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Number of individuals in simulated data.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Positive integers. If larger than the number of individuals in the selected corpus, it is lowered to this number.
+Should be set to a number that is significantly smaller than the number of individuals in the selected corpus,
+because otherwise, EpiGEN’s subsampling techniques have no effect.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Determines how many individuals from the selected corpus are included in the simulated data.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--sim-id</span> <span class="pre">SIM_ID</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>ID of simulated data.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Non-negative integers.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Together with the options <code class="docutils literal notranslate"><span class="pre">--corpus-id</span></code> and <code class="docutils literal notranslate"><span class="pre">--pop</span></code>, this options determines the prefix <code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code>
+of the files that contain the simulated data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><strong>Optional Arguments:</strong></dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--global-maf-range</span> <span class="pre">LB</span> <span class="pre">UB</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Range of acceptable MAFs for noise SNPs.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Floats <code class="docutils literal notranslate"><span class="pre">&lt;LB&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;UB&gt;</span></code> with <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">&lt;LB&gt;</span> <span class="pre">&lt;</span> <span class="pre">&lt;UB&gt;</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code>.</p>
+</dd>
+<dt>Default:</dt><dd><p>[0,1]</p>
+</dd>
+<dt>Effect:</dt><dd><p>All SNPs except for the disease SNPs are randomly sampled from those SNPs in the corpus whose MAFs
+fall into the specified range. If the range is too narrow, it is dynamically extended at runtime.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--biased-distr</span> <span class="pre">PARAM</span> <span class="pre">[PARAM</span> <span class="pre">...]</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Biased target distribution for simulated phenotypes.</p>
+</dd>
+<dt>Accepted Arguments for Quantitative Phenotypes:</dt><dd><p>A white-space separated list of floats of length 2 whose elements represent the mean (first element) and
+standard deviation (second element) of a Normal distribution.</p>
+</dd>
+<dt>Accepted Arguments for Categorical Phenotypes:</dt><dd><p>A white-space separated list of floats of length <code class="docutils literal notranslate"><span class="pre">&lt;c&gt;</span></code> whose entries represent the probabilities of the <code class="docutils literal notranslate"><span class="pre">&lt;c&gt;</span></code>
+categories.</p>
+</dd>
+<dt>Effect:</dt><dd><p>If provided, the individuals are subsampled after generating the phenotypes such that the obtained phenotype distribution
+matches the biased distribution. This option can hence be used to model observation bias.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--seed</span> <span class="pre">SEED</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Seed for numpy.random.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Non-negative integers.</p>
+</dd>
+<dt>Effect:</dt><dd><p>If provided, the simulator always generates the same data given the same input.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--compress</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Compress the generated output files.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>None.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Determines the suffix <code class="docutils literal notranslate"><span class="pre">&lt;SUFFIX&gt;</span></code> of the generated files. If provided, <code class="docutils literal notranslate"><span class="pre">&lt;SUFFIX&gt;</span></code> is set to <code class="docutils literal notranslate"><span class="pre">json.bz2</span></code>.
+Otherwise, it is set to <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-h,</span> <span class="pre">--help</span></code></dt><dd><dl class="simple">
+<dt>Effect:</dt><dd><p>Show help message and exit.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><strong>Optional Mutually Exclusive Arguments:</strong></dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--disease-snps</span> <span class="pre">SNP</span> <span class="pre">[SNP</span> <span class="pre">...]</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Position of disease SNPs in selected genotype corpus.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>White space separated list of non-negative integers whose length matches the size of the model specified
+via the option <code class="docutils literal notranslate"><span class="pre">--model</span></code>. All integers must be smaller than the number of SNPs in the selected corpus.</p>
+</dd>
+<dt>Effect:</dt><dd><p>If provided, the selected SNPs form the disease SNP set employed by the simulator.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--disease-maf-range</span> <span class="pre">LB</span> <span class="pre">UB</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Range of acceptable MAFs for disease SNPs.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Floats <code class="docutils literal notranslate"><span class="pre">&lt;LB&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;UB&gt;</span></code> with <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">&lt;LB&gt;</span> <span class="pre">&lt;</span> <span class="pre">&lt;UB&gt;</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code>.</p>
+</dd>
+<dt>Default:</dt><dd><p>[0,1]</p>
+</dd>
+<dt>Effect:</dt><dd><p>Unless <code class="docutils literal notranslate"><span class="pre">--disease-snps</span></code> is provided, the disease SNPs are randomly sampled from those SNPs in the corpus whose MAFs
+fall into the specified range. If the range is too narrow, it is dynamically extended at runtime.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><strong>Output:</strong></dt><dd><dl class="simple">
+<dt><em>Genotype Data:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_genotype.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[[G_0_0</span> <span class="pre">...</span> <span class="pre">G_0_&lt;INDS-1&gt;]</span> <span class="pre">...</span> <span class="pre">[G_&lt;SNPS-1&gt;_0</span> <span class="pre">...</span> <span class="pre">G_&lt;SNPS-1&gt;_&lt;INDS-1&gt;]]</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">G_S_I</span></code> encodes the number of minor alleles of the individual with index <code class="docutils literal notranslate"><span class="pre">I</span></code> at the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>Phenotype Data:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_phenotype.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[P_0</span> <span class="pre">...</span> <span class="pre">P_&lt;INDS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">P_I</span></code> encodes the phenotype of
+the individual with index <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>SNPs:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_snps.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[INFO_0</span> <span class="pre">...</span> <span class="pre">INFO_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">INFO_S</span></code> contains the following
+information about the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>: RS identifier, chromosome number, position on chromosome, major allele, minor allele.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>MAFs:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_mafs.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[MAF_0</span> <span class="pre">...</span> <span class="pre">MAF_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">MAF_S</span></code> encodes the MAF of
+the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>Disease SNPs:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_disease_snps.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[S_0</span> <span class="pre">...</span> <span class="pre">S_&lt;MODELSIZE-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">S_POS</span></code> encodes the index of the SNP at position <code class="docutils literal notranslate"><span class="pre">POS</span></code>
+in the epistasis model.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="function">
+<dt id="simulate_data.run_script">
+<code class="sig-prename descclassname">simulate_data.</code><code class="sig-name descname">run_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simulate_data.run_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the script.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generate_genotype_corpus.html"
+                        title="next chapter">The script <code class="docutils literal notranslate"><span class="pre">generate_genotype_corpus.py</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/simulate_data.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generate_genotype_corpus.html" title="The script generate_genotype_corpus.py"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Tim Kacprowski, Paolo Tieri.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>

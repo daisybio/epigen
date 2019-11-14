@@ -1,0 +1,10 @@
+epigen
+======
+
+.. toctree::
+   :maxdepth: 4
+
+   generate_genotype_corpus
+   merge_genotype_corpora
+   simulate_data
+   utils

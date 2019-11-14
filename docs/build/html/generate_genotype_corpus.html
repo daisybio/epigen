@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>The script generate_genotype_corpus.py &#8212; EpiGEN  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The script merge_genotype_corpora.py" href="merge_genotype_corpora.html" />
+    <link rel="prev" title="The script simulate_data.py" href="simulate_data.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="merge_genotype_corpora.html" title="The script merge_genotype_corpora.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="simulate_data.html" title="The script simulate_data.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-generate_genotype_corpus">
+<span id="the-script-generate-genotype-corpus-py"></span><h1>The script <code class="docutils literal notranslate"><span class="pre">generate_genotype_corpus.py</span></code><a class="headerlink" href="#module-generate_genotype_corpus" title="Permalink to this headline">¶</a></h1>
+<p>Run this script to generate genotype corpora.</p>
+<p>For each HAPMAP3 population and each chromosome, EpiGEN comes with a pre-computed corpus for 10000 individuals.
+The corpora for chromosome &lt;CHROM&gt; have corpus ID &lt;CHROM&gt; and can be used by <code class="docutils literal notranslate"><span class="pre">simulate_data.py</span></code> right away.
+If you want to simulate data on top of your own corpora, run this script.</p>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">generate_genotype_corpus</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="n">required</span> <span class="n">arguments</span><span class="p">]</span> <span class="p">[</span><span class="n">optional</span> <span class="n">arguments</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Requried Arguments:</strong></dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--corpus-id</span> <span class="pre">CORPUS_ID</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>ID of generated genotype corpus.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Non-negative integers. If contained in range(1,23), the pre-computed corpora shipped with EpiGEN are overwritten.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Together with <code class="docutils literal notranslate"><span class="pre">--pop</span></code>, this option determines the prefix <code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code> of the files
+that contain the generated corpus.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--pop</span> <span class="pre">POP</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>HAPMAP3 population code of generated genotype corpus.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>ASW, CEU, CEU+TSI, CHD, GIH, JPT+CHB, LWK, MEX, MKK, TSI, and YRI.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Together with <code class="docutils literal notranslate"><span class="pre">--pop</span></code>, this option determines the prefix <code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code> of the files
+that contain the generated corpus.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--inds</span> <span class="pre">INDS</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Number of individuals in the corpus.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Positive integers.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Determines how many individuals are contained in the generated corpus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><strong>Optional Arguments:</strong></dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--chroms</span> <span class="pre">CHROM</span> <span class="pre">[CHROM</span> <span class="pre">...]</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>List of chromosomes for which the corpus should be generated.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>A white-space separated list of integers between 1 and 22.</p>
+</dd>
+<dt>Default:</dt><dd><p>[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]</p>
+</dd>
+<dt>Effect:</dt><dd><p>For each selected chromosome, a corpus is generated by calling HAPGEN2 without disease SNPs.
+The final corpus is then obtained by concatenating the corpora.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--compress</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>Compress the generated output files.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>None.</p>
+</dd>
+<dt>Effect:</dt><dd><p>Determines the suffix <code class="docutils literal notranslate"><span class="pre">&lt;SUFFIX&gt;</span></code> of the generated files. If provided, <code class="docutils literal notranslate"><span class="pre">&lt;SUFFIX&gt;</span></code> is set to <code class="docutils literal notranslate"><span class="pre">json.bz2</span></code>.
+Otherwise, it is set to <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-h,</span> <span class="pre">--help</span></code></dt><dd><dl class="simple">
+<dt>Effect:</dt><dd><p>Show help message and exit.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><strong>Output:</strong></dt><dd><dl class="simple">
+<dt><em>Genotype Data:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;_genotype.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Compressed JSON file of the form <code class="docutils literal notranslate"><span class="pre">[[G_0_0</span> <span class="pre">...</span> <span class="pre">G_0_&lt;INDS-1&gt;]</span> <span class="pre">...</span> <span class="pre">[G_&lt;SNPS-1&gt;_0</span> <span class="pre">...</span> <span class="pre">G_&lt;SNPS-1&gt;_&lt;INDS-1&gt;]]</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">G_S_I</span></code> encodes the number of minor alleles of the individual with index <code class="docutils literal notranslate"><span class="pre">I</span></code> at the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>SNPs:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;_snps.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Compressed JSON file of the form <code class="docutils literal notranslate"><span class="pre">[INFO_0</span> <span class="pre">...</span> <span class="pre">INFO_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">INFO_S</span></code> contains the following
+information about the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>: RS identifier, chromosome number, position on chromosome, major allele, minor allele.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>MAFs:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;_mafs.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Compressed JSON file of the form <code class="docutils literal notranslate"><span class="pre">[MAF_0</span> <span class="pre">...</span> <span class="pre">MAF_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">MAF_S</span></code> encodes the MAF of
+the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>Cumulative MAF distribution:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;_cum_mafs.&lt;SUFFIX&gt;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Compressed ordered JSON file of the form <code class="docutils literal notranslate"><span class="pre">[[MAF_0</span> <span class="pre">COUNT_0]</span> <span class="pre">...</span> <span class="pre">[MAF_&lt;NMAFS-1&gt;</span> <span class="pre">COUNT_&lt;NMAFS-1&gt;]]</span></code>, where <code class="docutils literal notranslate"><span class="pre">COUNT_POS</span></code> encodes the
+number of SNPs is does not exceed <code class="docutils literal notranslate"><span class="pre">MAF_POS</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><em>Plot of Cumulative MAF distribution:</em></dt><dd><dl class="simple">
+<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./corpora/&lt;CORPUS_ID&gt;_&lt;POP&gt;_cum_mafs.pdf</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Plot of cumulative MAF distribution. Can be used to determine feasible ranges of MAFs passed to the options
+<code class="docutils literal notranslate"><span class="pre">--global-maf-range</span></code> and <code class="docutils literal notranslate"><span class="pre">--disease-maf-range</span></code> of the script <code class="docutils literal notranslate"><span class="pre">simulate_data.py</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="function">
+<dt id="generate_genotype_corpus.run_script">
+<code class="sig-prename descclassname">generate_genotype_corpus.</code><code class="sig-name descname">run_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#generate_genotype_corpus.run_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the script.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simulate_data.html"
+                        title="previous chapter">The script <code class="docutils literal notranslate"><span class="pre">simulate_data.py</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="merge_genotype_corpora.html"
+                        title="next chapter">The script <code class="docutils literal notranslate"><span class="pre">merge_genotype_corpora.py</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/generate_genotype_corpus.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="merge_genotype_corpora.html" title="The script merge_genotype_corpora.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="simulate_data.html" title="The script simulate_data.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Tim Kacprowski, Paolo Tieri.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>
