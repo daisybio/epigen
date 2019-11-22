@@ -72,7 +72,7 @@
 
 
 \title{EpiGEN: an epistasis simulation pipeline}
-\date{Nov 14, 2019}
+\date{Nov 22, 2019}
 \release{}
 \author{David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Paolo Tieri, and Tim Kacprowski}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -452,53 +452,62 @@ fall into the specified range. If the range is too narrow, it is dynamically ext
 \end{description}
 
 \item[{\sphinxstylestrong{Output:}}] \leavevmode\begin{description}
-\item[{\sphinxstyleemphasis{Genotype Data:}}] \leavevmode\begin{description}
-\item[{File:}] \leavevmode
-\sphinxcode{\sphinxupquote{./sim/\textless{}ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_genotype.\textless{}SUFFIX\textgreater{}}}
+\item[{\sphinxstyleemphasis{Output File:}}] \leavevmode\begin{description}
+\item[{Path:}] \leavevmode
+\sphinxcode{\sphinxupquote{./sim/\textless{}ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}.\textless{}SUFFIX\textgreater{}}}
+
+\item[{Format:}] \leavevmode
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{\{"genotype": \textless{}GENOTYPE\_DATA\textgreater{}, "phenotype": \textless{}PHENOTYPE\_DATA\textgreater{}, "snps": \textless{}SNP\_DATA\textgreater{}, "disease\_snps": \textless{}DISEASE\_SNP\_DATA\textgreater{}, "mafs": \textless{}MAF\_DATA\textgreater{}\}}}.
+
+\end{description}
+
+\item[{\sphinxcode{\sphinxupquote{\textless{}GENOTYPE\_DATA\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"genotype"}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0, ..., G\_0\_\textless{}INDS-1\textgreater{}{]} ... {[}G\_\textless{}SNPS-1\textgreater{}\_0, ..., G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
+JSON field of the form \sphinxcode{\sphinxupquote{{[}{[}G\_0\_0, ..., G\_0\_\textless{}INDS-1\textgreater{}{]} ... {[}G\_\textless{}SNPS-1\textgreater{}\_0, ..., G\_\textless{}SNPS-1\textgreater{}\_\textless{}INDS-1\textgreater{}{]}{]}}},
 where \sphinxcode{\sphinxupquote{G\_S\_I}} encodes the number of minor alleles of the individual with index \sphinxcode{\sphinxupquote{I}} at the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
 
-\item[{\sphinxstyleemphasis{Phenotype Data:}}] \leavevmode\begin{description}
-\item[{File:}] \leavevmode
-\sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_phenotype.\textless{}SUFFIX\textgreater{}}}
+\item[{\sphinxcode{\sphinxupquote{\textless{}PHENOTYPE\_DATA\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"phenotype"}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}P\_0, ..., P\_\textless{}INDS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{P\_I}} encodes the phenotype of
+JSON field of the form \sphinxcode{\sphinxupquote{{[}P\_0, ..., P\_\textless{}INDS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{P\_I}} encodes the phenotype of
 the individual with index \sphinxcode{\sphinxupquote{I}}.
 
 \end{description}
 
-\item[{\sphinxstyleemphasis{SNPs:}}] \leavevmode\begin{description}
-\item[{File:}] \leavevmode
-\sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_snps.\textless{}SUFFIX\textgreater{}}}
+\item[{\sphinxcode{\sphinxupquote{\textless{}SNP\_DATA\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"snps"}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}INFO\_0, ..., INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
+JSON field of the form \sphinxcode{\sphinxupquote{{[}INFO\_0, ..., INFO\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{INFO\_S}} contains the following
 information about the SNP with index \sphinxcode{\sphinxupquote{S}}: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
 
 \end{description}
 
-\item[{\sphinxstyleemphasis{MAFs:}}] \leavevmode\begin{description}
-\item[{File:}] \leavevmode
-\sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_mafs.\textless{}SUFFIX\textgreater{}}}
+\item[{\sphinxcode{\sphinxupquote{\textless{}DISEASE\_SNP\_DATA\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"disease\_snps"}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}MAF\_0, ..., MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
-the SNP with index \sphinxcode{\sphinxupquote{S}}.
+JSON field of the form \sphinxcode{\sphinxupquote{{[}S\_0, ..., S\_\textless{}MODELSIZE-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{S\_POS}} encodes the index of the SNP at position \sphinxcode{\sphinxupquote{POS}}
+in the epistasis model.
 
 \end{description}
 
-\item[{\sphinxstyleemphasis{Disease SNPs:}}] \leavevmode\begin{description}
-\item[{File:}] \leavevmode
-\sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}\_disease\_snps.\textless{}SUFFIX\textgreater{}}}
+\item[{\sphinxcode{\sphinxupquote{\textless{}MAF\_DATA\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"mafs"}}
 
 \item[{Content and Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{{[}S\_0, ..., S\_\textless{}MODELSIZE-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{S\_POS}} encodes the index of the SNP at position \sphinxcode{\sphinxupquote{POS}}
-in the epistasis model.
+JSON field of the form \sphinxcode{\sphinxupquote{{[}MAF\_0, ..., MAF\_\textless{}SNPS-1\textgreater{}{]}}}, where \sphinxcode{\sphinxupquote{MAF\_S}} encodes the MAF of
+the SNP with index \sphinxcode{\sphinxupquote{S}}.
 
 \end{description}
 

@@ -1,9 +1,9 @@
 \indexentry{simulate\_data (module)@\spxentry{simulate\_data}\spxextra{module}|hyperpage}{3}
 \indexentry{run\_script() (in module simulate\_data)@\spxentry{run\_script()}\spxextra{in module simulate\_data}|hyperpage}{6}
-\indexentry{generate\_genotype\_corpus (module)@\spxentry{generate\_genotype\_corpus}\spxextra{module}|hyperpage}{6}
+\indexentry{generate\_genotype\_corpus (module)@\spxentry{generate\_genotype\_corpus}\spxextra{module}|hyperpage}{7}
 \indexentry{run\_script() (in module generate\_genotype\_corpus)@\spxentry{run\_script()}\spxextra{in module generate\_genotype\_corpus}|hyperpage}{8}
 \indexentry{merge\_genotype\_corpora (module)@\spxentry{merge\_genotype\_corpora}\spxextra{module}|hyperpage}{8}
-\indexentry{run\_script() (in module merge\_genotype\_corpora)@\spxentry{run\_script()}\spxextra{in module merge\_genotype\_corpora}|hyperpage}{9}
+\indexentry{run\_script() (in module merge\_genotype\_corpora)@\spxentry{run\_script()}\spxextra{in module merge\_genotype\_corpora}|hyperpage}{10}
 \indexentry{utils.data\_simulator (module)@\spxentry{utils.data\_simulator}\spxextra{module}|hyperpage}{10}
 \indexentry{DataSimulator (class in utils.data\_simulator)@\spxentry{DataSimulator}\spxextra{class in utils.data\_simulator}|hyperpage}{10}
 \indexentry{genotype (utils.data\_simulator.DataSimulator attribute)@\spxentry{genotype}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{10}
@@ -14,7 +14,7 @@
 \indexentry{sim\_id (utils.data\_simulator.DataSimulator attribute)@\spxentry{sim\_id}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{10}
 \indexentry{corpus\_id (utils.data\_simulator.DataSimulator attribute)@\spxentry{corpus\_id}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{10}
 \indexentry{pop (utils.data\_simulator.DataSimulator attribute)@\spxentry{pop}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{10}
-\indexentry{num\_snps (utils.data\_simulator.DataSimulator attribute)@\spxentry{num\_snps}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{10}
+\indexentry{num\_snps (utils.data\_simulator.DataSimulator attribute)@\spxentry{num\_snps}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{11}
 \indexentry{num\_inds (utils.data\_simulator.DataSimulator attribute)@\spxentry{num\_inds}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{11}
 \indexentry{total\_num\_snps (utils.data\_simulator.DataSimulator attribute)@\spxentry{total\_num\_snps}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{11}
 \indexentry{total\_num\_inds (utils.data\_simulator.DataSimulator attribute)@\spxentry{total\_num\_inds}\spxextra{utils.data\_simulator.DataSimulator attribute}|hyperpage}{11}
@@ -34,8 +34,8 @@
 \indexentry{hapmap\_dir (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{hapmap\_dir}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{12}
 \indexentry{hapgen\_dir (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{hapgen\_dir}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{12}
 \indexentry{chroms (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{chroms}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{12}
-\indexentry{num\_inds (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{num\_inds}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{12}
-\indexentry{num\_snps (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{num\_snps}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{12}
+\indexentry{num\_inds (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{num\_inds}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{13}
+\indexentry{num\_snps (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{num\_snps}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{13}
 \indexentry{corpus\_id (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{corpus\_id}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{13}
 \indexentry{pop (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{pop}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{13}
 \indexentry{dummy\_disease\_snps (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{dummy\_disease\_snps}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{13}
@@ -46,9 +46,9 @@
 \indexentry{compress (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute)@\spxentry{compress}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}|hyperpage}{13}
 \indexentry{\_\_init\_\_() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{\_\_init\_\_()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{13}
 \indexentry{call\_hapgen2() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{call\_hapgen2()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{13}
-\indexentry{compute\_mafs() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{compute\_mafs()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{13}
-\indexentry{dump\_corpus() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{dump\_corpus()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{13}
-\indexentry{merge\_hapgen2\_output() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{merge\_hapgen2\_output()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{13}
+\indexentry{compute\_mafs() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{compute\_mafs()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{14}
+\indexentry{dump\_corpus() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{dump\_corpus()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{14}
+\indexentry{merge\_hapgen2\_output() (utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method)@\spxentry{merge\_hapgen2\_output()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}|hyperpage}{14}
 \indexentry{utils.genotype\_corpus\_merger (module)@\spxentry{utils.genotype\_corpus\_merger}\spxextra{module}|hyperpage}{14}
 \indexentry{GenotypeCorpusMerger (class in utils.genotype\_corpus\_merger)@\spxentry{GenotypeCorpusMerger}\spxextra{class in utils.genotype\_corpus\_merger}|hyperpage}{14}
 \indexentry{corpus\_ids (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{corpus\_ids}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{14}
@@ -60,8 +60,8 @@
 \indexentry{mafs (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{mafs}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{14}
 \indexentry{cum\_mafs (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{cum\_mafs}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{14}
 \indexentry{axis (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{axis}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{14}
-\indexentry{num\_snps (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{num\_snps}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{14}
-\indexentry{num\_inds (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{num\_inds}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{14}
+\indexentry{num\_snps (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{num\_snps}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{15}
+\indexentry{num\_inds (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{num\_inds}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{15}
 \indexentry{compress (utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute)@\spxentry{compress}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}|hyperpage}{15}
 \indexentry{\_\_init\_\_() (utils.genotype\_corpus\_merger.GenotypeCorpusMerger method)@\spxentry{\_\_init\_\_()}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger method}|hyperpage}{15}
 \indexentry{compute\_mafs() (utils.genotype\_corpus\_merger.GenotypeCorpusMerger method)@\spxentry{compute\_mafs()}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger method}|hyperpage}{15}
@@ -72,7 +72,7 @@
 \indexentry{size (utils.extensional\_model.ExtensionalModel attribute)@\spxentry{size}\spxextra{utils.extensional\_model.ExtensionalModel attribute}|hyperpage}{15}
 \indexentry{model (utils.extensional\_model.ExtensionalModel attribute)@\spxentry{model}\spxextra{utils.extensional\_model.ExtensionalModel attribute}|hyperpage}{15}
 \indexentry{phenotype (utils.extensional\_model.ExtensionalModel attribute)@\spxentry{phenotype}\spxextra{utils.extensional\_model.ExtensionalModel attribute}|hyperpage}{15}
-\indexentry{\_\_init\_\_() (utils.extensional\_model.ExtensionalModel method)@\spxentry{\_\_init\_\_()}\spxextra{utils.extensional\_model.ExtensionalModel method}|hyperpage}{15}
+\indexentry{\_\_init\_\_() (utils.extensional\_model.ExtensionalModel method)@\spxentry{\_\_init\_\_()}\spxextra{utils.extensional\_model.ExtensionalModel method}|hyperpage}{16}
 \indexentry{utils.parametrized\_model (module)@\spxentry{utils.parametrized\_model}\spxextra{module}|hyperpage}{16}
 \indexentry{ParametrizedModel (class in utils.parametrized\_model)@\spxentry{ParametrizedModel}\spxextra{class in utils.parametrized\_model}|hyperpage}{16}
 \indexentry{size (utils.parametrized\_model.ParametrizedModel attribute)@\spxentry{size}\spxextra{utils.parametrized\_model.ParametrizedModel attribute}|hyperpage}{16}
@@ -83,6 +83,6 @@
 \indexentry{\_\_init\_\_() (utils.parametrized\_model.ParametrizedModel method)@\spxentry{\_\_init\_\_()}\spxextra{utils.parametrized\_model.ParametrizedModel method}|hyperpage}{16}
 \indexentry{utils.argparse\_checks (module)@\spxentry{utils.argparse\_checks}\spxextra{module}|hyperpage}{16}
 \indexentry{check\_interval() (in module utils.argparse\_checks)@\spxentry{check\_interval()}\spxextra{in module utils.argparse\_checks}|hyperpage}{16}
-\indexentry{check\_length() (in module utils.argparse\_checks)@\spxentry{check\_length()}\spxextra{in module utils.argparse\_checks}|hyperpage}{16}
+\indexentry{check\_length() (in module utils.argparse\_checks)@\spxentry{check\_length()}\spxextra{in module utils.argparse\_checks}|hyperpage}{17}
 \indexentry{check\_non\_negative() (in module utils.argparse\_checks)@\spxentry{check\_non\_negative()}\spxextra{in module utils.argparse\_checks}|hyperpage}{17}
 \indexentry{check\_positive() (in module utils.argparse\_checks)@\spxentry{check\_positive()}\spxextra{in module utils.argparse\_checks}|hyperpage}{17}

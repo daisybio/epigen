@@ -232,43 +232,50 @@ fall into the specified range. If the range is too narrow, it is dynamically ext
 </dl>
 </dd>
 <dt><strong>Output:</strong></dt><dd><dl class="simple">
-<dt><em>Genotype Data:</em></dt><dd><dl class="simple">
-<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_genotype.&lt;SUFFIX&gt;</span></code></p>
+<dt><em>Output File:</em></dt><dd><dl class="simple">
+<dt>Path:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;.&lt;SUFFIX&gt;</span></code></p>
 </dd>
-<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[[G_0_0,</span> <span class="pre">...,</span> <span class="pre">G_0_&lt;INDS-1&gt;]</span> <span class="pre">...</span> <span class="pre">[G_&lt;SNPS-1&gt;_0,</span> <span class="pre">...,</span> <span class="pre">G_&lt;SNPS-1&gt;_&lt;INDS-1&gt;]]</span></code>,
+<dt>Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">{&quot;genotype&quot;:</span> <span class="pre">&lt;GENOTYPE_DATA&gt;,</span> <span class="pre">&quot;phenotype&quot;:</span> <span class="pre">&lt;PHENOTYPE_DATA&gt;,</span> <span class="pre">&quot;snps&quot;:</span> <span class="pre">&lt;SNP_DATA&gt;,</span> <span class="pre">&quot;disease_snps&quot;:</span> <span class="pre">&lt;DISEASE_SNP_DATA&gt;,</span> <span class="pre">&quot;mafs&quot;:</span> <span class="pre">&lt;MAF_DATA&gt;}</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;GENOTYPE_DATA&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;genotype&quot;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>JSON field of the form <code class="docutils literal notranslate"><span class="pre">[[G_0_0,</span> <span class="pre">...,</span> <span class="pre">G_0_&lt;INDS-1&gt;]</span> <span class="pre">...</span> <span class="pre">[G_&lt;SNPS-1&gt;_0,</span> <span class="pre">...,</span> <span class="pre">G_&lt;SNPS-1&gt;_&lt;INDS-1&gt;]]</span></code>,
 where <code class="docutils literal notranslate"><span class="pre">G_S_I</span></code> encodes the number of minor alleles of the individual with index <code class="docutils literal notranslate"><span class="pre">I</span></code> at the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
 </dd>
 </dl>
 </dd>
-<dt><em>Phenotype Data:</em></dt><dd><dl class="simple">
-<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_phenotype.&lt;SUFFIX&gt;</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;PHENOTYPE_DATA&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;phenotype&quot;</span></code></p>
 </dd>
-<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[P_0,</span> <span class="pre">...,</span> <span class="pre">P_&lt;INDS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">P_I</span></code> encodes the phenotype of
+<dt>Content and Format:</dt><dd><p>JSON field of the form <code class="docutils literal notranslate"><span class="pre">[P_0,</span> <span class="pre">...,</span> <span class="pre">P_&lt;INDS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">P_I</span></code> encodes the phenotype of
 the individual with index <code class="docutils literal notranslate"><span class="pre">I</span></code>.</p>
 </dd>
 </dl>
 </dd>
-<dt><em>SNPs:</em></dt><dd><dl class="simple">
-<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_snps.&lt;SUFFIX&gt;</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;SNP_DATA&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;snps&quot;</span></code></p>
 </dd>
-<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[INFO_0,</span> <span class="pre">...,</span> <span class="pre">INFO_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">INFO_S</span></code> contains the following
+<dt>Content and Format:</dt><dd><p>JSON field of the form <code class="docutils literal notranslate"><span class="pre">[INFO_0,</span> <span class="pre">...,</span> <span class="pre">INFO_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">INFO_S</span></code> contains the following
 information about the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>: RS identifier, chromosome number, position on chromosome, major allele, minor allele.</p>
 </dd>
 </dl>
 </dd>
-<dt><em>MAFs:</em></dt><dd><dl class="simple">
-<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_mafs.&lt;SUFFIX&gt;</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;DISEASE_SNP_DATA&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;disease_snps&quot;</span></code></p>
 </dd>
-<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[MAF_0,</span> <span class="pre">...,</span> <span class="pre">MAF_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">MAF_S</span></code> encodes the MAF of
-the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
+<dt>Content and Format:</dt><dd><p>JSON field of the form <code class="docutils literal notranslate"><span class="pre">[S_0,</span> <span class="pre">...,</span> <span class="pre">S_&lt;MODELSIZE-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">S_POS</span></code> encodes the index of the SNP at position <code class="docutils literal notranslate"><span class="pre">POS</span></code>
+in the epistasis model.</p>
 </dd>
 </dl>
 </dd>
-<dt><em>Disease SNPs:</em></dt><dd><dl class="simple">
-<dt>File:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;_disease_snps.&lt;SUFFIX&gt;</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;MAF_DATA&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;mafs&quot;</span></code></p>
 </dd>
-<dt>Content and Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">[S_0,</span> <span class="pre">...,</span> <span class="pre">S_&lt;MODELSIZE-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">S_POS</span></code> encodes the index of the SNP at position <code class="docutils literal notranslate"><span class="pre">POS</span></code>
-in the epistasis model.</p>
+<dt>Content and Format:</dt><dd><p>JSON field of the form <code class="docutils literal notranslate"><span class="pre">[MAF_0,</span> <span class="pre">...,</span> <span class="pre">MAF_&lt;SNPS-1&gt;]</span></code>, where <code class="docutils literal notranslate"><span class="pre">MAF_S</span></code> encodes the MAF of
+the SNP with index <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p>
 </dd>
 </dl>
 </dd>

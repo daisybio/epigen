@@ -178,36 +178,43 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
             fall into the specified range. If the range is too narrow, it is dynamically extended at runtime.
 
 **Output:**
-    *Genotype Data:*
-        File: 
-            ``./sim/<ID>_<CORPUS_ID>_<POP>_genotype.<SUFFIX>``
+    *Output File:*
+        Path:
+            ``./sim/<ID>_<CORPUS_ID>_<POP>.<SUFFIX>``
+        Format:
+            (Compressed) JSON file of the form ``{"genotype": <GENOTYPE_DATA>, "phenotype": <PHENOTYPE_DATA>, "snps": <SNP_DATA>, "disease_snps": <DISEASE_SNP_DATA>, "mafs": <MAF_DATA>}``. 
+    ``<GENOTYPE_DATA>``
+        Key: 
+            ``"genotype"``
         Content and Format: 
-            (Compressed) JSON file of the form ``[[G_0_0, ..., G_0_<INDS-1>] ... [G_<SNPS-1>_0, ..., G_<SNPS-1>_<INDS-1>]]``,
+            JSON field of the form ``[[G_0_0, ..., G_0_<INDS-1>] ... [G_<SNPS-1>_0, ..., G_<SNPS-1>_<INDS-1>]]``,
             where ``G_S_I`` encodes the number of minor alleles of the individual with index ``I`` at the SNP with index ``S``.
-    *Phenotype Data:*
-        File: 
-            ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_phenotype.<SUFFIX>``
+    ``<PHENOTYPE_DATA>``
+        Key: 
+            ``"phenotype"``
         Content and Format: 
-            (Compressed) JSON file of the form ``[P_0, ..., P_<INDS-1>]``, where ``P_I`` encodes the phenotype of 
+            JSON field of the form ``[P_0, ..., P_<INDS-1>]``, where ``P_I`` encodes the phenotype of 
             the individual with index ``I``.
-    *SNPs:*
-        File:
-            ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_snps.<SUFFIX>``
+    ``<SNP_DATA>``
+        Key:
+            ``"snps"``
         Content and Format:
-            (Compressed) JSON file of the form ``[INFO_0, ..., INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
+            JSON field of the form ``[INFO_0, ..., INFO_<SNPS-1>]``, where ``INFO_S`` contains the following
             information about the SNP with index ``S``: RS identifier, chromosome number, position on chromosome, major allele, minor allele.
-    *MAFs:*
-        File:
-            ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_mafs.<SUFFIX>``
+    ``<DISEASE_SNP_DATA>``
+        Key: 
+            ``"disease_snps"``
         Content and Format:
-            (Compressed) JSON file of the form ``[MAF_0, ..., MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
-            the SNP with index ``S``.
-    *Disease SNPs:*
-        File: 
-            ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>_disease_snps.<SUFFIX>``
-        Content and Format:
-            (Compressed) JSON file of the form ``[S_0, ..., S_<MODELSIZE-1>]``, where ``S_POS`` encodes the index of the SNP at position ``POS``
+            JSON field of the form ``[S_0, ..., S_<MODELSIZE-1>]``, where ``S_POS`` encodes the index of the SNP at position ``POS``
             in the epistasis model.
+    ``<MAF_DATA>``
+        Key:
+            ``"mafs"``
+        Content and Format:
+            JSON field of the form ``[MAF_0, ..., MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
+            the SNP with index ``S``.
+    
+            
 
 """
 
@@ -223,11 +230,7 @@ def run_script():
     descr += "\nRun this script to simulate epistasis data.\n"
     descr += "\nusage: python3 %(prog)s [required arguments] [optional arguments]\n"
     epilo = "The simulated data can be found in the ./sim directory:\n"
-    epilo += "Genotype data:\t./sim/<ID>_<CORPUS_ID>_<POP>_genotype.<SUFFIX>\n"
-    epilo += "Phenotype data:\t./sim/<ID>_<CORPUS_ID>_<POP>_phenotype.<SUFFIX>\n"
-    epilo += "SNPs:\t\t./sim/<SIM_ID>_<CORPUS_ID>_<POP>_snps.<SUFFIX>\n"
-    epilo += "MAFs:\t\t./sim/<SIM_ID>_<CORPUS_ID>_<POP>_mafs.<SUFFIX>\n"
-    epilo += "Disease SNPs:\t./sim/<SIM_ID>_<CORPUS_ID>_<POP>_disease_snps.<SUFFIX>2\n"
+    epilo += "Generated data:\t./sim/<ID>_<CORPUS_ID>_<POP>.<SUFFIX>\n"
     epilo += "\n############################################################################\n"
     parser = argparse.ArgumentParser(description=descr,formatter_class=argparse.RawTextHelpFormatter, epilog=epilo, usage=argparse.SUPPRESS)
     required_args = parser.add_argument_group("required arguments")
@@ -261,11 +264,7 @@ def run_script():
     print("\n----------------------------------------------------------------------------\n")
     print("Finished simulation of epistasis data.")
     print("The generated data can be found in the ./sim directory:")
-    print("Genotype data:\t./sim/{}_{}_{}_genotype.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
-    print("Phenotype data:\t./sim/{}_{}_{}_phenotype.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
-    print("SNPs:\t\t./sim/{}_{}_{}_snps.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
-    print("MAFs:\t\t./sim/{}_{}_{}_mafs.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
-    print("Disease SNPs:\t./sim/{}_{}_{}_disease_snps.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
+    print("Generated data:\t./sim/{}_{}_{}.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
     print("\n############################################################################")
     
 if __name__ == "__main__":
