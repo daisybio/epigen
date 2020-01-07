@@ -18,10 +18,12 @@
 #   along with EpiGEN. If not, see <http://www.gnu.org/licenses/>.         #
 #                                                                          #
 #//////////////////////////////////////////////////////////////////////////#
+from builtins import isinstance
 
 """Contains checks for arguments parsed by argparse."""
 
 import argparse
+import collections.abc as abc
 
 def check_length(argname):
     """Ensures that at least two arguments are provided.
@@ -59,7 +61,12 @@ def check_positive(argname):
     """
     class CheckPositive(argparse.Action):
         def __call__(self, parser, args, value, option_string=None):
-            if not (0 < value):
+            if isinstance(value, abc.Iterable):
+                for item in value:
+                    if not (0 < item):
+                        msg="The argument \"{f}\" requires positive arguments.".format(f=argname)
+                        raise argparse.ArgumentTypeError(msg)
+            elif not (0 < value):
                 msg="The argument \"{f}\" requires a positive argument.".format(f=argname)
                 raise argparse.ArgumentTypeError(msg)
             setattr(args, self.dest, value)
@@ -73,7 +80,12 @@ def check_non_negative(argname):
     """
     class CheckNonNegative(argparse.Action):
         def __call__(self, parser, args, value, option_string=None):
-            if not (0 <= value):
+            if isinstance(value, abc.Iterable):
+                for item in value:
+                    if not (0 <= item):
+                        msg="The argument \"{f}\" requires non-negative arguments.".format(f=argname)
+                        raise argparse.ArgumentTypeError(msg)
+            elif not (0 <= value):
                 msg="The argument \"{f}\" requires a non-negative argument.".format(f=argname)
                 raise argparse.ArgumentTypeError(msg)
             setattr(args, self.dest, value)

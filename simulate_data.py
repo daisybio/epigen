@@ -106,13 +106,13 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
             because otherwise, EpiGEN's subsampling techniques have no effect. 
         Effect:
             Determines how many individuals from the selected corpus are included in the simulated data.
-    ``--sim-id SIM_ID``
+    ``--sim-ids SIM_ID [SIM_ID ...]``
         Description:
-            ID of simulated data.
+            IDs of simulated data.
         Accepted Arguments:
             Non-negative integers.
         Effect: 
-            Together with the options ``--corpus-id`` and ``--pop``, this options determines the prefix ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>``
+            Together with the options ``--corpus-id`` and ``--pop``, this options determines the prefices ``./sim/<SIM_ID>_<CORPUS_ID>_<POP>``
             of the files that contain the simulated data.
 
 **Optional Arguments:**
@@ -254,7 +254,7 @@ def run_script():
     required_args.add_argument("--model", required=True, help="Path to model file (see examples in ./model directory).")
     required_args.add_argument("--snps", type=int, required=True, help="Number of SNPs in simulated data.", action=checks.check_positive("--snps"))
     required_args.add_argument("--inds", type=int, required=True, help="Number of individuals in simulated data.", action=checks.check_positive("--inds"))
-    required_args.add_argument("--sim-id", type=int, required=True, help="ID of simulated data.", action=checks.check_non_negative("--corpus-id"))
+    required_args.add_argument("--sim-ids", type=int, required=True, nargs="+", help="IDs of simulated data.", action=checks.check_non_negative("--sim-ids"))
     optional_args = parser.add_argument_group("optional arguments")
     optional_args.add_argument("--noise-maf-range", type=float, nargs=2, default=[0,1], metavar=("LB", "UB"), help="Range of acceptable MAFs for noise SNPs. Default = [0,1].", action=checks.check_interval("--global-maf-range"))
     optional_args.add_argument("--biased-distr", default=[], type=float, nargs="+", action=checks.check_length("--biased-distr"), help="Biased target distribution for simulated phenotypes. Default = [].", metavar="PARAM")
@@ -269,17 +269,23 @@ def run_script():
     print("\n############################################################################")
     print("######################### EpiGEN - simulate_data.py ########################\n")
     # Just for testing#
-    sim = DataSim(args.sim_id, args.corpus_id, args.pop, args.model, args.snps, args.inds, args.disease_snps, args.biased_distr, args.noise_maf_range, args.disease_maf_range, args.seed, args.compress)
+    sim = DataSim(args.sim_ids[0], args.corpus_id, args.pop, args.model, args.snps, args.inds, args.disease_snps, args.biased_distr, args.noise_maf_range, args.disease_maf_range, args.seed, args.compress)
     sim.sample_snps()
     sim.generate_phenotype()
     sim.dump_simulated_data()
+    for index in range(1, len(args.sim_ids)):
+        sim.set_sim_id(args.sim_ids[index])
+        sim.sample_snps()
+        sim.generate_phenotype()
+        sim.dump_simulated_data()
     suffix = "json"
     if args.compress:
         suffix = "json.bz2"
     print("\n----------------------------------------------------------------------------\n")
     print("Finished simulation of epistasis data.")
     print("The generated data can be found in the ./sim directory:")
-    print("Generated data:\t./sim/{}_{}_{}.{}".format(args.sim_id, args.corpus_id, args.pop, suffix))
+    for sim_id in args.sim_ids:
+        print("Generated data:\t./sim/{}_{}_{}.{}".format(sim_id, args.corpus_id, args.pop, suffix))
     print("\n############################################################################")
     
 if __name__ == "__main__":

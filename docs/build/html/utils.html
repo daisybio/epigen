@@ -57,7 +57,7 @@ Expects to be imported from EpiGEN’s root directory.</p>
 <dt id="utils.data_simulator.DataSimulator.genotype">
 <code class="sig-name descname">genotype</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.genotype" title="Permalink to this definition">¶</a></dt>
 <dd><p>A numpy.array with entries from range(3) whose rows represent SNPs and whose
-columns represent individuals.</p>
+columns represent individuals contained in simulated data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>numpy.array</p>
@@ -91,7 +91,53 @@ about the corresponding SNP.</p>
 <dl class="attribute">
 <dt id="utils.data_simulator.DataSimulator.cum_mafs">
 <code class="sig-name descname">cum_mafs</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.cum_mafs" title="Permalink to this definition">¶</a></dt>
-<dd><p>A list of pairs of the form (MAF,count) representing the cumulative MAF distribution.</p>
+<dd><p>A list of pairs of the form (MAF,count) representing the cumulative MAF distribution of self.mafs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (float,int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.corpus_genotype">
+<code class="sig-name descname">corpus_genotype</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.corpus_genotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array with entries from range(3) whose rows represent SNPs and whose
+columns represent individuals contained in the genotype corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.corpus_snps">
+<code class="sig-name descname">corpus_snps</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.corpus_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list with one entry for each row of self.corpus_genotype. The entries provide information
+about the corresponding SNP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of (list of str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.corpus_mafs">
+<code class="sig-name descname">corpus_mafs</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.corpus_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A numpy.array of floats representing the MAFs of all rows of self.corpus_genotype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.corpus_cum_mafs">
+<code class="sig-name descname">corpus_cum_mafs</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.corpus_cum_mafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of pairs of the form (MAF,count) representing the cumulative MAF distribution of self.corpus_mafs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list of (float,int)</p>
@@ -308,6 +354,17 @@ generated.</p></li>
 <dt id="utils.data_simulator.DataSimulator.sample_snps">
 <code class="sig-name descname">sample_snps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.sample_snps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Samples the SNPs and the disease SNP set based on the MAFs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="utils.data_simulator.DataSimulator.set_sim_id">
+<code class="sig-name descname">set_sim_id</code><span class="sig-paren">(</span><em class="sig-param">sim_id</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.set_sim_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the simulation ID and prepares next simulation on top of pre-loaded corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sim_id</strong> (<em>int</em>) – An integer that represents the ID of the generated data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -851,7 +908,6 @@ Examples can be found in the directory epigen/models/.</p></li>
 </div>
 <div class="section" id="module-utils.argparse_checks">
 <span id="the-module-utils-argparse-checks-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.argparse_checks.py</span></code><a class="headerlink" href="#module-utils.argparse_checks" title="Permalink to this headline">¶</a></h2>
-<p>Contains checks for arguments parsed by argparse.</p>
 <dl class="function">
 <dt id="utils.argparse_checks.check_interval">
 <code class="sig-prename descclassname">utils.argparse_checks.</code><code class="sig-name descname">check_interval</code><span class="sig-paren">(</span><em class="sig-param">argname</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.argparse_checks.check_interval" title="Permalink to this definition">¶</a></dt>

@@ -38,11 +38,17 @@ class DataSimulator(object):
     
     Attributes:
         genotype (numpy.array): A numpy.array with entries from range(3) whose rows represent SNPs and whose
-            columns represent individuals.
+            columns represent individuals contained in simulated data.
         snps (list of (list of str)): A list with one entry for each row of self.genotype. The entries provide information 
             about the corresponding SNP.
         mafs (numpy.array): A numpy.array of floats representing the MAFs of all rows of self.genotype.
-        cum_mafs (list of (float,int)): A list of pairs of the form (MAF,count) representing the cumulative MAF distribution.
+        cum_mafs (list of (float,int)): A list of pairs of the form (MAF,count) representing the cumulative MAF distribution of self.mafs.
+        corpus_genotype (numpy.array): A numpy.array with entries from range(3) whose rows represent SNPs and whose
+            columns represent individuals contained in the genotype corpus.
+        corpus_snps (list of (list of str)): A list with one entry for each row of self.corpus_genotype. The entries provide information 
+            about the corresponding SNP.
+        corpus_mafs (numpy.array): A numpy.array of floats representing the MAFs of all rows of self.corpus_genotype.
+        corpus_cum_mafs (list of (float,int)): A list of pairs of the form (MAF,count) representing the cumulative MAF distribution of self.corpus_mafs.
         model (ExtensionalModel/ParametrizedModel): The epistasis model.
         sim_id (int): An integer that represents the ID of the generated data.
         corpus_id (int): An integer that represents the ID of the genotype corpus on top of which 
@@ -96,6 +102,7 @@ class DataSimulator(object):
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_genotype.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
+        self.corpus_genotype = self.genotype
         
         # Load SNPs.
         print("Loading SNPs ...")
@@ -110,6 +117,7 @@ class DataSimulator(object):
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_snps.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
+        self.corpus_snps = self.snps
         
         # Load MAFs.
         print("Loading MAFs ...")
@@ -124,6 +132,7 @@ class DataSimulator(object):
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_mafs.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
+        self.corpus_mafs = self.mafs
         
         # Load cumulative MAF distribution.
         print("Loading cumulative MAF distribution ...")
@@ -138,6 +147,7 @@ class DataSimulator(object):
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
+        self.corpus_cum_mafs = self.cum_mafs
         
         # Parse the epistasis model.
         print("Parsing epistasis model ...")
@@ -211,9 +221,22 @@ class DataSimulator(object):
         if len(self.disease_snps) > 0 and len(self.disease_snps) != self.model.size:
             raise ValueError("The sizes of the disease SNP set and the epistasis model don't match. Disease SNP set size: {}; model size: {}.".format(len(self.disease_snps), self.model.size))
             
+    def set_sim_id(self, sim_id):
+        """Sets the simulation ID and prepares next simulation on top of pre-loaded corpus.
         
+        Args:
+            sim_id (int): An integer that represents the ID of the generated data.
+        """
+        self.sim_id = sim_id
+        self.genotype = self.corpus_genotype
+        self.snps = self.corpus_snps
+        self.mafs = self.corpus_mafs
+        self.cum_mafs = self.corpus_cum_mafs  
+    
     def sample_snps(self):
         """Samples the SNPs and the disease SNP set based on the MAFs."""
+        
+        print("Starting simulation for simulation ID {}.".format(self.sim_id))
         
         # Adjust disease MAF range if too few SNPs respect it.
         if len(self.disease_snps) == 0:

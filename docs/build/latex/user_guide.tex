@@ -336,15 +336,15 @@ Determines how many individuals from the selected corpus are included in the sim
 
 \end{description}
 
-\item[{\sphinxcode{\sphinxupquote{-{-}sim-id SIM\_ID}}}] \leavevmode\begin{description}
+\item[{\sphinxcode{\sphinxupquote{-{-}sim-ids SIM\_ID {[}SIM\_ID ...{]}}}}] \leavevmode\begin{description}
 \item[{Description:}] \leavevmode
-ID of simulated data.
+IDs of simulated data.
 
 \item[{Accepted Arguments:}] \leavevmode
 Non-negative integers.
 
 \item[{Effect:}] \leavevmode
-Together with the options \sphinxcode{\sphinxupquote{-{-}corpus-id}} and \sphinxcode{\sphinxupquote{-{-}pop}}, this options determines the prefix \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}}
+Together with the options \sphinxcode{\sphinxupquote{-{-}corpus-id}} and \sphinxcode{\sphinxupquote{-{-}pop}}, this options determines the prefices \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}}
 of the files that contain the simulated data.
 
 \end{description}
@@ -891,7 +891,7 @@ Expects to be imported from EpiGEN’s root directory.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.genotype}}\pysigline{\sphinxbfcode{\sphinxupquote{genotype}}}
 A numpy.array with entries from range(3) whose rows represent SNPs and whose
-columns represent individuals.
+columns represent individuals contained in simulated data.
 \begin{quote}\begin{description}
 \item[{Type}] \leavevmode
 numpy.array
@@ -931,7 +931,61 @@ numpy.array
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.cum_mafs}}\pysigline{\sphinxbfcode{\sphinxupquote{cum\_mafs}}}
-A list of pairs of the form (MAF,count) representing the cumulative MAF distribution.
+A list of pairs of the form (MAF,count) representing the cumulative MAF distribution of self.mafs.
+\begin{quote}\begin{description}
+\item[{Type}] \leavevmode
+list of (float,int)
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{corpus\_genotype (utils.data\_simulator.DataSimulator attribute)@\spxentry{corpus\_genotype}\spxextra{utils.data\_simulator.DataSimulator attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.corpus_genotype}}\pysigline{\sphinxbfcode{\sphinxupquote{corpus\_genotype}}}
+A numpy.array with entries from range(3) whose rows represent SNPs and whose
+columns represent individuals contained in the genotype corpus.
+\begin{quote}\begin{description}
+\item[{Type}] \leavevmode
+numpy.array
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{corpus\_snps (utils.data\_simulator.DataSimulator attribute)@\spxentry{corpus\_snps}\spxextra{utils.data\_simulator.DataSimulator attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.corpus_snps}}\pysigline{\sphinxbfcode{\sphinxupquote{corpus\_snps}}}
+A list with one entry for each row of self.corpus\_genotype. The entries provide information
+about the corresponding SNP.
+\begin{quote}\begin{description}
+\item[{Type}] \leavevmode
+list of (list of str)
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{corpus\_mafs (utils.data\_simulator.DataSimulator attribute)@\spxentry{corpus\_mafs}\spxextra{utils.data\_simulator.DataSimulator attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.corpus_mafs}}\pysigline{\sphinxbfcode{\sphinxupquote{corpus\_mafs}}}
+A numpy.array of floats representing the MAFs of all rows of self.corpus\_genotype.
+\begin{quote}\begin{description}
+\item[{Type}] \leavevmode
+numpy.array
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{corpus\_cum\_mafs (utils.data\_simulator.DataSimulator attribute)@\spxentry{corpus\_cum\_mafs}\spxextra{utils.data\_simulator.DataSimulator attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.corpus_cum_mafs}}\pysigline{\sphinxbfcode{\sphinxupquote{corpus\_cum\_mafs}}}
+A list of pairs of the form (MAF,count) representing the cumulative MAF distribution of self.corpus\_mafs.
 \begin{quote}\begin{description}
 \item[{Type}] \leavevmode
 list of (float,int)
@@ -1209,6 +1263,19 @@ Generates the phenotype and adjusts the number of individuals.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.sample_snps}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{sample\_snps}}}{}{}
 Samples the SNPs and the disease SNP set based on the MAFs.
+
+\end{fulllineitems}
+
+\index{set\_sim\_id() (utils.data\_simulator.DataSimulator method)@\spxentry{set\_sim\_id()}\spxextra{utils.data\_simulator.DataSimulator method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.set_sim_id}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{set\_sim\_id}}}{\emph{sim\_id}}{}
+Sets the simulation ID and prepares next simulation on top of pre-loaded corpus.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\sphinxstyleliteralstrong{\sphinxupquote{sim\_id}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} An integer that represents the ID of the generated data.
+
+\end{description}\end{quote}
 
 \end{fulllineitems}
 
@@ -1883,9 +1950,7 @@ Examples can be found in the directory epigen/models/.
 
 
 \subsection{The module \sphinxstyleliteralintitle{\sphinxupquote{utils.argparse\_checks.py}}}
-\label{\detokenize{utils:module-utils.argparse_checks}}\label{\detokenize{utils:the-module-utils-argparse-checks-py}}\index{utils.argparse\_checks (module)@\spxentry{utils.argparse\_checks}\spxextra{module}}
-Contains checks for arguments parsed by argparse.
-\index{check\_interval() (in module utils.argparse\_checks)@\spxentry{check\_interval()}\spxextra{in module utils.argparse\_checks}}
+\label{\detokenize{utils:module-utils.argparse_checks}}\label{\detokenize{utils:the-module-utils-argparse-checks-py}}\index{utils.argparse\_checks (module)@\spxentry{utils.argparse\_checks}\spxextra{module}}\index{check\_interval() (in module utils.argparse\_checks)@\spxentry{check\_interval()}\spxextra{in module utils.argparse\_checks}}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{utils:utils.argparse_checks.check_interval}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{utils.argparse\_checks.}}\sphinxbfcode{\sphinxupquote{check\_interval}}}{\emph{argname}}{}
