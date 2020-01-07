@@ -347,7 +347,11 @@ class DataSimulator(object):
         """Dumps the simulated data."""
         
         print("Serializing the simulated data ...")
-        simulated_data = {"num_snps" : self.num_snps, "num_inds" : self.num_inds, "genotype" : self.genotype.tolist(), "phenotype" : self.phenotype.tolist(), "snps" : self.snps, "disease_snps" : self.disease_snps, "mafs" : self.mafs.tolist()}
+        model_type = self.model.phenotype
+        if model_type == "quantitative":
+            simulated_data = {"num_snps" : self.num_snps, "num_inds" : self.num_inds, "model_type" : "quantitative", "genotype" : self.genotype.tolist(), "phenotype" : self.phenotype.tolist(), "snps" : self.snps, "disease_snps" : self.disease_snps, "mafs" : self.mafs.tolist()}
+        else:
+            simulated_data = {"num_snps" : self.num_snps, "num_inds" : self.num_inds, "model_type" : "categorical", "num_categories" : model_type, "genotype" : self.genotype.tolist(), "phenotype" : self.phenotype.tolist(), "snps" : self.snps, "disease_snps" : self.disease_snps, "mafs" : self.mafs.tolist()}
         # Dump genotype.
         if self.compress:
             # Dump compressed data.

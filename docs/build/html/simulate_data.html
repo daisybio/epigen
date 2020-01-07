@@ -235,7 +235,30 @@ fall into the specified range. If the range is too narrow, it is dynamically ext
 <dt><em>Output File:</em></dt><dd><dl class="simple">
 <dt>Path:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">./sim/&lt;ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;.&lt;SUFFIX&gt;</span></code></p>
 </dd>
-<dt>Format:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">{&quot;genotype&quot;:</span> <span class="pre">&lt;GENOTYPE_DATA&gt;,</span> <span class="pre">&quot;phenotype&quot;:</span> <span class="pre">&lt;PHENOTYPE_DATA&gt;,</span> <span class="pre">&quot;snps&quot;:</span> <span class="pre">&lt;SNP_DATA&gt;,</span> <span class="pre">&quot;disease_snps&quot;:</span> <span class="pre">&lt;DISEASE_SNP_DATA&gt;,</span> <span class="pre">&quot;mafs&quot;:</span> <span class="pre">&lt;MAF_DATA&gt;}</span></code>.</p>
+<dt>Format for Quantitative Phenotypes:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">{&quot;num_snps&quot;:</span> <span class="pre">&lt;NUM_SNPS&gt;,</span> <span class="pre">&quot;num_inds&quot;:</span> <span class="pre">&lt;NUM_INDS&gt;,</span> <span class="pre">&quot;model_type&quot;:</span> <span class="pre">&quot;quantitative&quot;,</span> <span class="pre">&quot;genotype&quot;:</span> <span class="pre">&lt;GENOTYPE_DATA&gt;,</span> <span class="pre">&quot;phenotype&quot;:</span> <span class="pre">&lt;PHENOTYPE_DATA&gt;,</span> <span class="pre">&quot;snps&quot;:</span> <span class="pre">&lt;SNP_DATA&gt;,</span> <span class="pre">&quot;disease_snps&quot;:</span> <span class="pre">&lt;DISEASE_SNP_DATA&gt;,</span> <span class="pre">&quot;mafs&quot;:</span> <span class="pre">&lt;MAF_DATA&gt;}</span></code>.</p>
+</dd>
+<dt>Format for Categorical Phenotypes:</dt><dd><p>(Compressed) JSON file of the form <code class="docutils literal notranslate"><span class="pre">{&quot;num_snps&quot;:</span> <span class="pre">&lt;NUM_SNPS&gt;,</span> <span class="pre">&quot;num_inds&quot;:</span> <span class="pre">&lt;NUM_INDS&gt;,</span> <span class="pre">&quot;model_type&quot;:</span> <span class="pre">&quot;categorical&quot;,</span> <span class="pre">&quot;num_categories&quot;:</span> <span class="pre">&lt;NUM_CATEGORIES&gt;,</span> <span class="pre">&quot;genotype&quot;:</span> <span class="pre">&lt;GENOTYPE_DATA&gt;,</span> <span class="pre">&quot;phenotype&quot;:</span> <span class="pre">&lt;PHENOTYPE_DATA&gt;,</span> <span class="pre">&quot;snps&quot;:</span> <span class="pre">&lt;SNP_DATA&gt;,</span> <span class="pre">&quot;disease_snps&quot;:</span> <span class="pre">&lt;DISEASE_SNP_DATA&gt;,</span> <span class="pre">&quot;mafs&quot;:</span> <span class="pre">&lt;MAF_DATA&gt;}</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;NUM_SNPS&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;num_spns&quot;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Integer representing the number of SNPs.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;NUM_INDS&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;num_inds&quot;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Integer representing the number of individuals.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;NUM_CATEGORIES&gt;</span></code></dt><dd><dl class="simple">
+<dt>Key:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;num_categories&quot;</span></code></p>
+</dd>
+<dt>Content and Format:</dt><dd><p>Integer representing the number of categories for categorical phenotypes.</p>
 </dd>
 </dl>
 </dd>

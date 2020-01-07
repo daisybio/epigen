@@ -181,8 +181,25 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
     *Output File:*
         Path:
             ``./sim/<ID>_<CORPUS_ID>_<POP>.<SUFFIX>``
-        Format:
-            (Compressed) JSON file of the form ``{"genotype": <GENOTYPE_DATA>, "phenotype": <PHENOTYPE_DATA>, "snps": <SNP_DATA>, "disease_snps": <DISEASE_SNP_DATA>, "mafs": <MAF_DATA>}``. 
+        Format for Quantitative Phenotypes:
+            (Compressed) JSON file of the form ``{"num_snps": <NUM_SNPS>, "num_inds": <NUM_INDS>, "model_type": "quantitative", "genotype": <GENOTYPE_DATA>, "phenotype": <PHENOTYPE_DATA>, "snps": <SNP_DATA>, "disease_snps": <DISEASE_SNP_DATA>, "mafs": <MAF_DATA>}``.
+        Format for Categorical Phenotypes:
+            (Compressed) JSON file of the form ``{"num_snps": <NUM_SNPS>, "num_inds": <NUM_INDS>, "model_type": "categorical", "num_categories": <NUM_CATEGORIES>, "genotype": <GENOTYPE_DATA>, "phenotype": <PHENOTYPE_DATA>, "snps": <SNP_DATA>, "disease_snps": <DISEASE_SNP_DATA>, "mafs": <MAF_DATA>}``. 
+    ``<NUM_SNPS>``
+        Key:
+            ``"num_spns"``
+        Content and Format:
+            Integer representing the number of SNPs.
+    ``<NUM_INDS>``
+        Key:
+            ``"num_inds"``
+        Content and Format:
+            Integer representing the number of individuals.
+    ``<NUM_CATEGORIES>``
+        Key:
+            ``"num_categories"``
+        Content and Format:
+            Integer representing the number of categories for categorical phenotypes.
     ``<GENOTYPE_DATA>``
         Key: 
             ``"genotype"``
@@ -214,8 +231,6 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
             JSON field of the form ``[MAF_0, ..., MAF_<SNPS-1>]``, where ``MAF_S`` encodes the MAF of
             the SNP with index ``S``.
     
-            
-
 """
 
 from utils.data_simulator import DataSimulator as DataSim

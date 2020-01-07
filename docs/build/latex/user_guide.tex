@@ -72,7 +72,7 @@
 
 
 \title{EpiGEN: an epistasis simulation pipeline}
-\date{Nov 22, 2019}
+\date{Jan 07, 2020}
 \release{}
 \author{David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Paolo Tieri, and Tim Kacprowski}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -456,8 +456,38 @@ fall into the specified range. If the range is too narrow, it is dynamically ext
 \item[{Path:}] \leavevmode
 \sphinxcode{\sphinxupquote{./sim/\textless{}ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}.\textless{}SUFFIX\textgreater{}}}
 
-\item[{Format:}] \leavevmode
-(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{\{"genotype": \textless{}GENOTYPE\_DATA\textgreater{}, "phenotype": \textless{}PHENOTYPE\_DATA\textgreater{}, "snps": \textless{}SNP\_DATA\textgreater{}, "disease\_snps": \textless{}DISEASE\_SNP\_DATA\textgreater{}, "mafs": \textless{}MAF\_DATA\textgreater{}\}}}.
+\item[{Format for Quantitative Phenotypes:}] \leavevmode
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{\{"num\_snps": \textless{}NUM\_SNPS\textgreater{}, "num\_inds": \textless{}NUM\_INDS\textgreater{}, "model\_type": "quantitative", "genotype": \textless{}GENOTYPE\_DATA\textgreater{}, "phenotype": \textless{}PHENOTYPE\_DATA\textgreater{}, "snps": \textless{}SNP\_DATA\textgreater{}, "disease\_snps": \textless{}DISEASE\_SNP\_DATA\textgreater{}, "mafs": \textless{}MAF\_DATA\textgreater{}\}}}.
+
+\item[{Format for Categorical Phenotypes:}] \leavevmode
+(Compressed) JSON file of the form \sphinxcode{\sphinxupquote{\{"num\_snps": \textless{}NUM\_SNPS\textgreater{}, "num\_inds": \textless{}NUM\_INDS\textgreater{}, "model\_type": "categorical", "num\_categories": \textless{}NUM\_CATEGORIES\textgreater{}, "genotype": \textless{}GENOTYPE\_DATA\textgreater{}, "phenotype": \textless{}PHENOTYPE\_DATA\textgreater{}, "snps": \textless{}SNP\_DATA\textgreater{}, "disease\_snps": \textless{}DISEASE\_SNP\_DATA\textgreater{}, "mafs": \textless{}MAF\_DATA\textgreater{}\}}}.
+
+\end{description}
+
+\item[{\sphinxcode{\sphinxupquote{\textless{}NUM\_SNPS\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"num\_spns"}}
+
+\item[{Content and Format:}] \leavevmode
+Integer representing the number of SNPs.
+
+\end{description}
+
+\item[{\sphinxcode{\sphinxupquote{\textless{}NUM\_INDS\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"num\_inds"}}
+
+\item[{Content and Format:}] \leavevmode
+Integer representing the number of individuals.
+
+\end{description}
+
+\item[{\sphinxcode{\sphinxupquote{\textless{}NUM\_CATEGORIES\textgreater{}}}}] \leavevmode\begin{description}
+\item[{Key:}] \leavevmode
+\sphinxcode{\sphinxupquote{"num\_categories"}}
+
+\item[{Content and Format:}] \leavevmode
+Integer representing the number of categories for categorical phenotypes.
 
 \end{description}
 
