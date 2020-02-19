@@ -141,13 +141,26 @@ because otherwise, EpiGEN’s subsampling techniques have no effect.</p>
 </dd>
 </dl>
 </dd>
+</dl>
+</dd>
+<dt><strong>Required Group of Mutually Exclusive Arguments:</strong></dt><dd><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--sim-ids</span> <span class="pre">SIM_ID</span> <span class="pre">[SIM_ID</span> <span class="pre">...]</span></code></dt><dd><dl class="simple">
 <dt>Description:</dt><dd><p>IDs of simulated data.</p>
 </dd>
-<dt>Accepted Arguments:</dt><dd><p>Non-negative integers.</p>
+<dt>Accepted Arguments:</dt><dd><p>One or several non-negative integers.</p>
 </dd>
-<dt>Effect:</dt><dd><p>Together with the options <code class="docutils literal notranslate"><span class="pre">--corpus-id</span></code> and <code class="docutils literal notranslate"><span class="pre">--pop</span></code>, this options determines the prefices <code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code>
-of the files that contain the simulated data.</p>
+<dt>Effect:</dt><dd><p>If N IDs &lt;SIM_ID_1&gt; … &lt;SIM_ID_N&gt; are provided, N simulated epistasis instances with prefices
+<code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID_1&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code>, …, <code class="docutils literal notranslate"><span class="pre">./sim/&lt;SIM_ID_N&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code> are generated.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--num-sims</span> <span class="pre">NUM_SIMS</span></code></dt><dd><dl class="simple">
+<dt>Description:</dt><dd><p>The number of epistasis instances that should be generated.</p>
+</dd>
+<dt>Accepted Arguments:</dt><dd><p>Positive integer.</p>
+</dd>
+<dt>Effect:</dt><dd><p>If specified, &lt;NUM_SIMS&gt; simulated epistasis instances with prefices
+<code class="docutils literal notranslate"><span class="pre">./sim/0_&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code>, …, <code class="docutils literal notranslate"><span class="pre">./sim/&lt;NUM_SIMS-1&gt;_&lt;CORPUS_ID&gt;_&lt;POP&gt;</span></code> are generated.</p>
 </dd>
 </dl>
 </dd>

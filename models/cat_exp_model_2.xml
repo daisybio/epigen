@@ -22,32 +22,10 @@
  #//////////////////////////////////////////////////////////////////////////#
  -->
 <!DOCTYPE ParametrizedModel SYSTEM "ParametrizedModel.dtd">
-<ParametrizedModel size="2" phenotype="quantitative" stdev="1.3">
-    <BaselineModel alpha="15"/>
-    <MarginalModel alpha="1.5" type="dominant">
-        <pos>0</pos>
-    </MarginalModel>
-    <MarginalModel alpha="1.3" type="additive">
-        <pos>1</pos>
-    </MarginalModel>
-    <MarginalModel alpha="1.4" type="recessive">
-        <pos>2</pos>
-    </MarginalModel>
-    <InteractionModel alpha="1.2" type="joint-dominant">
+<ParametrizedModel size="2" phenotype="2">
+    <BaselineModel alpha="0.1"/>
+    <InteractionModel alpha="2" type="exponential">
         <pos>0</pos>
         <pos>1</pos>
-    </InteractionModel>
-    <InteractionModel alpha="1.1" type="exponential">
-        <pos>0</pos>
-        <pos>2</pos>
-    </InteractionModel>
-    <InteractionModel alpha="1.3" type="multiplicative">
-        <pos>1</pos>
-        <pos>2</pos>
-    </InteractionModel>
-    <InteractionModel alpha="1.1" type="joint-recessive">
-        <pos>0</pos>
-        <pos>1</pos>
-        <pos>2</pos>
     </InteractionModel>
 </ParametrizedModel>

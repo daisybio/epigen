@@ -47,7 +47,7 @@
 <p>Contains definition of DataSimulator class.</p>
 <dl class="class">
 <dt id="utils.data_simulator.DataSimulator">
-<em class="property">class </em><code class="sig-prename descclassname">utils.data_simulator.</code><code class="sig-name descname">DataSimulator</code><span class="sig-paren">(</span><em class="sig-param">sim_id</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">model</em>, <em class="sig-param">num_snps</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">disease_snps</em>, <em class="sig-param">biased_distr</em>, <em class="sig-param">noise_maf_range</em>, <em class="sig-param">disease_maf_range</em>, <em class="sig-param">seed</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">utils.data_simulator.</code><code class="sig-name descname">DataSimulator</code><span class="sig-paren">(</span><em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">model</em>, <em class="sig-param">num_snps</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">disease_snps</em>, <em class="sig-param">biased_distr</em>, <em class="sig-param">noise_maf_range</em>, <em class="sig-param">disease_maf_range</em>, <em class="sig-param">seed</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Simulates epistasis data given a pre-generated genotype corpus.</p>
 <p>This class is employed by the script simulate_data.py.
@@ -269,6 +269,17 @@ generated.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="utils.data_simulator.DataSimulator.input_disease_snps">
+<code class="sig-name descname">input_disease_snps</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.input_disease_snps" title="Permalink to this definition">¶</a></dt>
+<dd><p>A user-specified list of positions of the selected disease SNPs in self.snps and self.genotype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="utils.data_simulator.DataSimulator.noise_maf_range">
 <code class="sig-name descname">noise_maf_range</code><a class="headerlink" href="#utils.data_simulator.DataSimulator.noise_maf_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected noise SNPs.</p>
@@ -314,12 +325,11 @@ generated.</p>
 
 <dl class="method">
 <dt id="utils.data_simulator.DataSimulator.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">sim_id</em>, <em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">model</em>, <em class="sig-param">num_snps</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">disease_snps</em>, <em class="sig-param">biased_distr</em>, <em class="sig-param">noise_maf_range</em>, <em class="sig-param">disease_maf_range</em>, <em class="sig-param">seed</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">corpus_id</em>, <em class="sig-param">pop</em>, <em class="sig-param">model</em>, <em class="sig-param">num_snps</em>, <em class="sig-param">num_inds</em>, <em class="sig-param">disease_snps</em>, <em class="sig-param">biased_distr</em>, <em class="sig-param">noise_maf_range</em>, <em class="sig-param">disease_maf_range</em>, <em class="sig-param">seed</em>, <em class="sig-param">compress</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.data_simulator.DataSimulator.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialized DataSimulator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sim_id</strong> (<em>int</em>) – An integer that represents the ID of the generated data.</p></li>
 <li><p><strong>corpus_id</strong> (<em>int</em>) – An integer that represents the ID of the genotype corpus on top of which
 the data should be simulated.</p></li>
 <li><p><strong>pop</strong> (<em>str</em>) – A string representing the HAPMAP3 population for which the selected genotype corpus was

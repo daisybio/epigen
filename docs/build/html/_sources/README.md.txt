@@ -23,7 +23,7 @@ The user interface of EpiGEN consists of three scripts:
 The script `simulate_data.py` simulates epistasis data on top of a pre-computed genotype corpus. For each chromosome `<CHROM>` and each HAPMAP3 population code `<POP>`, EpiGEN contains a pre-computed corpus for 10000 individuals, which is identified by the prefix `corpora/<CHROM>_<POP>_`. For example, if you want to generate epistasis data with ID 0 for 7500 individuals and 10000 SNPs on top of the pre-computed corpus `corpora/1_ASW_`, where the parametrized epistasis model `models/param_model.xml` acts upon the SNPs with IDs 156, 3, and 1076 in the corpus, you can use `simulate_data.py` as follows:
 
 ```sh
-python3 simulate_data.py --sim-id 0 --corpus-id 1 --pop ASW --inds 7500 --snps 10000 --disease-snps 156 3 1076 --model models/param_model.xml  
+python3 simulate_data.py --sim-ids 0 --corpus-id 1 --pop ASW --inds 7500 --snps 10000 --disease-snps 156 3 1076 --model models/param_model.xml  
 ```
 
 As you will notice when executing this command, a large fraction of the runtime of `simulate_data.py` is used for loading the corpora. If you want to simulate data for only a small number of individuals, it is therefore advisable to first compute your own, smaller corpora. You can also speed-up the script by unzipping the corpora before running it. 
@@ -96,4 +96,3 @@ If you use EpiGEN, please cite the following paper:
     ├── extensional_model.py.        // Implements extensional models
     └── argparse_checks.py.          // Implements argparse checks
 ```
- 

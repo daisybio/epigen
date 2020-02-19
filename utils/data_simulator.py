@@ -62,6 +62,7 @@ class DataSimulator(object):
         biased_distr (list of float): Parameters of biased observed phenotype distribution. If empty, no observation bias is applied.
         phenotype (numpy.array): A numpy.array that stores the generated phenotypes.
         disease_snps (list of int): A list of positions of the selected disease SNPs in self.snps and self.genotype.
+        input_disease_snps (list of int): A user-specified list of positions of the selected disease SNPs in self.snps and self.genotype.
         noise_maf_range (float,float): A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected noise SNPs.
         disease_maf_range (float,float): A tuple of floats between 0 and 1 that specifies the range of acceptable MAFs for the selected disease SNPs.
         epsilon (float): A small positive real used for comparing floats.
@@ -69,11 +70,10 @@ class DataSimulator(object):
     """
 
 
-    def __init__(self, sim_id, corpus_id, pop, model, num_snps, num_inds, disease_snps, biased_distr, noise_maf_range, disease_maf_range, seed, compress):
+    def __init__(self, corpus_id, pop, model, num_snps, num_inds, disease_snps, biased_distr, noise_maf_range, disease_maf_range, seed, compress):
         """Initialized DataSimulator.
         
         Args:
-            sim_id (int): An integer that represents the ID of the generated data.
             corpus_id (int): An integer that represents the ID of the genotype corpus on top of which 
                 the data should be simulated.
             pop (str): A string representing the HAPMAP3 population for which the selected genotype corpus was 
@@ -90,67 +90,67 @@ class DataSimulator(object):
         """
         
         # Load genotype corpus.
-        print("Loading genotype corpus ...")
+        print("Loading genotype corpus.")
         if os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_genotype.json"):
             with open("corpora/" + str(corpus_id) + "_" + pop + "_genotype.json", "rt") as jsonfile:
-                self.genotype = np.asarray(json.load(jsonfile), dtype=np.uint8)
+                self.corpus_genotype = np.asarray(json.load(jsonfile), dtype=np.uint8)
         elif os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_genotype.json.bz2"):
             with bz2.open("corpora/" + str(corpus_id) + "_" + pop + "_genotype.json.bz2", "rt", encoding="ascii") as zipfile:
-                self.genotype = np.asarray(json.load(zipfile), dtype=np.uint8)
+                self.corpus_genotype = np.asarray(json.load(zipfile), dtype=np.uint8)
         else:
             msg = "Neither the file corpora/" + str(corpus_id) + "_" + pop + "_genotype.json.bz2 "
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_genotype.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
-        self.corpus_genotype = self.genotype
+        self.genotype = None
         
         # Load SNPs.
-        print("Loading SNPs ...")
+        print("Loading SNPs.")
         if os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_snps.json"):
             with open("corpora/" + str(corpus_id) + "_" + pop + "_snps.json", "rt") as jsonfile:
-                self.snps = json.load(jsonfile)
+                self.corpus_snps = json.load(jsonfile)
         elif os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_snps.json.bz2"):
             with bz2.open("corpora/" + str(corpus_id) + "_" + pop + "_snps.json.bz2", "rt", encoding="ascii") as zipfile:
-                self.snps = json.load(zipfile)
+                self.corpus_snps = json.load(zipfile)
         else:
             msg = "Neither the file corpora/" + str(corpus_id) + "_" + pop + "_snps.json.bz2 "
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_snps.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
-        self.corpus_snps = self.snps
+        self.snps = None
         
         # Load MAFs.
-        print("Loading MAFs ...")
+        print("Loading MAFs.")
         if os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json"):
             with open("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json", "rt") as jsonfile:
-                self.mafs = np.asarray(json.load(jsonfile), dtype=float)
+                self.corpus_mafs = np.asarray(json.load(jsonfile), dtype=float)
         elif os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json.bz2"):
             with bz2.open("corpora/" + str(corpus_id) + "_" + pop + "_mafs.json.bz2", "rt", encoding="ascii") as zipfile:
-                self.mafs = np.asarray(json.load(zipfile), dtype=float)
+                self.corpus_mafs = np.asarray(json.load(zipfile), dtype=float)
         else:
             msg = "Neither the file corpora/" + str(corpus_id) + "_" + pop + "_mafs.json.bz2 "
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_mafs.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
-        self.corpus_mafs = self.mafs
+        self.mafs = None
         
         # Load cumulative MAF distribution.
-        print("Loading cumulative MAF distribution ...")
+        print("Loading cumulative MAF distribution.")
         if os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json"):
             with open("corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json", "rt") as jsonfile:
-                self.cum_mafs = json.load(jsonfile)
+                self.corpus_cum_mafs = json.load(jsonfile)
         elif os.path.exists("corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json.bz2"):
             with bz2.open("corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json.bz2", "rt", encoding="ascii") as zipfile:
-                self.cum_mafs = json.load(zipfile)
+                self.corpus_cum_mafs = json.load(zipfile)
         else:
             msg = "Neither the file corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json.bz2 "
             msg += "nor the file corpora/" + str(corpus_id) + "_" + pop + "_cum_mafs.json exists. "
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
-        self.corpus_cum_mafs = self.cum_mafs
+        self.cum_mafs = None
         
         # Parse the epistasis model.
-        print("Parsing epistasis model ...")
+        print("Parsing epistasis model.")
         model_suffix = model.split(".")[-1]
         if model_suffix == "ini":
             self.model = ExtensionalModel(model, seed)
@@ -162,13 +162,14 @@ class DataSimulator(object):
             raise ValueError(msg)
         
         # Set remaining attributes.
-        self.sim_id = sim_id
+        self.sim_id = None
         self.num_snps = num_snps
         self.num_inds = num_inds
         self.noise_maf_range = noise_maf_range
         self.disease_maf_range = disease_maf_range
         self.biased_distr = biased_distr
-        self.disease_snps = disease_snps
+        self.input_disease_snps = disease_snps
+        self.disease_snps = None
         self.corpus_id = corpus_id
         self.pop = pop
         self.phenotype = None
@@ -180,7 +181,7 @@ class DataSimulator(object):
             np.random.seed(seed)
             
         # Ensure that the biased distribution is consistent with the epistasis model.
-        print("Checking input consistency ...")
+        print("Checking input consistency.")
         if len(self.biased_distr) > 0:
             wrong_format = False
             if self.model.phenotype == "quantitative":
@@ -205,8 +206,8 @@ class DataSimulator(object):
                     raise ValueError("For categorical phenptypes, the arguments passed to --biased-distr must be non-negative floats that sum up to 1, and their number must match the phenotype dimension.")
                     
         # Ensure that the desired numbers of SNPs and individuals are feasible.
-        self.total_num_snps = np.shape(self.genotype)[0]
-        self.total_num_inds = np.shape(self.genotype)[1]
+        self.total_num_snps = np.shape(self.corpus_genotype)[0]
+        self.total_num_inds = np.shape(self.corpus_genotype)[1]
         if self.num_snps > self.total_num_snps:
             self.num_snps = self.total_num_snps
             print("WARNING: Desired number of SNPs exceeds SNPs in corpus. Decreased to {}.".format(self.num_snps))
@@ -215,10 +216,10 @@ class DataSimulator(object):
             print("WARNING: Desired number of individuals exceeds individuals in corpus. Decreased to {}.".format(self.num_inds))
             
         # Ensure that the disease SNP set is feasible.
-        for snp in self.disease_snps:
+        for snp in self.input_disease_snps:
             if snp >= self.total_num_snps:
                 raise ValueError("Genotype corpus contains no SNP with ID {}.".format(snp))
-        if len(self.disease_snps) > 0 and len(self.disease_snps) != self.model.size:
+        if len(self.input_disease_snps) > 0 and len(self.input_disease_snps) != self.model.size:
             raise ValueError("The sizes of the disease SNP set and the epistasis model don't match. Disease SNP set size: {}; model size: {}.".format(len(self.disease_snps), self.model.size))
             
     def set_sim_id(self, sim_id):
@@ -227,20 +228,25 @@ class DataSimulator(object):
         Args:
             sim_id (int): An integer that represents the ID of the generated data.
         """
+        
+        # Set simulation ID.
         self.sim_id = sim_id
+        print("----------------------------------------------------------------------------")
+        print("Starting simulation for simulation ID {}.".format(self.sim_id))
+        
+        # Reset result variables.
         self.genotype = self.corpus_genotype
         self.snps = self.corpus_snps
         self.mafs = self.corpus_mafs
-        self.cum_mafs = self.corpus_cum_mafs  
+        self.cum_mafs = self.corpus_cum_mafs 
+        self.disease_snps = self.input_disease_snps 
     
     def sample_snps(self):
         """Samples the SNPs and the disease SNP set based on the MAFs."""
         
-        print("Starting simulation for simulation ID {}.".format(self.sim_id))
-        
         # Adjust disease MAF range if too few SNPs respect it.
         if len(self.disease_snps) == 0:
-            print("Checking disease MAF range (extend if too narrow) ...")
+            print("Checking disease MAF range (extend if too narrow).")
             pos_last_too_small = -1
             pos_last_not_too_large = -1
             for item in self.cum_mafs:
@@ -273,7 +279,7 @@ class DataSimulator(object):
                 print("WARNING: Specified disease MAF range is too narrow. Extended to [{},{}].".format(self.disease_maf_range[0], self.disease_maf_range[1]))
             
         # Adjust global MAF range if too few SNPs respect it.
-        print("Checking noise MAF range (extend if too narrow) ...")
+        print("Checking noise MAF range (extend if too narrow).")
         pos_last_too_small = -1
         pos_last_not_too_large = -1
         for item in self.cum_mafs:
@@ -307,7 +313,7 @@ class DataSimulator(object):
             
         
         # Sample the disease SNPs.
-        print("Sampling disease SNPs ...")
+        print("Sampling disease SNPs.")
         if len(self.disease_snps) == 0:
             candidates = [snp for snp in range(self.total_num_snps) if (self.mafs[snp] >= self.disease_maf_range[0]) and (self.mafs[snp] <= self.disease_maf_range[1])]
             self.disease_snps = np.random.choice(candidates, replace=False, size=self.model.size).tolist()
@@ -316,12 +322,12 @@ class DataSimulator(object):
             is_no_disease_snp[snp] = False
             
         # Sample the noise SNPs.
-        print("Sampling noise SNPs ...")
+        print("Sampling noise SNPs.")
         candidates = [snp for snp in range(self.total_num_snps) if (self.mafs[snp] >= self.noise_maf_range[0]) and (self.mafs[snp] <= self.noise_maf_range[1]) & is_no_disease_snp[snp]]
         selected_snps = sorted(self.disease_snps + np.random.choice(candidates, replace=False, size=(self.num_snps - self.model.size)).tolist())
         
         # Update the genotype and the MAF arrays, as well as the SNP list.
-        print("Updating genotype matrix, MAF array, and SNP list ...") 
+        print("Updating genotype matrix, MAF array, and SNP list.") 
         self.snps = [self.snps[snp] for snp in selected_snps]
         snp_id_old_to_new = {selected_snps[i] : i for i in range(self.num_snps)}
         self.disease_snps = [snp_id_old_to_new[snp] for snp in self.disease_snps]
@@ -332,11 +338,11 @@ class DataSimulator(object):
         """Generates the phenotype and adjusts the number of individuals."""
         
         # Generate the phenotype for all individuals in the corpus.
-        print("Generating the phenotypes ...")
+        print("Generating the phenotypes.")
         self.phenotype = np.array([self.model(self.genotype[self.disease_snps,ind]) for ind in range(self.total_num_inds)])
         
         # Subsample the individuals.
-        print("Subsampling the individuals ...")
+        print("Subsampling the individuals.")
         selected_inds = []
         # No observation bias -> select individuals uniformly.
         if len(self.biased_distr) == 0:
@@ -369,7 +375,7 @@ class DataSimulator(object):
     def dump_simulated_data(self):
         """Dumps the simulated data."""
         
-        print("Serializing the simulated data ...")
+        print("Serializing the simulated data.")
         model_type = self.model.phenotype
         if model_type == "quantitative":
             simulated_data = {"num_snps" : self.num_snps, "num_inds" : self.num_inds, "model_type" : "quantitative", "genotype" : self.genotype.tolist(), "phenotype" : self.phenotype.tolist(), "snps" : self.snps, "disease_snps" : self.disease_snps, "mafs" : self.mafs.tolist()}

@@ -72,7 +72,7 @@
 
 
 \title{EpiGEN: an epistasis simulation pipeline}
-\date{Jan 07, 2020}
+\date{Feb 19, 2020}
 \release{}
 \author{David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Paolo Tieri, and Tim Kacprowski}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -124,7 +124,7 @@ The user interface of EpiGEN consists of three scripts:
 The script \sphinxcode{\sphinxupquote{simulate\_data.py}} simulates epistasis data on top of a pre-computed genotype corpus. For each chromosome \sphinxcode{\sphinxupquote{\textless{}CHROM\textgreater{}}} and each HAPMAP3 population code \sphinxcode{\sphinxupquote{\textless{}POP\textgreater{}}}, EpiGEN contains a pre-computed corpus for 10000 individuals, which is identified by the prefix \sphinxcode{\sphinxupquote{corpora/\textless{}CHROM\textgreater{}\_\textless{}POP\textgreater{}\_}}. For example, if you want to generate epistasis data with ID 0 for 7500 individuals and 10000 SNPs on top of the pre-computed corpus \sphinxcode{\sphinxupquote{corpora/1\_ASW\_}}, where the parametrized epistasis model \sphinxcode{\sphinxupquote{models/param\_model.xml}} acts upon the SNPs with IDs 156, 3, and 1076 in the corpus, you can use \sphinxcode{\sphinxupquote{simulate\_data.py}} as follows:
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-python3 simulate\PYGZus{}data.py \PYGZhy{}\PYGZhy{}sim\PYGZhy{}id \PYG{l+m}{0} \PYGZhy{}\PYGZhy{}corpus\PYGZhy{}id \PYG{l+m}{1} \PYGZhy{}\PYGZhy{}pop ASW \PYGZhy{}\PYGZhy{}inds \PYG{l+m}{7500} \PYGZhy{}\PYGZhy{}snps \PYG{l+m}{10000} \PYGZhy{}\PYGZhy{}disease\PYGZhy{}snps \PYG{l+m}{156} \PYG{l+m}{3} \PYG{l+m}{1076} \PYGZhy{}\PYGZhy{}model models/param\PYGZus{}model.xml  
+python3 simulate\PYGZus{}data.py \PYGZhy{}\PYGZhy{}sim\PYGZhy{}ids \PYG{l+m}{0} \PYGZhy{}\PYGZhy{}corpus\PYGZhy{}id \PYG{l+m}{1} \PYGZhy{}\PYGZhy{}pop ASW \PYGZhy{}\PYGZhy{}inds \PYG{l+m}{7500} \PYGZhy{}\PYGZhy{}snps \PYG{l+m}{10000} \PYGZhy{}\PYGZhy{}disease\PYGZhy{}snps \PYG{l+m}{156} \PYG{l+m}{3} \PYG{l+m}{1076} \PYGZhy{}\PYGZhy{}model models/param\PYGZus{}model.xml  
 \end{sphinxVerbatim}
 
 As you will notice when executing this command, a large fraction of the runtime of \sphinxcode{\sphinxupquote{simulate\_data.py}} is used for loading the corpora. If you want to simulate data for only a small number of individuals, it is therefore advisable to first compute your own, smaller corpora. You can also speed-up the script by unzipping the corpora before running it.
@@ -336,16 +336,32 @@ Determines how many individuals from the selected corpus are included in the sim
 
 \end{description}
 
+\end{description}
+
+\item[{\sphinxstylestrong{Required Group of Mutually Exclusive Arguments:}}] \leavevmode\begin{description}
 \item[{\sphinxcode{\sphinxupquote{-{-}sim-ids SIM\_ID {[}SIM\_ID ...{]}}}}] \leavevmode\begin{description}
 \item[{Description:}] \leavevmode
 IDs of simulated data.
 
 \item[{Accepted Arguments:}] \leavevmode
-Non-negative integers.
+One or several non-negative integers.
 
 \item[{Effect:}] \leavevmode
-Together with the options \sphinxcode{\sphinxupquote{-{-}corpus-id}} and \sphinxcode{\sphinxupquote{-{-}pop}}, this options determines the prefices \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}}
-of the files that contain the simulated data.
+If N IDs \textless{}SIM\_ID\_1\textgreater{} … \textless{}SIM\_ID\_N\textgreater{} are provided, N simulated epistasis instances with prefices
+\sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\_1\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}}, …, \sphinxcode{\sphinxupquote{./sim/\textless{}SIM\_ID\_N\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}} are generated.
+
+\end{description}
+
+\item[{\sphinxcode{\sphinxupquote{-{-}num-sims NUM\_SIMS}}}] \leavevmode\begin{description}
+\item[{Description:}] \leavevmode
+The number of epistasis instances that should be generated.
+
+\item[{Accepted Arguments:}] \leavevmode
+Positive integer.
+
+\item[{Effect:}] \leavevmode
+If specified, \textless{}NUM\_SIMS\textgreater{} simulated epistasis instances with prefices
+\sphinxcode{\sphinxupquote{./sim/0\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}}, …, \sphinxcode{\sphinxupquote{./sim/\textless{}NUM\_SIMS-1\textgreater{}\_\textless{}CORPUS\_ID\textgreater{}\_\textless{}POP\textgreater{}}} are generated.
 
 \end{description}
 
@@ -878,7 +894,7 @@ Contains definition of DataSimulator class.
 \index{DataSimulator (class in utils.data\_simulator)@\spxentry{DataSimulator}\spxextra{class in utils.data\_simulator}}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{utils.data\_simulator.}}\sphinxbfcode{\sphinxupquote{DataSimulator}}}{\emph{sim\_id}, \emph{corpus\_id}, \emph{pop}, \emph{model}, \emph{num\_snps}, \emph{num\_inds}, \emph{disease\_snps}, \emph{biased\_distr}, \emph{noise\_maf\_range}, \emph{disease\_maf\_range}, \emph{seed}, \emph{compress}}{}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{utils.data\_simulator.}}\sphinxbfcode{\sphinxupquote{DataSimulator}}}{\emph{corpus\_id}, \emph{pop}, \emph{model}, \emph{num\_snps}, \emph{num\_inds}, \emph{disease\_snps}, \emph{biased\_distr}, \emph{noise\_maf\_range}, \emph{disease\_maf\_range}, \emph{seed}, \emph{compress}}{}
 Bases: \sphinxcode{\sphinxupquote{object}}
 
 Simulates epistasis data given a pre-generated genotype corpus.
@@ -1139,6 +1155,19 @@ list of int
 
 \end{fulllineitems}
 
+\index{input\_disease\_snps (utils.data\_simulator.DataSimulator attribute)@\spxentry{input\_disease\_snps}\spxextra{utils.data\_simulator.DataSimulator attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.input_disease_snps}}\pysigline{\sphinxbfcode{\sphinxupquote{input\_disease\_snps}}}
+A user-specified list of positions of the selected disease SNPs in self.snps and self.genotype.
+\begin{quote}\begin{description}
+\item[{Type}] \leavevmode
+list of int
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
 \index{noise\_maf\_range (utils.data\_simulator.DataSimulator attribute)@\spxentry{noise\_maf\_range}\spxextra{utils.data\_simulator.DataSimulator attribute}}
 
 \begin{fulllineitems}
@@ -1194,13 +1223,10 @@ bool
 \index{\_\_init\_\_() (utils.data\_simulator.DataSimulator method)@\spxentry{\_\_init\_\_()}\spxextra{utils.data\_simulator.DataSimulator method}}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.__init__}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{\_\_init\_\_}}}{\emph{sim\_id}, \emph{corpus\_id}, \emph{pop}, \emph{model}, \emph{num\_snps}, \emph{num\_inds}, \emph{disease\_snps}, \emph{biased\_distr}, \emph{noise\_maf\_range}, \emph{disease\_maf\_range}, \emph{seed}, \emph{compress}}{}
+\phantomsection\label{\detokenize{utils:utils.data_simulator.DataSimulator.__init__}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{\_\_init\_\_}}}{\emph{corpus\_id}, \emph{pop}, \emph{model}, \emph{num\_snps}, \emph{num\_inds}, \emph{disease\_snps}, \emph{biased\_distr}, \emph{noise\_maf\_range}, \emph{disease\_maf\_range}, \emph{seed}, \emph{compress}}{}
 Initialized DataSimulator.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
-\item {} 
-\sphinxstyleliteralstrong{\sphinxupquote{sim\_id}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} An integer that represents the ID of the generated data.
-
 \item {} 
 \sphinxstyleliteralstrong{\sphinxupquote{corpus\_id}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} An integer that represents the ID of the genotype corpus on top of which
 the data should be simulated.
