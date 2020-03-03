@@ -103,6 +103,9 @@ class DataSimulator(object):
             msg += "Change corpus or population ID or re-run generate_genotype_corpus.py." 
             raise OSError(msg)
         self.genotype = None
+        self.total_num_snps = np.shape(self.corpus_genotype)[0]
+        self.total_num_inds = np.shape(self.corpus_genotype)[1]
+        print("Genotype corpus contains {} SNPs and {} individuals.".format(self.total_num_snps, self.total_num_inds))
         
         # Load SNPs.
         print("Loading SNPs.")
@@ -206,8 +209,6 @@ class DataSimulator(object):
                     raise ValueError("For categorical phenptypes, the arguments passed to --biased-distr must be non-negative floats that sum up to 1, and their number must match the phenotype dimension.")
                     
         # Ensure that the desired numbers of SNPs and individuals are feasible.
-        self.total_num_snps = np.shape(self.corpus_genotype)[0]
-        self.total_num_inds = np.shape(self.corpus_genotype)[1]
         if self.num_snps > self.total_num_snps:
             self.num_snps = self.total_num_snps
             print("WARNING: Desired number of SNPs exceeds SNPs in corpus. Decreased to {}.".format(self.num_snps))

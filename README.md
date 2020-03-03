@@ -42,9 +42,21 @@ python3 merge_genotype_corpora.py --corpus-ids 1 2 --pops ASW ASW --corpus-id 23
 
 Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in `docs/build/html` and `docs/build/latex`.
 
+## Implementing Custom Interaction Models
+
+EpiGEN natively supports four parametrized interaction models: exponential, multiplicative, joint-dominant, and joint-recessive interaction. Further interaction models can easily be implemented by the user. Assume, for instance, that the user wants to implement xor-dominant interaction, i.e., a parametrized interaction model where there is an effect if and only if there is at least one minor allele at exactly one of the SNPs involved in the interaction. Then it suffices to insert the following five lines of code at line 242 of `utils/parametrized_model.py`:
+
+```py
+elif model_type == "xor-dominant":
+	if np.sum(gen_at_snp_set[poss]) == 1:
+		return alpha
+	else:
+		return 1
+```
+
 ## Requirements
 
-EpiGen has the following dependencies:
+EpiGEN has the following dependencies:
 
 - Python 3.3 or higher.
 - Numpy 1.17.3 or higher.
