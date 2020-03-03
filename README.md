@@ -85,9 +85,10 @@ If you use EpiGEN, please cite the following paper:
 ├── README.md                        // README
 ├── LICENSE                          // A copy of the GNU General Public License 3
 ├── requirements.txt                 // Lists dependencies
-├── simulate_data.py                 // Script the simulate epistasis data
+├── simulate_data.py                 // Script to simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── test_runtime.py                  // Script to test EpiGEN's runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data
 ├── corpora                          // Output directory for genotype corpora
