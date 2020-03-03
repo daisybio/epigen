@@ -79,9 +79,21 @@
 </div>
 <p>Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in <code class="docutils literal notranslate"><span class="pre">docs/build/html</span></code> and <code class="docutils literal notranslate"><span class="pre">docs/build/latex</span></code>.</p>
 </div>
+<div class="section" id="implementing-custom-interaction-models">
+<h2>Implementing Custom Interaction Models<a class="headerlink" href="#implementing-custom-interaction-models" title="Permalink to this headline">¶</a></h2>
+<p>EpiGEN natively supports four parametrized interaction models: exponential, multiplicative, joint-dominant, and joint-recessive interaction. Further interaction models can easily be implemented by the user. Assume, for instance, that the user wants to implement xor-dominant interaction, i.e., a parametrized interaction model where there is an effect if and only if there is at least one minor allele at exactly one of the SNPs involved in the interaction. Then it suffices to insert the following five lines of code at line 242 of <code class="docutils literal notranslate"><span class="pre">utils/parametrized_model.py</span></code>:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s2">&quot;xor-dominant&quot;</span><span class="p">:</span>
+	<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gen_at_snp_set</span><span class="p">[</span><span class="n">poss</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">alpha</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>For consistency, it is also recommendable to add the string <code class="docutils literal notranslate"><span class="pre">&quot;xor-dominant&quot;</span></code> to the error message on line 249 of <code class="docutils literal notranslate"><span class="pre">utils/parametrized_model.py</span></code>, as well to the list of acceptable interaction types on line 42 of the document type definition <code class="docutils literal notranslate"><span class="pre">models/ParametrizedModel.dtd</span></code>.</p>
+</div>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>EpiGen has the following dependencies:</p>
+<p>EpiGEN has the following dependencies:</p>
 <ul class="simple">
 <li><p>Python 3.3 or higher.</p></li>
 <li><p>Numpy 1.17.3 or higher.</p></li>
@@ -108,9 +120,10 @@
 ├── README.md                        // README
 ├── LICENSE                          // A copy of the GNU General Public License 3
 ├── requirements.txt                 // Lists dependencies
-├── simulate_data.py                 // Script the simulate epistasis data
+├── simulate_data.py                 // Script to simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── test_runtime.py                  // Script to test EpiGEN&#39;s runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data
 ├── corpora                          // Output directory for genotype corpora
@@ -119,12 +132,13 @@
 │   ├── HAPGEN2                      // Contains HAPGEN2 binaries and license
 │   └── HAPMAP3                      // Contains HAPMAP3 data
 ├── models                           // Contains epistasis models
-│   ├── ParametrizedModel.dtd.       // Doctype definition for parametrized models
-│   ├── ext_model.ini.               // An example of an extensional model
-│   └── param_model.xml.             // An example of a parametrized model
+│   ├── ParametrizedModel.dtd        // Doctype definition for parametrized models
+│   ├── ext_model.ini                // An example of an extensional model
+│   ├── param_model.xml              // An example of a parametrized model
+│   └── ...                          // Further models
 └── utils                            // Contains the core of EpiGEN
-    ├── __init__.py.                 // __init__ file
-    ├── data_simulator.py.           // Implements simulation of epistasis data
+    ├── __init__.py                  // __init__ file
+    ├── data_simulator.py            // Implements simulation of epistasis data
     ├── genotype_corpus_generator.py // Implements generation of genotype corpora
     ├── genotype_corpusmerger.py     // Implements merging of genotype corpora
     ├── parametrized_model.py.       // Implements parametrized models 
@@ -147,6 +161,7 @@
 <li><a class="reference internal" href="#scope">Scope</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#implementing-custom-interaction-models">Implementing Custom Interaction Models</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#license">License</a></li>
 <li><a class="reference internal" href="#citing-epigen">Citing EpiGEN</a></li>

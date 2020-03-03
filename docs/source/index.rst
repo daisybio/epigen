@@ -14,4 +14,5 @@ EpiGEN: an epistasis simulation pipeline
    simulate_data
    generate_genotype_corpus
    merge_genotype_corpora
+   test_runtime
    utils

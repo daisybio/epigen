@@ -250,6 +250,14 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrb8t.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/vf/adobe/courier/pcrb8t.vf
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrb8r.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrr8c.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrb8t.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/vf/adobe/courier/pcrr8c.vf
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/vf/adobe/courier/pcrb8t.vf
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrb8r.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/times/ptmbi8t.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/vf/adobe/times/ptmbi8t.vf
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/times/ptmbi8r.tfm
@@ -264,7 +272,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/vf/adobe/courier/pcrro8t.vf
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrro8r.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
-INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT user_guide.ind
 INPUT user_guide.ind
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/adobe/courier/pcrr8t.tfm

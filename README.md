@@ -54,6 +54,8 @@ elif model_type == "xor-dominant":
 		return 1
 ```
 
+For consistency, it is also recommendable to add the string `"xor-dominant"` to the error message on line 249 of `utils/parametrized_model.py`, as well to the list of acceptable interaction types on line 42 of the document type definition ``models/ParametrizedModel.dtd``.
+
 ## Requirements
 
 EpiGEN has the following dependencies:

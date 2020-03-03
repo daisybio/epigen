@@ -42,9 +42,23 @@ python3 merge_genotype_corpora.py --corpus-ids 1 2 --pops ASW ASW --corpus-id 23
 
 Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in `docs/build/html` and `docs/build/latex`.
 
+## Implementing Custom Interaction Models
+
+EpiGEN natively supports four parametrized interaction models: exponential, multiplicative, joint-dominant, and joint-recessive interaction. Further interaction models can easily be implemented by the user. Assume, for instance, that the user wants to implement xor-dominant interaction, i.e., a parametrized interaction model where there is an effect if and only if there is at least one minor allele at exactly one of the SNPs involved in the interaction. Then it suffices to insert the following five lines of code at line 242 of `utils/parametrized_model.py`:
+
+```py
+elif model_type == "xor-dominant":
+	if np.sum(gen_at_snp_set[poss]) == 1:
+		return alpha
+	else:
+		return 1
+```
+
+For consistency, it is also recommendable to add the string `"xor-dominant"` to the error message on line 249 of `utils/parametrized_model.py`, as well to the list of acceptable interaction types on line 42 of the document type definition ``models/ParametrizedModel.dtd``.
+
 ## Requirements
 
-EpiGen has the following dependencies:
+EpiGEN has the following dependencies:
 
 - Python 3.3 or higher.
 - Numpy 1.17.3 or higher.
@@ -73,9 +87,10 @@ If you use EpiGEN, please cite the following paper:
 ├── README.md                        // README
 ├── LICENSE                          // A copy of the GNU General Public License 3
 ├── requirements.txt                 // Lists dependencies
-├── simulate_data.py                 // Script the simulate epistasis data
+├── simulate_data.py                 // Script to simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── test_runtime.py                  // Script to test EpiGEN's runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data
 ├── corpora                          // Output directory for genotype corpora
@@ -84,12 +99,13 @@ If you use EpiGEN, please cite the following paper:
 │   ├── HAPGEN2                      // Contains HAPGEN2 binaries and license
 │   └── HAPMAP3                      // Contains HAPMAP3 data
 ├── models                           // Contains epistasis models
-│   ├── ParametrizedModel.dtd.       // Doctype definition for parametrized models
-│   ├── ext_model.ini.               // An example of an extensional model
-│   └── param_model.xml.             // An example of a parametrized model
+│   ├── ParametrizedModel.dtd        // Doctype definition for parametrized models
+│   ├── ext_model.ini                // An example of an extensional model
+│   ├── param_model.xml              // An example of a parametrized model
+│   └── ...                          // Further models
 └── utils                            // Contains the core of EpiGEN
-    ├── __init__.py.                 // __init__ file
-    ├── data_simulator.py.           // Implements simulation of epistasis data
+    ├── __init__.py                  // __init__ file
+    ├── data_simulator.py            // Implements simulation of epistasis data
     ├── genotype_corpus_generator.py // Implements generation of genotype corpora
     ├── genotype_corpusmerger.py     // Implements merging of genotype corpora
     ├── parametrized_model.py.       // Implements parametrized models 

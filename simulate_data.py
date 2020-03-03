@@ -57,7 +57,7 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
             Strings ending in ``.ini`` or ``.xml`` that represent paths to existing model files.
         Effect:
             Specifies the epistasis model used by the simulator.
-        Format of INI files:
+        Format of INI files for extensionally defined models:
             For each genotype of length ``<size>``, parameters of a Normal distribution must be provided.
             INI files for quantitative phenotypes have to be of the following format:::
             
@@ -84,10 +84,10 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
                 .
                 2,...,2 = <p_1>,...,<p_c>
                 
-        Format of XML files:
-            XML files have to match the document type definition ``./model/ParametrizedModel.dtd``.
+        Format of XML files for parametrized models:
+            XML files have to match the document type definition ``models/ParametrizedModel.dtd``.
         Examples:
-            Cf. the files ``./model/ext_model.ini`` and ``./model/param_model.xml``.        
+            Cf. the files ``models/ext_model.ini`` and ``models/param_model.xml``.        
     ``--snps SNPS``:
         Description:
             Number of SNPs in simulated data.

@@ -23,7 +23,7 @@
 
 **Usage**:: 
     
-    python3 test_runtimes.py
+    python3 test_runtime.py
     
 **Output:**
     File: 

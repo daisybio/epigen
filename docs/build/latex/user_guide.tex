@@ -72,7 +72,7 @@
 
 
 \title{EpiGEN: an epistasis simulation pipeline}
-\date{Feb 19, 2020}
+\date{Mar 03, 2020}
 \release{}
 \author{David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Paolo Tieri, and Tim Kacprowski}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -144,9 +144,24 @@ python3 merge\PYGZus{}genotype\PYGZus{}corpora.py \PYGZhy{}\PYGZhy{}corpus\PYGZh
 Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in \sphinxcode{\sphinxupquote{docs/build/html}} and \sphinxcode{\sphinxupquote{docs/build/latex}}.
 
 
+\subsection{Implementing Custom Interaction Models}
+\label{\detokenize{README:implementing-custom-interaction-models}}
+EpiGEN natively supports four parametrized interaction models: exponential, multiplicative, joint-dominant, and joint-recessive interaction. Further interaction models can easily be implemented by the user. Assume, for instance, that the user wants to implement xor-dominant interaction, i.e., a parametrized interaction model where there is an effect if and only if there is at least one minor allele at exactly one of the SNPs involved in the interaction. Then it suffices to insert the following five lines of code at line 242 of \sphinxcode{\sphinxupquote{utils/parametrized\_model.py}}:
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{elif} \PYG{n}{model\PYGZus{}type} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{xor\PYGZhy{}dominant}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:}
+	\PYG{k}{if} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{gen\PYGZus{}at\PYGZus{}snp\PYGZus{}set}\PYG{p}{[}\PYG{n}{poss}\PYG{p}{]}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+		\PYG{k}{return} \PYG{n}{alpha}
+	\PYG{k}{else}\PYG{p}{:}
+		\PYG{k}{return} \PYG{l+m+mi}{1}
+\end{sphinxVerbatim}
+
+For consistency, it is also recommendable to add the string \sphinxcode{\sphinxupquote{"xor-dominant"}} to the error message on line 249 of \sphinxcode{\sphinxupquote{utils/parametrized\_model.py}}, as well to the list of acceptable interaction types on line 42 of the document type definition \sphinxcode{\sphinxupquote{models/ParametrizedModel.dtd}}.
+
+
 \subsection{Requirements}
 \label{\detokenize{README:requirements}}
-EpiGen has the following dependencies:
+EpiGEN has the following dependencies:
 \begin{itemize}
 \item {} 
 Python 3.3 or higher.
@@ -189,9 +204,10 @@ D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski. “Ep
 ├── README.md                        // README
 ├── LICENSE                          // A copy of the GNU General Public License 3
 ├── requirements.txt                 // Lists dependencies
-├── simulate\PYGZus{}data.py                 // Script the simulate epistasis data
+├── simulate\PYGZus{}data.py                 // Script to simulate epistasis data
 ├── generate\PYGZus{}genotype\PYGZus{}corpus.py      // Script to generate genotype corpus
 ├── merge\PYGZus{}genotype\PYGZus{}corpora.py        // Script to merge genotype corpora
+├── test\PYGZus{}runtime.py                  // Script to test EpiGEN\PYGZsq{}s runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data
 ├── corpora                          // Output directory for genotype corpora
@@ -200,12 +216,13 @@ D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski. “Ep
 │   ├── HAPGEN2                      // Contains HAPGEN2 binaries and license
 │   └── HAPMAP3                      // Contains HAPMAP3 data
 ├── models                           // Contains epistasis models
-│   ├── ParametrizedModel.dtd.       // Doctype definition for parametrized models
-│   ├── ext\PYGZus{}model.ini.               // An example of an extensional model
-│   └── param\PYGZus{}model.xml.             // An example of a parametrized model
+│   ├── ParametrizedModel.dtd        // Doctype definition for parametrized models
+│   ├── ext\PYGZus{}model.ini                // An example of an extensional model
+│   ├── param\PYGZus{}model.xml              // An example of a parametrized model
+│   └── ...                          // Further models
 └── utils                            // Contains the core of EpiGEN
-    ├── \PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}.py.                 // \PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{} file
-    ├── data\PYGZus{}simulator.py.           // Implements simulation of epistasis data
+    ├── \PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}.py                  // \PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{} file
+    ├── data\PYGZus{}simulator.py            // Implements simulation of epistasis data
     ├── genotype\PYGZus{}corpus\PYGZus{}generator.py // Implements generation of genotype corpora
     ├── genotype\PYGZus{}corpusmerger.py     // Implements merging of genotype corpora
     ├── parametrized\PYGZus{}model.py.       // Implements parametrized models 
@@ -269,7 +286,7 @@ Strings ending in \sphinxcode{\sphinxupquote{.ini}} or \sphinxcode{\sphinxupquot
 \item[{Effect:}] \leavevmode
 Specifies the epistasis model used by the simulator.
 
-\item[{Format of INI files:}] \leavevmode
+\item[{Format of INI files for extensionally defined models:}] \leavevmode
 For each genotype of length \sphinxcode{\sphinxupquote{\textless{}size\textgreater{}}}, parameters of a Normal distribution must be provided.
 INI files for quantitative phenotypes have to be of the following format::
 
@@ -300,11 +317,11 @@ INI files for categorical phenotypes have to be of the following format::
 \PYG{l+m+mi}{2}\PYG{p}{,}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{,}\PYG{l+m+mi}{2} \PYG{o}{=} \PYG{o}{\PYGZlt{}}\PYG{n}{p\PYGZus{}1}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}\PYG{p}{,}\PYG{o}{\PYGZlt{}}\PYG{n}{p\PYGZus{}c}\PYG{o}{\PYGZgt{}}
 \end{sphinxVerbatim}
 
-\item[{Format of XML files:}] \leavevmode
-XML files have to match the document type definition \sphinxcode{\sphinxupquote{./model/ParametrizedModel.dtd}}.
+\item[{Format of XML files for parametrized models:}] \leavevmode
+XML files have to match the document type definition \sphinxcode{\sphinxupquote{models/ParametrizedModel.dtd}}.
 
 \item[{Examples:}] \leavevmode
-Cf. the files \sphinxcode{\sphinxupquote{./model/ext\_model.ini}} and \sphinxcode{\sphinxupquote{./model/param\_model.xml}}.
+Cf. the files \sphinxcode{\sphinxupquote{models/ext\_model.ini}} and \sphinxcode{\sphinxupquote{models/param\_model.xml}}.
 
 \end{description}
 
@@ -877,6 +894,48 @@ Plot of cumulative MAF distribution. Can be used to determine feasible ranges of
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{merge_genotype_corpora:merge_genotype_corpora.run_script}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{merge\_genotype\_corpora.}}\sphinxbfcode{\sphinxupquote{run\_script}}}{}{}
+Runs the script.
+
+\end{fulllineitems}
+
+
+
+\section{The script \sphinxstyleliteralintitle{\sphinxupquote{test\_runtime.py}}}
+\label{\detokenize{test_runtime:module-test_runtime}}\label{\detokenize{test_runtime:the-script-test-runtime-py}}\label{\detokenize{test_runtime::doc}}\index{test\_runtime (module)@\spxentry{test\_runtime}\spxextra{module}}
+Run this script to test to carry out runtime tests.
+
+\sphinxstylestrong{Usage}:
+
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{python3} \PYG{n}{test\PYGZus{}runtime}\PYG{o}{.}\PYG{n}{py}
+\end{sphinxVerbatim}
+\begin{description}
+\item[{\sphinxstylestrong{Output:}}] \leavevmode\begin{description}
+\item[{File:}] \leavevmode
+\sphinxcode{\sphinxupquote{./num\_inds\_vs\_runtime.csv}}
+
+\item[{Content:}] \leavevmode
+Runtimes for simulating 1 dataset with varying number of individuals with number of SNPs fixed to 100000.
+
+\item[{File:}] \leavevmode
+\sphinxcode{\sphinxupquote{./num\_snps\_vs\_runtime.csv}}
+
+\item[{Content:}] \leavevmode
+Runtimes for simulating 1 dataset with varying number of SNPs with number of individuals fixed to 10000.
+
+\item[{File:}] \leavevmode
+\sphinxcode{\sphinxupquote{./num\_datasets\_vs\_runtime.csv}}
+
+\item[{Content:}] \leavevmode
+Runtimes for simulating varying number of datasets with number of SNPs and individuals fixed to 100.
+
+\end{description}
+
+\end{description}
+\index{run\_script() (in module test\_runtime)@\spxentry{run\_script()}\spxextra{in module test\_runtime}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{test_runtime:test_runtime.run_script}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{test\_runtime.}}\sphinxbfcode{\sphinxupquote{run\_script}}}{}{}
 Runs the script.
 
 \end{fulllineitems}
@@ -2041,6 +2100,9 @@ Ensures that the provided argument is positive.
 \indexspace
 \bigletter{s}
 \item\relax\sphinxstyleindexentry{simulate\_data}\sphinxstyleindexpageref{simulate_data:\detokenize{module-simulate_data}}
+\indexspace
+\bigletter{t}
+\item\relax\sphinxstyleindexentry{test\_runtime}\sphinxstyleindexpageref{test_runtime:\detokenize{module-test_runtime}}
 \indexspace
 \bigletter{u}
 \item\relax\sphinxstyleindexentry{utils.argparse\_checks}\sphinxstyleindexpageref{utils:\detokenize{module-utils.argparse_checks}}
