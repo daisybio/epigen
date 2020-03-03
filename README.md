@@ -2,7 +2,7 @@
 
 ## Scope
 
-EpiGEN is an easy-to-use epistasis simulation pipeline written in Python. It supports epistasis models of arbitrary size, which can be specified either extensionally or via parametrized risk models. Moreover, the user can specify the minor allele frequencies (MAFs) of both noise and disease SNPs, and provide a bias target distribution for the generated phenotypes to simulate observation bias.
+EpiGEN is an easy-to-use epistasis simulation pipeline written in Python. It supports epistasis models of arbitrary size, which can be specified either extensionally or via parametrized risk models. Moreover, the user can specify the minor allele frequencies (MAFs) of both noise and disease SNPs, and provide a biased target distribution for the generated phenotypes to simulate observation bias.
 
 ## Installation
 
