@@ -77,7 +77,7 @@ All of EpiGEN's Python sources are licensed under the [GNU General Public Licens
 
 If you use EpiGEN, please cite the following paper:
 
-- D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski. &ldquo;EpiGEN: an epistasis simulation pipeline&rdquo;. Submitted.
+- D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski (2020). &ldquo;EpiGEN: an epistasis simulation pipeline&rdquo;, Bioinformatics, DOI: [10.1093/bioinformatics/btaa245](https://doi.org/10.1093/bioinformatics/btaa245).
 
 
 ## Structure of the Repository
