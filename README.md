@@ -6,7 +6,7 @@ EpiGEN is an easy-to-use epistasis simulation pipeline written in Python. It sup
 
 ## Installation
 
-EpiGen is freely available on [GitHub](https://github.com/baumbachlab/epigen). To install it on your machine, simply execute the following line in a terminal:
+EpiGen is freely available on [GitHub](https://github.com/baumbachlab/epigen). Before installing it on your machine, make sure that you have [git](https://git-scm.com/) and [git lfs](https://git-lfs.github.com/) installed. Then simply execute the following line in a terminal:
 
 ```sh
 git clone https://github.com/baumbachlab/epigen
