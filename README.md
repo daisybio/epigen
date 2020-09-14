@@ -34,13 +34,15 @@ If you want to use custom corpora instead of the pre-computed ones, you can gene
 python3 generate_genotype_corpus.py --corpus-id 1 --pop ASW --inds 10000 --chroms 1 --compress 
 ```
 
-Finally, the script `merge_genotype_corpora.py` allows you to merge pre-computed corpora into a larger copus. For instance, the following command merges the pre-computed corpora `corpora/1_ASW_` and `corpora/2_ASW_` into a newly generated corpus `corpora/23_ASW_`:
+The script `merge_genotype_corpora.py` allows you to merge pre-computed corpora into a larger corpus. For instance, the following command merges the pre-computed corpora `corpora/1_ASW_` and `corpora/2_ASW_` into a newly generated corpus `corpora/23_ASW_`:
 
 ```sh
 python3 merge_genotype_corpora.py --corpus-ids 1 2 --pops ASW ASW --corpus-id 23 --append SNPS
 ```
 
-Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in `docs/build/html` and `docs/build/latex`.
+Finally, you can validate the simulated data with the script `validate_simulated_data.py`. For categorical phenotypes, this script carries out the chi-squared test, for quantitative phenotypes, it runs one-way ANOVA.
+
+More detailed descriptions of how to use the scripts can be found in the user guide or by calling them with the option `--help`.
 
 ## Implementing Custom Interaction Models
 
@@ -67,7 +69,9 @@ EpiGEN has the following dependencies:
 
 Moreover, due to its HAPGEN2 dependency, the script `generate_genotype_corpus.py` needs to be run on a Linux machine or on a machine running macOS 10.14 or lower. However, you can avoid running `generate_genotype_corpus.py` by using the pre-computed corpora and merging them, if necessary.
 
-If you want to re-compile the documentation contained in the `docs` directory, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing `make html` and `make latexpdf` from the `docs` directory. 
+## User Guide
+
+EpiGEN comes with a detailed user guide. The main files of the HTML and LaTeX versions are, respectively, `docs/build/html/index.html` and `docs/build/latex/user_guide.pdf`.  If you want to re-compile the user guide, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing `make html` and `make latexpdf` from the `docs` directory. 
 
 ## License
 

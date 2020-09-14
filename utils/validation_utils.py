@@ -115,6 +115,7 @@ def write_to_log_file(logfilename, test, p_value, disease_mafs, penetrance_table
         disease_mafs (list): List of MAFs of disease SNPs.
         penetrance_table (dict): Penetrance table induced by disease SNPs.
     """
+    penetrance_table = {str(gen): phens for gen, phens in penetrance_table.items()}
     log = {'test': test, 'p_value': p_value, 'disease_mafs': disease_mafs, 'penetrance_table': penetrance_table}
     try:
         with open(logfilename, 'w') as jsonfile:
