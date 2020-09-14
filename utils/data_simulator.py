@@ -69,7 +69,6 @@ class DataSimulator(object):
         compress (bool): If True, the simulated data is compressed.
     """
 
-
     def __init__(self, corpus_id, pop, model, num_snps, num_inds, disease_snps, biased_distr, noise_maf_range, disease_maf_range, seed, compress):
         """Initialized DataSimulator.
         
@@ -222,7 +221,7 @@ class DataSimulator(object):
                 raise ValueError("Genotype corpus contains no SNP with ID {}.".format(snp))
         if len(self.input_disease_snps) > 0 and len(self.input_disease_snps) != self.model.size:
             raise ValueError("The sizes of the disease SNP set and the epistasis model don't match. Disease SNP set size: {}; model size: {}.".format(len(self.disease_snps), self.model.size))
-            
+
     def set_sim_id(self, sim_id):
         """Sets the simulation ID and prepares next simulation on top of pre-loaded corpus.
         
@@ -241,7 +240,7 @@ class DataSimulator(object):
         self.mafs = self.corpus_mafs
         self.cum_mafs = self.corpus_cum_mafs 
         self.disease_snps = self.input_disease_snps 
-    
+
     def sample_snps(self):
         """Samples the SNPs and the disease SNP set based on the MAFs."""
         
@@ -311,8 +310,7 @@ class DataSimulator(object):
             self.noise_maf_range[0] = min(self.noise_maf_range[0], self.cum_mafs[pos_last_too_small + 1][0])
             self.noise_maf_range[1] = max(self.noise_maf_range[1], self.cum_mafs[pos_last_not_too_large][0])
             print("WARNING: Specified noise MAF range is too narrow. Extended to [{},{}].".format(self.noise_maf_range[0], self.noise_maf_range[1]))
-            
-        
+
         # Sample the disease SNPs.
         print("Sampling disease SNPs.")
         if len(self.disease_snps) == 0:
@@ -327,13 +325,12 @@ class DataSimulator(object):
         candidates = [snp for snp in range(self.total_num_snps) if (self.mafs[snp] >= self.noise_maf_range[0]) and (self.mafs[snp] <= self.noise_maf_range[1]) & is_no_disease_snp[snp]]
         selected_snps = sorted(self.disease_snps + np.random.choice(candidates, replace=False, size=(self.num_snps - self.model.size)).tolist())
         
-        # Update the genotype and the MAF arrays, as well as the SNP list.
+        # Update the genotype array and the SNP list.
         print("Updating genotype matrix, MAF array, and SNP list.") 
         self.snps = [self.snps[snp] for snp in selected_snps]
         snp_id_old_to_new = {selected_snps[i] : i for i in range(self.num_snps)}
         self.disease_snps = [snp_id_old_to_new[snp] for snp in self.disease_snps]
         self.genotype = self.genotype[selected_snps,:]
-        self.mafs = self.mafs[selected_snps]
         
     def generate_phenotype(self):
         """Generates the phenotype and adjusts the number of individuals."""
@@ -368,10 +365,11 @@ class DataSimulator(object):
                 probs /= np.sum(probs)
             selected_inds = np.random.choice(range(self.total_num_inds), replace=False, size=self.num_inds, p=probs).tolist()
         
-        # Sort the selected individuals and adjust the genotype and phenotype arrays.
+        # Sort the selected individuals and adjust the genotype, phenotype and MAF arrays.
         selected_inds = sorted(selected_inds)
         self.genotype = self.genotype[:,selected_inds]
         self.phenotype = self.phenotype[selected_inds]
+        self.mafs = np.sum(self.genotype, axis=1) / (self.num_inds * 2)
         
     def dump_simulated_data(self):
         """Dumps the simulated data."""

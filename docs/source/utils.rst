@@ -50,3 +50,11 @@ The module ``utils.argparse_checks.py``
    :members:
    :undoc-members:
    :show-inheritance:
+
+The module ``utils.validation_utils.py``
+----------------------------------------
+
+.. automodule:: utils.validation_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

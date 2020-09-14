@@ -182,7 +182,7 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
         Accepted Arguments:
             Floats ``<LB>`` and ``<UB>`` with ``0 <= <LB> < <UB> <= 1``.
         Default:
-            [0,1]
+            [0.1,1]
         Effect:
             Unless ``--disease-snps`` is provided, the disease SNPs are randomly sampled from those SNPs in the corpus whose MAFs 
             fall into the specified range. If the range is too narrow, it is dynamically extended at runtime.
@@ -247,6 +247,7 @@ from utils.data_simulator import DataSimulator as DataSim
 import utils.argparse_checks as checks
 import argparse
 
+
 def run_script():
     """Runs the script."""
     
@@ -276,7 +277,7 @@ def run_script():
     exclusive_args = parser.add_argument_group("optional group of mutually exclusive arguments")
     disease_snps = exclusive_args.add_mutually_exclusive_group()
     disease_snps.add_argument("--disease-snps", default=[], type=int, nargs="+", action=checks.check_length("--disease-snps"), metavar="SNP", help="Position of disease SNPs in selected genotype corpus. Default = [].")
-    disease_snps.add_argument("--disease-maf-range", type=float, nargs=2, default=[0,1], metavar=("LB", "UB"), help="Range of acceptable MAFs for disease SNPs. Default = [0,1].", action=checks.check_interval("--disease-maf-range"))
+    disease_snps.add_argument("--disease-maf-range", type=float, nargs=2, default=[0.1,1], metavar=("LB", "UB"), help="Range of acceptable MAFs for disease SNPs. Default = [0.1, 1].", action=checks.check_interval("--disease-maf-range"))
     args = parser.parse_args()
     
     print("\n############################################################################")
@@ -301,6 +302,7 @@ def run_script():
     for sim_id in sim_ids:
         print("Generated data:\t./sim/{}_{}_{}.{}".format(sim_id, args.corpus_id, args.pop, suffix))
     print("\n############################################################################")
-    
+
+
 if __name__ == "__main__":
     run_script()

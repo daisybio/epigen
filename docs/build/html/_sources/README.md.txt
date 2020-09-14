@@ -6,7 +6,7 @@ EpiGEN is an easy-to-use epistasis simulation pipeline written in Python. It sup
 
 ## Installation
 
-EpiGen is freely available on [GitHub](https://github.com/baumbachlab/epigen). To install it on your machine, simply execute the following line in a terminal:
+EpiGen is freely available on [GitHub](https://github.com/baumbachlab/epigen). Before installing it on your machine, make sure that you have [git](https://git-scm.com/) and [git lfs](https://git-lfs.github.com/) installed. Then simply execute the following line in a terminal:
 
 ```sh
 git clone https://github.com/baumbachlab/epigen
@@ -77,7 +77,7 @@ All of EpiGEN's Python sources are licensed under the [GNU General Public Licens
 
 If you use EpiGEN, please cite the following paper:
 
-- D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski. &ldquo;EpiGEN: an epistasis simulation pipeline&rdquo;. Submitted.
+- D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski (2020). &ldquo;EpiGEN: an epistasis simulation pipeline&rdquo;, Bioinformatics, DOI: [10.1093/bioinformatics/btaa245](https://doi.org/10.1093/bioinformatics/btaa245).
 
 
 ## Structure of the Repository
@@ -90,6 +90,7 @@ If you use EpiGEN, please cite the following paper:
 ├── simulate_data.py                 // Script to simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── validate_simulated_data.py       // Script to validate simulated data
 ├── test_runtime.py                  // Script to test EpiGEN's runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data

@@ -86,7 +86,7 @@ INI files are used to provide extensionally defined models, XML files specify pa
 </dd>
 <dt>Effect:</dt><dd><p>Specifies the epistasis model used by the simulator.</p>
 </dd>
-<dt>Format of INI files:</dt><dd><p>For each genotype of length <code class="docutils literal notranslate"><span class="pre">&lt;size&gt;</span></code>, parameters of a Normal distribution must be provided.
+<dt>Format of INI files for extensionally defined models:</dt><dd><p>For each genotype of length <code class="docutils literal notranslate"><span class="pre">&lt;size&gt;</span></code>, parameters of a Normal distribution must be provided.
 INI files for quantitative phenotypes have to be of the following format::</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Model</span> <span class="n">Type</span><span class="p">]</span>
 <span class="n">size</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span>
@@ -113,9 +113,9 @@ INI files for categorical phenotypes have to be of the following format::</p>
 </pre></div>
 </div>
 </dd>
-<dt>Format of XML files:</dt><dd><p>XML files have to match the document type definition <code class="docutils literal notranslate"><span class="pre">./model/ParametrizedModel.dtd</span></code>.</p>
+<dt>Format of XML files for parametrized models:</dt><dd><p>XML files have to match the document type definition <code class="docutils literal notranslate"><span class="pre">models/ParametrizedModel.dtd</span></code>.</p>
 </dd>
-<dt>Examples:</dt><dd><p>Cf. the files <code class="docutils literal notranslate"><span class="pre">./model/ext_model.ini</span></code> and <code class="docutils literal notranslate"><span class="pre">./model/param_model.xml</span></code>.</p>
+<dt>Examples:</dt><dd><p>Cf. the files <code class="docutils literal notranslate"><span class="pre">models/ext_model.ini</span></code> and <code class="docutils literal notranslate"><span class="pre">models/param_model.xml</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -235,7 +235,7 @@ via the option <code class="docutils literal notranslate"><span class="pre">--mo
 </dd>
 <dt>Accepted Arguments:</dt><dd><p>Floats <code class="docutils literal notranslate"><span class="pre">&lt;LB&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;UB&gt;</span></code> with <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">&lt;LB&gt;</span> <span class="pre">&lt;</span> <span class="pre">&lt;UB&gt;</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code>.</p>
 </dd>
-<dt>Default:</dt><dd><p>[0,1]</p>
+<dt>Default:</dt><dd><p>[0.1,1]</p>
 </dd>
 <dt>Effect:</dt><dd><p>Unless <code class="docutils literal notranslate"><span class="pre">--disease-snps</span></code> is provided, the disease SNPs are randomly sampled from those SNPs in the corpus whose MAFs
 fall into the specified range. If the range is too narrow, it is dynamically extended at runtime.</p>

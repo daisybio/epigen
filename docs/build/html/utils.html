@@ -16,7 +16,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="The script merge_genotype_corpora.py" href="merge_genotype_corpora.html" /> 
+    <link rel="prev" title="The script validate_simulated_data.py" href="validate_simulated_data.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,7 +28,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="merge_genotype_corpora.html" title="The script merge_genotype_corpora.py"
+          <a href="validate_simulated_data.html" title="The script validate_simulated_data.py"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
       </ul>
@@ -963,6 +963,95 @@ Examples can be found in the directory epigen/models/.</p></li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-utils.validation_utils">
+<span id="the-module-utils-validation-utils-py"></span><h2>The module <code class="docutils literal notranslate"><span class="pre">utils.validation_utils.py</span></code><a class="headerlink" href="#module-utils.validation_utils" title="Permalink to this headline">¶</a></h2>
+<p>Contains utility functions for validating simulated data.</p>
+<dl class="function">
+<dt id="utils.validation_utils.chi_square">
+<code class="sig-prename descclassname">utils.validation_utils.</code><code class="sig-name descname">chi_square</code><span class="sig-paren">(</span><em class="sig-param">penetrance_table</em>, <em class="sig-param">num_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.validation_utils.chi_square" title="Permalink to this definition">¶</a></dt>
+<dd><p>Carries out chi-square test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>penetrance_table</strong> (<em>dict</em>) – The penetrance table induced by the disease SNPs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The obtained p-value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.validation_utils.generate_penetrance_table">
+<code class="sig-prename descclassname">utils.validation_utils.</code><code class="sig-name descname">generate_penetrance_table</code><span class="sig-paren">(</span><em class="sig-param">sim_data</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.validation_utils.generate_penetrance_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates penetrance table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sim_data</strong> (<em>dict</em>) – The simulated data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The penetrance table induced by the disease SNPs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.validation_utils.load_data">
+<code class="sig-prename descclassname">utils.validation_utils.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.validation_utils.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads simulated data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to the file containing the data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing the simulated data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.validation_utils.one_way_anova">
+<code class="sig-prename descclassname">utils.validation_utils.</code><code class="sig-name descname">one_way_anova</code><span class="sig-paren">(</span><em class="sig-param">penetrance_table</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.validation_utils.one_way_anova" title="Permalink to this definition">¶</a></dt>
+<dd><p>Carries out one-way ANOVA F-test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>penetrance_table</strong> (<em>dict</em>) – The penetrance table induced by the disease SNPs.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The obtained p-value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.validation_utils.write_to_log_file">
+<code class="sig-prename descclassname">utils.validation_utils.</code><code class="sig-name descname">write_to_log_file</code><span class="sig-paren">(</span><em class="sig-param">logfilename</em>, <em class="sig-param">test</em>, <em class="sig-param">p_value</em>, <em class="sig-param">disease_mafs</em>, <em class="sig-param">penetrance_table</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.validation_utils.write_to_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the results of the validation to a log-file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logfilename</strong> (<em>str</em>) – Name of the log-file.</p></li>
+<li><p><strong>test</strong> (<em>str</em>) – Name of the test.</p></li>
+<li><p><strong>p_value</strong> (<em>float</em>) – Obtained p-value.</p></li>
+<li><p><strong>disease_mafs</strong> (<em>list</em>) – List of MAFs of disease SNPs.</p></li>
+<li><p><strong>penetrance_table</strong> (<em>dict</em>) – Penetrance table induced by disease SNPs.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -980,13 +1069,14 @@ Examples can be found in the directory epigen/models/.</p></li>
 <li><a class="reference internal" href="#module-utils.extensional_model">The module <code class="docutils literal notranslate"><span class="pre">utils.extensional_model.py</span></code></a></li>
 <li><a class="reference internal" href="#module-utils.parametrized_model">The module <code class="docutils literal notranslate"><span class="pre">utils.parametrized_model.py</span></code></a></li>
 <li><a class="reference internal" href="#module-utils.argparse_checks">The module <code class="docutils literal notranslate"><span class="pre">utils.argparse_checks.py</span></code></a></li>
+<li><a class="reference internal" href="#module-utils.validation_utils">The module <code class="docutils literal notranslate"><span class="pre">utils.validation_utils.py</span></code></a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="merge_genotype_corpora.html"
-                        title="previous chapter">The script <code class="docutils literal notranslate"><span class="pre">merge_genotype_corpora.py</span></code></a></p>
+  <p class="topless"><a href="validate_simulated_data.html"
+                        title="previous chapter">The script <code class="docutils literal notranslate"><span class="pre">validate_simulated_data.py</span></code></a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -1018,7 +1108,7 @@ Examples can be found in the directory epigen/models/.</p></li>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="merge_genotype_corpora.html" title="The script merge_genotype_corpora.py"
+          <a href="validate_simulated_data.html" title="The script validate_simulated_data.py"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">EpiGEN  documentation</a> &#187;</li> 
       </ul>

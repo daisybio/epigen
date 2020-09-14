@@ -262,7 +262,7 @@ class GenotypeCorpusGenerator(object):
         print("Computing MAFs ... ")
         
         # Compute the minor allele frequencies.
-        self.mafs = np.apply_along_axis(np.sum, 1, np.sign(self.genotype)) / self.num_inds
+        self.mafs = np.sum(self.genotype, axis=1) / (self.num_inds * 2)
         
         # Compute cumulative MAF distribution.
         self.cum_mafs = []

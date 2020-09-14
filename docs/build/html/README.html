@@ -51,7 +51,7 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>EpiGen is freely available on <a class="reference external" href="https://github.com/baumbachlab/epigen">GitHub</a>. To install it on your machine, simply execute the following line in a terminal:</p>
+<p>EpiGen is freely available on <a class="reference external" href="https://github.com/baumbachlab/epigen">GitHub</a>. Before installing it on your machine, make sure that you have <a class="reference external" href="https://git-scm.com/">git</a> and <a class="reference external" href="https://git-lfs.github.com/">git lfs</a> installed. Then simply execute the following line in a terminal:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/baumbachlab/epigen
 </pre></div>
 </div>
@@ -111,7 +111,7 @@
 <h2>Citing EpiGEN<a class="headerlink" href="#citing-epigen" title="Permalink to this headline">¶</a></h2>
 <p>If you use EpiGEN, please cite the following paper:</p>
 <ul class="simple">
-<li><p>D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski. “EpiGEN: an epistasis simulation pipeline”. Submitted.</p></li>
+<li><p>D. B. Blumenthal, L. Viola, M. List, J. Baumbach, P. Tieri, T. Kacprowski (2020). “EpiGEN: an epistasis simulation pipeline”, Bioinformatics, DOI: <a class="reference external" href="https://doi.org/10.1093/bioinformatics/btaa245">10.1093/bioinformatics/btaa245</a>.</p></li>
 </ul>
 </div>
 <div class="section" id="structure-of-the-repository">
@@ -123,6 +123,7 @@
 ├── simulate_data.py                 // Script to simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── validate_simulated_data.py       // Script to validate simulated data
 ├── test_runtime.py                  // Script to test EpiGEN&#39;s runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data

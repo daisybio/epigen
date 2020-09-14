@@ -90,6 +90,7 @@ If you use EpiGEN, please cite the following paper:
 ├── simulate_data.py                 // Script to simulate epistasis data
 ├── generate_genotype_corpus.py      // Script to generate genotype corpus
 ├── merge_genotype_corpora.py        // Script to merge genotype corpora
+├── validate_simulated_data.py       // Script to validate simulated data
 ├── test_runtime.py                  // Script to test EpiGEN's runtime performance
 ├── docs                             // Contains Sphinx documentation
 ├── sim                              // Output directory for simulated data
