@@ -221,7 +221,10 @@ Otherwise, it is set to <code class="docutils literal notranslate"><span class="
 </dd>
 <dt><strong>Optional Mutually Exclusive Arguments:</strong></dt><dd><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--disease-snps</span> <span class="pre">SNP</span> <span class="pre">[SNP</span> <span class="pre">...]</span></code></dt><dd><dl class="simple">
-<dt>Description:</dt><dd><p>Position of disease SNPs in selected genotype corpus.</p>
+<dt>Description:</dt><dd><p>Position of disease SNPs in selected genotype corpus. Note that these positions do not correspond to the
+positions of the disease SNPs in the simulated epistasis data, since EpiGEN re-orders the SNPs. The
+positions of the disease SNPs in the simulated epistasis data are contained in the JSON field
+with the key <code class="docutils literal notranslate"><span class="pre">&quot;disease_snps&quot;</span></code> of the result file.</p>
 </dd>
 <dt>Accepted Arguments:</dt><dd><p>White space separated list of non-negative integers whose length matches the size of the model specified
 via the option <code class="docutils literal notranslate"><span class="pre">--model</span></code>. All integers must be smaller than the number of SNPs in the selected corpus.</p>

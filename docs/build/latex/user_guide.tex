@@ -72,7 +72,7 @@
 
 
 \title{EpiGEN: an epistasis simulation pipeline}
-\date{Sep 14, 2020}
+\date{Sep 16, 2020}
 \release{}
 \author{David B. Blumenthal, Lorenzo Viola, Markus List, Jan Baumbach, Paolo Tieri, and Tim Kacprowski}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -135,13 +135,15 @@ If you want to use custom corpora instead of the pre-computed ones, you can gene
 python3 generate\PYGZus{}genotype\PYGZus{}corpus.py \PYGZhy{}\PYGZhy{}corpus\PYGZhy{}id \PYG{l+m}{1} \PYGZhy{}\PYGZhy{}pop ASW \PYGZhy{}\PYGZhy{}inds \PYG{l+m}{10000} \PYGZhy{}\PYGZhy{}chroms \PYG{l+m}{1} \PYGZhy{}\PYGZhy{}compress 
 \end{sphinxVerbatim}
 
-Finally, the script \sphinxcode{\sphinxupquote{merge\_genotype\_corpora.py}} allows you to merge pre-computed corpora into a larger copus. For instance, the following command merges the pre-computed corpora \sphinxcode{\sphinxupquote{corpora/1\_ASW\_}} and \sphinxcode{\sphinxupquote{corpora/2\_ASW\_}} into a newly generated corpus \sphinxcode{\sphinxupquote{corpora/23\_ASW\_}}:
+The script \sphinxcode{\sphinxupquote{merge\_genotype\_corpora.py}} allows you to merge pre-computed corpora into a larger corpus. For instance, the following command merges the pre-computed corpora \sphinxcode{\sphinxupquote{corpora/1\_ASW\_}} and \sphinxcode{\sphinxupquote{corpora/2\_ASW\_}} into a newly generated corpus \sphinxcode{\sphinxupquote{corpora/23\_ASW\_}}:
 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 python3 merge\PYGZus{}genotype\PYGZus{}corpora.py \PYGZhy{}\PYGZhy{}corpus\PYGZhy{}ids \PYG{l+m}{1} \PYG{l+m}{2} \PYGZhy{}\PYGZhy{}pops ASW ASW \PYGZhy{}\PYGZhy{}corpus\PYGZhy{}id \PYG{l+m}{23} \PYGZhy{}\PYGZhy{}append SNPS
 \end{sphinxVerbatim}
 
-Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in \sphinxcode{\sphinxupquote{docs/build/html}} and \sphinxcode{\sphinxupquote{docs/build/latex}}.
+Finally, you can validate the simulated data with the script \sphinxcode{\sphinxupquote{validate\_simulated\_data.py}}. For categorical phenotypes, this script carries out the chi-squared test, for quantitative phenotypes, it runs one-way ANOVA.
+
+More detailed descriptions of how to use the scripts can be found in the user guide or by calling them with the option \sphinxcode{\sphinxupquote{-{-}help}}.
 
 
 \subsection{Implementing Custom Interaction Models}
@@ -179,7 +181,10 @@ Matplotlib 3.1.1 or higher.
 
 Moreover, due to its HAPGEN2 dependency, the script \sphinxcode{\sphinxupquote{generate\_genotype\_corpus.py}} needs to be run on a Linux machine or on a machine running macOS 10.14 or lower. However, you can avoid running \sphinxcode{\sphinxupquote{generate\_genotype\_corpus.py}} by using the pre-computed corpora and merging them, if necessary.
 
-If you want to re-compile the documentation contained in the \sphinxcode{\sphinxupquote{docs}} directory, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing \sphinxcode{\sphinxupquote{make html}} and \sphinxcode{\sphinxupquote{make latexpdf}} from the \sphinxcode{\sphinxupquote{docs}} directory.
+
+\subsection{User Guide}
+\label{\detokenize{README:user-guide}}
+EpiGEN comes with a detailed user guide. The main files of the HTML and LaTeX versions are, respectively, \sphinxcode{\sphinxupquote{docs/build/html/index.html}} and \sphinxcode{\sphinxupquote{docs/build/latex/user\_guide.pdf}}.  If you want to re-compile the user guide, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing \sphinxcode{\sphinxupquote{make html}} and \sphinxcode{\sphinxupquote{make latexpdf}} from the \sphinxcode{\sphinxupquote{docs}} directory.
 
 
 \subsection{License}
@@ -456,7 +461,10 @@ Show help message and exit.
 \item[{\sphinxstylestrong{Optional Mutually Exclusive Arguments:}}] \leavevmode\begin{description}
 \item[{\sphinxcode{\sphinxupquote{-{-}disease-snps SNP {[}SNP ...{]}}}}] \leavevmode\begin{description}
 \item[{Description:}] \leavevmode
-Position of disease SNPs in selected genotype corpus.
+Position of disease SNPs in selected genotype corpus. Note that these positions do not correspond to the
+positions of the disease SNPs in the simulated epistasis data, since EpiGEN re-orders the SNPs. The
+positions of the disease SNPs in the simulated epistasis data are contained in the JSON field
+with the key \sphinxcode{\sphinxupquote{"disease\_snps"}} of the result file.
 
 \item[{Accepted Arguments:}] \leavevmode
 White space separated list of non-negative integers whose length matches the size of the model specified

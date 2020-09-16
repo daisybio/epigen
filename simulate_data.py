@@ -170,7 +170,10 @@ You can also use your own corpora -- simply run the script ``generate_genotype_c
 **Optional Mutually Exclusive Arguments:**
     ``--disease-snps SNP [SNP ...]``
         Description:
-            Position of disease SNPs in selected genotype corpus. 
+            Position of disease SNPs in selected genotype corpus. Note that these positions do not correspond to the
+            positions of the disease SNPs in the simulated epistasis data, since EpiGEN re-orders the SNPs. The
+            positions of the disease SNPs in the simulated epistasis data are contained in the JSON field
+            with the key ``"disease_snps"`` of the result file.
         Accepted Arguments: 
             White space separated list of non-negative integers whose length matches the size of the model specified 
             via the option ``--model``. All integers must be smaller than the number of SNPs in the selected corpus.

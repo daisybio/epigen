@@ -8,7 +8,7 @@
   \item \spxentry{\_\_init\_\_()}\spxextra{utils.data\_simulator.DataSimulator method}, 
 		\hyperpage{14}
   \item \spxentry{\_\_init\_\_()}\spxextra{utils.extensional\_model.ExtensionalModel method}, 
-		\hyperpage{18}
+		\hyperpage{19}
   \item \spxentry{\_\_init\_\_()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}, 
 		\hyperpage{16}
   \item \spxentry{\_\_init\_\_()}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger method}, 
@@ -19,7 +19,7 @@
   \indexspace
   \bigletter A
   \item \spxentry{axis}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}, 
-		\hyperpage{17}
+		\hyperpage{18}
 
   \indexspace
   \bigletter B
@@ -31,22 +31,22 @@
   \indexspace
   \bigletter C
   \item \spxentry{call\_hapgen2()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}, 
-		\hyperpage{16}
-  \item \spxentry{check\_interval()}\spxextra{in module utils.argparse\_checks}, \hyperpage{19}
-  \item \spxentry{check\_length()}\spxextra{in module utils.argparse\_checks}, \hyperpage{19}
+		\hyperpage{17}
+  \item \spxentry{check\_interval()}\spxextra{in module utils.argparse\_checks}, \hyperpage{20}
+  \item \spxentry{check\_length()}\spxextra{in module utils.argparse\_checks}, \hyperpage{20}
   \item \spxentry{check\_non\_negative()}\spxextra{in module utils.argparse\_checks}, 
 		\hyperpage{20}
   \item \spxentry{check\_positive()}\spxextra{in module utils.argparse\_checks}, \hyperpage{20}
   \item \spxentry{chi\_square()}\spxextra{in module utils.validation\_utils}, \hyperpage{20}
   \item \spxentry{chroms}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}, 
-		\hyperpage{15}
+		\hyperpage{16}
   \item \spxentry{compress}\spxextra{utils.data\_simulator.DataSimulator attribute}, \hyperpage{14}
   \item \spxentry{compress}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}, 
 		\hyperpage{16}
   \item \spxentry{compress}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}, 
 		\hyperpage{18}
   \item \spxentry{compute\_mafs()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}, 
-		\hyperpage{16}
+		\hyperpage{17}
   \item \spxentry{compute\_mafs()}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger method}, 
 		\hyperpage{18}
   \item \spxentry{corpus\_cum\_mafs}\spxextra{utils.data\_simulator.DataSimulator attribute}, 
@@ -82,7 +82,7 @@
   \item \spxentry{dummy\_disease\_snps}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}, 
 		\hyperpage{16}
   \item \spxentry{dump\_corpus()}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator method}, 
-		\hyperpage{16}
+		\hyperpage{17}
   \item \spxentry{dump\_corpus()}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger method}, 
 		\hyperpage{18}
   \item \spxentry{dump\_simulated\_data()}\spxextra{utils.data\_simulator.DataSimulator method}, 
@@ -100,7 +100,7 @@
 		\hyperpage{20}
   \item \spxentry{generate\_phenotype()}\spxextra{utils.data\_simulator.DataSimulator method}, 
 		\hyperpage{15}
-  \item \spxentry{genotype}\spxextra{utils.data\_simulator.DataSimulator attribute}, \hyperpage{12}
+  \item \spxentry{genotype}\spxextra{utils.data\_simulator.DataSimulator attribute}, \hyperpage{13}
   \item \spxentry{genotype}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}, 
 		\hyperpage{16}
   \item \spxentry{genotype}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}, 
@@ -151,17 +151,17 @@
   \item \spxentry{noise\_maf\_range}\spxextra{utils.data\_simulator.DataSimulator attribute}, 
 		\hyperpage{14}
   \item \spxentry{num\_inds}\spxextra{utils.data\_simulator.DataSimulator attribute}, 
-		\hyperpage{13}
+		\hyperpage{14}
   \item \spxentry{num\_inds}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}, 
-		\hyperpage{15}
+		\hyperpage{16}
   \item \spxentry{num\_inds}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}, 
 		\hyperpage{18}
   \item \spxentry{num\_snps}\spxextra{utils.data\_simulator.DataSimulator attribute}, 
-		\hyperpage{13}
+		\hyperpage{14}
   \item \spxentry{num\_snps}\spxextra{utils.genotype\_corpus\_generator.GenotypeCorpusGenerator attribute}, 
 		\hyperpage{16}
   \item \spxentry{num\_snps}\spxextra{utils.genotype\_corpus\_merger.GenotypeCorpusMerger attribute}, 
-		\hyperpage{17}
+		\hyperpage{18}
 
   \indexspace
   \bigletter O
@@ -173,7 +173,7 @@
   \item \spxentry{phenotype}\spxextra{utils.data\_simulator.DataSimulator attribute}, 
 		\hyperpage{14}
   \item \spxentry{phenotype}\spxextra{utils.extensional\_model.ExtensionalModel attribute}, 
-		\hyperpage{18}
+		\hyperpage{19}
   \item \spxentry{phenotype}\spxextra{utils.parametrized\_model.ParametrizedModel attribute}, 
 		\hyperpage{19}
   \item \spxentry{pop}\spxextra{utils.data\_simulator.DataSimulator attribute}, \hyperpage{13}
@@ -188,7 +188,7 @@
   \bigletter R
   \item \spxentry{run\_script()}\spxextra{in module generate\_genotype\_corpus}, \hyperpage{9}
   \item \spxentry{run\_script()}\spxextra{in module merge\_genotype\_corpora}, \hyperpage{11}
-  \item \spxentry{run\_script()}\spxextra{in module simulate\_data}, \hyperpage{7}
+  \item \spxentry{run\_script()}\spxextra{in module simulate\_data}, \hyperpage{8}
   \item \spxentry{run\_script()}\spxextra{in module test\_runtime}, \hyperpage{11}
   \item \spxentry{run\_script()}\spxextra{in module validate\_simulated\_data}, \hyperpage{12}
 
@@ -220,7 +220,7 @@
 
   \indexspace
   \bigletter U
-  \item \spxentry{utils.argparse\_checks}\spxextra{module}, \hyperpage{19}
+  \item \spxentry{utils.argparse\_checks}\spxextra{module}, \hyperpage{20}
   \item \spxentry{utils.data\_simulator}\spxextra{module}, \hyperpage{12}
   \item \spxentry{utils.extensional\_model}\spxextra{module}, \hyperpage{18}
   \item \spxentry{utils.genotype\_corpus\_generator}\spxextra{module}, \hyperpage{15}

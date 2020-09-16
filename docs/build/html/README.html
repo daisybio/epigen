@@ -73,11 +73,12 @@
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 generate_genotype_corpus.py --corpus-id <span class="m">1</span> --pop ASW --inds <span class="m">10000</span> --chroms <span class="m">1</span> --compress 
 </pre></div>
 </div>
-<p>Finally, the script <code class="docutils literal notranslate"><span class="pre">merge_genotype_corpora.py</span></code> allows you to merge pre-computed corpora into a larger copus. For instance, the following command merges the pre-computed corpora <code class="docutils literal notranslate"><span class="pre">corpora/1_ASW_</span></code> and <code class="docutils literal notranslate"><span class="pre">corpora/2_ASW_</span></code> into a newly generated corpus <code class="docutils literal notranslate"><span class="pre">corpora/23_ASW_</span></code>:</p>
+<p>The script <code class="docutils literal notranslate"><span class="pre">merge_genotype_corpora.py</span></code> allows you to merge pre-computed corpora into a larger corpus. For instance, the following command merges the pre-computed corpora <code class="docutils literal notranslate"><span class="pre">corpora/1_ASW_</span></code> and <code class="docutils literal notranslate"><span class="pre">corpora/2_ASW_</span></code> into a newly generated corpus <code class="docutils literal notranslate"><span class="pre">corpora/23_ASW_</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 merge_genotype_corpora.py --corpus-ids <span class="m">1</span> <span class="m">2</span> --pops ASW ASW --corpus-id <span class="m">23</span> --append SNPS
 </pre></div>
 </div>
-<p>Detailed descriptions of how to use the scripts can be found in the HTML and PDF documentations contained in <code class="docutils literal notranslate"><span class="pre">docs/build/html</span></code> and <code class="docutils literal notranslate"><span class="pre">docs/build/latex</span></code>.</p>
+<p>Finally, you can validate the simulated data with the script <code class="docutils literal notranslate"><span class="pre">validate_simulated_data.py</span></code>. For categorical phenotypes, this script carries out the chi-squared test, for quantitative phenotypes, it runs one-way ANOVA.</p>
+<p>More detailed descriptions of how to use the scripts can be found in the user guide or by calling them with the option <code class="docutils literal notranslate"><span class="pre">--help</span></code>.</p>
 </div>
 <div class="section" id="implementing-custom-interaction-models">
 <h2>Implementing Custom Interaction Models<a class="headerlink" href="#implementing-custom-interaction-models" title="Permalink to this headline">¶</a></h2>
@@ -101,7 +102,10 @@
 <li><p>Matplotlib 3.1.1 or higher.</p></li>
 </ul>
 <p>Moreover, due to its HAPGEN2 dependency, the script <code class="docutils literal notranslate"><span class="pre">generate_genotype_corpus.py</span></code> needs to be run on a Linux machine or on a machine running macOS 10.14 or lower. However, you can avoid running <code class="docutils literal notranslate"><span class="pre">generate_genotype_corpus.py</span></code> by using the pre-computed corpora and merging them, if necessary.</p>
-<p>If you want to re-compile the documentation contained in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">latexpdf</span></code> from the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory.</p>
+</div>
+<div class="section" id="user-guide">
+<h2>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h2>
+<p>EpiGEN comes with a detailed user guide. The main files of the HTML and LaTeX versions are, respectively, <code class="docutils literal notranslate"><span class="pre">docs/build/html/index.html</span></code> and <code class="docutils literal notranslate"><span class="pre">docs/build/latex/user_guide.pdf</span></code>.  If you want to re-compile the user guide, you additionally need to install Sphinx, the extension recommonmark, and the package mock. If you have these packages installed, the HTML and PDF documentations can be re-compiled by executing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">latexpdf</span></code> from the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory.</p>
 </div>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
@@ -164,6 +168,7 @@
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#implementing-custom-interaction-models">Implementing Custom Interaction Models</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#user-guide">User Guide</a></li>
 <li><a class="reference internal" href="#license">License</a></li>
 <li><a class="reference internal" href="#citing-epigen">Citing EpiGEN</a></li>
 <li><a class="reference internal" href="#structure-of-the-repository">Structure of the Repository</a></li>
